@@ -1,0 +1,18 @@
+C:\Users\TOPTECH\source\C#\Library_DataAccess\obj\Debug\Library_DataAccess.csproj.AssemblyReference.cache
+C:\Users\TOPTECH\source\C#\Library_DataAccess\obj\Debug\Library_DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\TOPTECH\source\C#\Library_DataAccess\bin\Debug\Library_DataAccess.dll
+C:\Users\TOPTECH\source\C#\Library_DataAccess\bin\Debug\Library_DataAccess.pdb
+C:\Users\TOPTECH\source\C#\Library_DataAccess\obj\Debug\Library_DataAccess.dll
+C:\Users\TOPTECH\source\C#\Library_DataAccess\obj\Debug\Library_DataAccess.pdb
+C:\Users\TOPTECH\source\C#\Library Managment System1\Library_DataAccess\bin\Debug\Library_DataAccess.dll
+C:\Users\TOPTECH\source\C#\Library Managment System1\Library_DataAccess\bin\Debug\Library_DataAccess.pdb
+C:\Users\TOPTECH\source\C#\Library Managment System1\Library_DataAccess\obj\Debug\Library_DataAccess.csproj.AssemblyReference.cache
+C:\Users\TOPTECH\source\C#\Library Managment System1\Library_DataAccess\obj\Debug\Library_DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\TOPTECH\source\C#\Library Managment System1\Library_DataAccess\obj\Debug\Library_DataAccess.dll
+C:\Users\TOPTECH\source\C#\Library Managment System1\Library_DataAccess\obj\Debug\Library_DataAccess.pdb
+C:\Users\TOPTECH\source\C#\Library Managment System\Library_DataAccess\bin\Debug\Library_DataAccess.dll
+C:\Users\TOPTECH\source\C#\Library Managment System\Library_DataAccess\bin\Debug\Library_DataAccess.pdb
+C:\Users\TOPTECH\source\C#\Library Managment System\Library_DataAccess\obj\Debug\Library_DataAccess.csproj.AssemblyReference.cache
+C:\Users\TOPTECH\source\C#\Library Managment System\Library_DataAccess\obj\Debug\Library_DataAccess.csproj.CoreCompileInputs.cache
+C:\Users\TOPTECH\source\C#\Library Managment System\Library_DataAccess\obj\Debug\Library_DataAccess.dll
+C:\Users\TOPTECH\source\C#\Library Managment System\Library_DataAccess\obj\Debug\Library_DataAccess.pdb

@@ -1,0 +1,27 @@
+C:\Users\TOPTECH\source\C#\Library_Buisness\obj\Debug\Library_Buisness.csproj.AssemblyReference.cache
+C:\Users\TOPTECH\source\C#\Library_Buisness\obj\Debug\Library_Buisness.csproj.CoreCompileInputs.cache
+C:\Users\TOPTECH\source\C#\Library_Buisness\bin\Debug\Library_Buisness.dll
+C:\Users\TOPTECH\source\C#\Library_Buisness\bin\Debug\Library_Buisness.pdb
+C:\Users\TOPTECH\source\C#\Library_Buisness\bin\Debug\Library_DataAccess.dll
+C:\Users\TOPTECH\source\C#\Library_Buisness\bin\Debug\Library_DataAccess.pdb
+C:\Users\TOPTECH\source\C#\Library_Buisness\obj\Debug\Library_.09F1F4E8.Up2Date
+C:\Users\TOPTECH\source\C#\Library_Buisness\obj\Debug\Library_Buisness.dll
+C:\Users\TOPTECH\source\C#\Library_Buisness\obj\Debug\Library_Buisness.pdb
+C:\Users\TOPTECH\source\C#\Library Managment System1\Library_Buisness\bin\Debug\Library_Buisness.dll
+C:\Users\TOPTECH\source\C#\Library Managment System1\Library_Buisness\bin\Debug\Library_Buisness.pdb
+C:\Users\TOPTECH\source\C#\Library Managment System1\Library_Buisness\bin\Debug\Library_DataAccess.dll
+C:\Users\TOPTECH\source\C#\Library Managment System1\Library_Buisness\bin\Debug\Library_DataAccess.pdb
+C:\Users\TOPTECH\source\C#\Library Managment System1\Library_Buisness\obj\Debug\Library_Buisness.csproj.AssemblyReference.cache
+C:\Users\TOPTECH\source\C#\Library Managment System1\Library_Buisness\obj\Debug\Library_Buisness.csproj.CoreCompileInputs.cache
+C:\Users\TOPTECH\source\C#\Library Managment System1\Library_Buisness\obj\Debug\Library_.09F1F4E8.Up2Date
+C:\Users\TOPTECH\source\C#\Library Managment System1\Library_Buisness\obj\Debug\Library_Buisness.dll
+C:\Users\TOPTECH\source\C#\Library Managment System1\Library_Buisness\obj\Debug\Library_Buisness.pdb
+C:\Users\TOPTECH\source\C#\Library Managment System\Library_Buisness\bin\Debug\Library_Buisness.dll
+C:\Users\TOPTECH\source\C#\Library Managment System\Library_Buisness\bin\Debug\Library_Buisness.pdb
+C:\Users\TOPTECH\source\C#\Library Managment System\Library_Buisness\bin\Debug\Library_DataAccess.dll
+C:\Users\TOPTECH\source\C#\Library Managment System\Library_Buisness\bin\Debug\Library_DataAccess.pdb
+C:\Users\TOPTECH\source\C#\Library Managment System\Library_Buisness\obj\Debug\Library_Buisness.csproj.AssemblyReference.cache
+C:\Users\TOPTECH\source\C#\Library Managment System\Library_Buisness\obj\Debug\Library_Buisness.csproj.CoreCompileInputs.cache
+C:\Users\TOPTECH\source\C#\Library Managment System\Library_Buisness\obj\Debug\Library_.09F1F4E8.Up2Date
+C:\Users\TOPTECH\source\C#\Library Managment System\Library_Buisness\obj\Debug\Library_Buisness.dll
+C:\Users\TOPTECH\source\C#\Library Managment System\Library_Buisness\obj\Debug\Library_Buisness.pdb
