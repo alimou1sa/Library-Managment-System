@@ -68,6 +68,11 @@
             this.guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
             this.btnSave = new Guna.UI2.WinForms.Guna2Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NupDNumofCopies)).BeginInit();
             this.CMstripPublisher.SuspendLayout();
@@ -75,6 +80,7 @@
             this.CMstripAuther.SuspendLayout();
             this.CMstripCategory.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -213,10 +219,9 @@
             // cbPublisherName
             // 
             this.cbPublisherName.ContextMenuStrip = this.CMstripPublisher;
+            this.cbPublisherName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbPublisherName.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbPublisherName.FormattingEnabled = true;
-            this.cbPublisherName.Items.AddRange(new object[] {
-            "None"});
             this.cbPublisherName.Location = new System.Drawing.Point(161, 328);
             this.cbPublisherName.Name = "cbPublisherName";
             this.cbPublisherName.Size = new System.Drawing.Size(167, 29);
@@ -226,9 +231,10 @@
             // 
             this.CMstripPublisher.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.CMstripPublisher.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.editeToolStripMenuItem1});
+            this.editeToolStripMenuItem1,
+            this.deleteToolStripMenuItem3});
             this.CMstripPublisher.Name = "CMstripPublisher";
-            this.CMstripPublisher.Size = new System.Drawing.Size(110, 32);
+            this.CMstripPublisher.Size = new System.Drawing.Size(211, 88);
             // 
             // editeToolStripMenuItem1
             // 
@@ -255,6 +261,7 @@
             this.txtBookPrice.Size = new System.Drawing.Size(227, 28);
             this.txtBookPrice.TabIndex = 21;
             this.txtBookPrice.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtBookPrice_KeyPress);
+            this.txtBookPrice.Validating += new System.ComponentModel.CancelEventHandler(this.txtBookPrice_Validating);
             // 
             // label10
             // 
@@ -270,10 +277,9 @@
             // cbGenre
             // 
             this.cbGenre.ContextMenuStrip = this.CMstripGenre;
+            this.cbGenre.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbGenre.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbGenre.FormattingEnabled = true;
-            this.cbGenre.Items.AddRange(new object[] {
-            "None"});
             this.cbGenre.Location = new System.Drawing.Point(598, 126);
             this.cbGenre.Name = "cbGenre";
             this.cbGenre.Size = new System.Drawing.Size(200, 29);
@@ -283,24 +289,24 @@
             // 
             this.CMstripGenre.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.CMstripGenre.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.editeToolStripMenuItem});
+            this.editeToolStripMenuItem,
+            this.deleteToolStripMenuItem});
             this.CMstripGenre.Name = "CMstripGenre";
-            this.CMstripGenre.Size = new System.Drawing.Size(110, 32);
+            this.CMstripGenre.Size = new System.Drawing.Size(130, 60);
             // 
             // editeToolStripMenuItem
             // 
             this.editeToolStripMenuItem.Name = "editeToolStripMenuItem";
-            this.editeToolStripMenuItem.Size = new System.Drawing.Size(109, 28);
+            this.editeToolStripMenuItem.Size = new System.Drawing.Size(210, 28);
             this.editeToolStripMenuItem.Text = "Edit";
             this.editeToolStripMenuItem.Click += new System.EventHandler(this.editeToolStripMenuItem_Click);
             // 
             // cbAutherName
             // 
             this.cbAutherName.ContextMenuStrip = this.CMstripAuther;
+            this.cbAutherName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbAutherName.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbAutherName.FormattingEnabled = true;
-            this.cbAutherName.Items.AddRange(new object[] {
-            "None"});
             this.cbAutherName.Location = new System.Drawing.Point(161, 268);
             this.cbAutherName.Name = "cbAutherName";
             this.cbAutherName.Size = new System.Drawing.Size(167, 29);
@@ -310,9 +316,10 @@
             // 
             this.CMstripAuther.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.CMstripAuther.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.editToolStripMenuItem1});
+            this.editToolStripMenuItem1,
+            this.deleteToolStripMenuItem2});
             this.CMstripAuther.Name = "CMstripAuther";
-            this.CMstripAuther.Size = new System.Drawing.Size(110, 32);
+            this.CMstripAuther.Size = new System.Drawing.Size(130, 60);
             // 
             // editToolStripMenuItem1
             // 
@@ -344,10 +351,9 @@
             // cbCategory
             // 
             this.cbCategory.ContextMenuStrip = this.CMstripCategory;
+            this.cbCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbCategory.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cbCategory.FormattingEnabled = true;
-            this.cbCategory.Items.AddRange(new object[] {
-            "None"});
             this.cbCategory.Location = new System.Drawing.Point(598, 189);
             this.cbCategory.Name = "cbCategory";
             this.cbCategory.Size = new System.Drawing.Size(200, 29);
@@ -357,9 +363,10 @@
             // 
             this.CMstripCategory.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.CMstripCategory.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.editToolStripMenuItem});
+            this.editToolStripMenuItem,
+            this.deleteToolStripMenuItem1});
             this.CMstripCategory.Name = "CMstripCategory";
-            this.CMstripCategory.Size = new System.Drawing.Size(110, 32);
+            this.CMstripCategory.Size = new System.Drawing.Size(130, 60);
             this.CMstripCategory.Opening += new System.ComponentModel.CancelEventHandler(this.CMstripCategory_Opening);
             // 
             // editToolStripMenuItem
@@ -403,6 +410,7 @@
             this.txtISBN.Name = "txtISBN";
             this.txtISBN.Size = new System.Drawing.Size(217, 28);
             this.txtISBN.TabIndex = 8;
+            this.txtISBN.Validating += new System.ComponentModel.CancelEventHandler(this.txtISBN_Validating);
             // 
             // txtTitle
             // 
@@ -411,6 +419,7 @@
             this.txtTitle.Name = "txtTitle";
             this.txtTitle.Size = new System.Drawing.Size(217, 28);
             this.txtTitle.TabIndex = 7;
+            this.txtTitle.Validating += new System.ComponentModel.CancelEventHandler(this.txtTitle_Validating);
             // 
             // label7
             // 
@@ -530,6 +539,38 @@
             this.pictureBox1.TabIndex = 5;
             this.pictureBox1.TabStop = false;
             // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(210, 28);
+            this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            // 
+            // deleteToolStripMenuItem1
+            // 
+            this.deleteToolStripMenuItem1.Name = "deleteToolStripMenuItem1";
+            this.deleteToolStripMenuItem1.Size = new System.Drawing.Size(210, 28);
+            this.deleteToolStripMenuItem1.Text = "Delete";
+            this.deleteToolStripMenuItem1.Click += new System.EventHandler(this.deleteToolStripMenuItem1_Click);
+            // 
+            // deleteToolStripMenuItem2
+            // 
+            this.deleteToolStripMenuItem2.Name = "deleteToolStripMenuItem2";
+            this.deleteToolStripMenuItem2.Size = new System.Drawing.Size(210, 28);
+            this.deleteToolStripMenuItem2.Text = "Delete";
+            this.deleteToolStripMenuItem2.Click += new System.EventHandler(this.deleteToolStripMenuItem2_Click);
+            // 
+            // deleteToolStripMenuItem3
+            // 
+            this.deleteToolStripMenuItem3.Name = "deleteToolStripMenuItem3";
+            this.deleteToolStripMenuItem3.Size = new System.Drawing.Size(210, 28);
+            this.deleteToolStripMenuItem3.Text = "Delete";
+            this.deleteToolStripMenuItem3.Click += new System.EventHandler(this.deleteToolStripMenuItem3_Click);
+            // 
             // frmAddUpdateBooks
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 16F);
@@ -553,6 +594,7 @@
             this.CMstripAuther.ResumeLayout(false);
             this.CMstripCategory.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -599,5 +641,10 @@
         private System.Windows.Forms.ContextMenuStrip CMstripAuther;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem1;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem3;
     }
 }

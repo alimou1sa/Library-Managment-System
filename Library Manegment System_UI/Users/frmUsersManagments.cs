@@ -20,18 +20,18 @@ namespace Library_Manegment_System
         {
             InitializeComponent();
         }
-        DataTable _dtUsers = clsUsers.GetAllUsers();
+        DataTable _dtUsers;//= clsUsers.GetAllUsers();
 
-        private void _RefreshUserssList()
+        private async Task  _RefreshUserssList()
         {
-            _dtUsers = clsUsers.GetAllUsers();
+            _dtUsers =await  clsUsers.GetAllUsers();
             dgvShowUserList.DataSource = _dtUsers;
             lblRecordsCount.Text = dgvShowUserList.Rows.Count.ToString();
         }
 
-        private void frmUsersManagments_Load(object sender, EventArgs e)
+        private async void frmUsersManagments_Load(object sender, EventArgs e)
         {
-            _RefreshUserssList();
+           await  _RefreshUserssList();
             dgvShowUserList.DataSource = _dtUsers;
             cbFiterBy.SelectedIndex = 0;
             lblRecordsCount.Text = dgvShowUserList.Rows.Count.ToString();
@@ -199,25 +199,25 @@ namespace Library_Manegment_System
                 e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
 
-        private void btnPeopleManagment_Click(object sender, EventArgs e)
+        private async void btnPeopleManagment_Click(object sender, EventArgs e)
         {
             frmPeopleManrgment frmAddUpdatePersons = new frmPeopleManrgment();
             frmAddUpdatePersons.ShowDialog();
-            _RefreshUserssList();
+          await   _RefreshUserssList();
         }
 
-        private void btnAddUser_Click(object sender, EventArgs e)
+        private async void btnAddUser_Click(object sender, EventArgs e)
         {
             frmAddUpdateUser frmAddUser = new frmAddUpdateUser();
             frmAddUser.ShowDialog();
-            _RefreshUserssList();
+           await  _RefreshUserssList();
         }
 
-        private void editToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmAddUpdateUser frmAddUser = new frmAddUpdateUser((int)dgvShowUserList .CurrentRow.Cells[0].Value);
             frmAddUser.ShowDialog();
-            _RefreshUserssList();
+          await   _RefreshUserssList();
         }
 
         private void userDetailsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -243,11 +243,11 @@ namespace Library_Manegment_System
             
         }
 
-        private void addUserToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void addUserToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmAddUpdateUser frmAddUser = new frmAddUpdateUser();
             frmAddUser.ShowDialog();
-            _RefreshUserssList();
+          await   _RefreshUserssList();
         }
     }
 }

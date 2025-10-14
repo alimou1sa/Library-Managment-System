@@ -1,5 +1,6 @@
 ﻿using Library;
 using Library_Business;
+using Library_Manegment_System;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,18 +15,14 @@ namespace Library_Manegment_System
 {
     public partial class frmLoanBook : Form
     {
-
-
         public enum enMode { AddNew = 0, Update = 1 };
         private enMode _Mode;
         private int? _BookID = null;
-        private int? _MemberID =null;
+        private int? _MemberID = null;
 
         public enum enCreationMode { BorrowBook = 0, ReturnBook = 1 };
         private enCreationMode _CreationMode;
-
         clsPaymentDetails _PaymentDetails;
-
 
         private int _LoanID = -1;
         clsLoanes _Loan;
@@ -35,130 +32,137 @@ namespace Library_Manegment_System
         bool IsReservationMode = false;
 
 
-        public frmLoanBook(int BookID=-1,int MemmberID=-1 )
+        public frmLoanBook(int BookID = -1, int MemmberID = -1)
         {
             InitializeComponent();
 
-            if(BookID!=-1)
+            if (BookID != -1)
                 _BookID = BookID;
-            if( MemmberID!=-1)
+            if (MemmberID != -1)
                 _MemberID = MemmberID;
 
-            _CreationMode =enCreationMode.BorrowBook;
+            _CreationMode = enCreationMode.BorrowBook;
             _Mode = enMode.AddNew;
         }
 
-        public frmLoanBook(int LoanID,bool IsUpdateMode)
+        public frmLoanBook(int LoanID, bool IsUpdateMode)
         {
             InitializeComponent();
 
             _LoanID = LoanID;
 
-            _CreationMode=enCreationMode.ReturnBook;
+            _CreationMode = enCreationMode.ReturnBook;
             if (IsUpdateMode)
                 _Mode = enMode.Update;
             else
                 _Mode = enMode.AddNew;
-
         }
 
-        private async void _ResetDefualtValues()
+
+        private async Task _ResetDefualtValues()
+        {
+            await LoadBookAndMemberInfo();
+
+            if (_Mode == enMode.AddNew)
+            {
+                AddNewMode();
+            }
+            else if (_Mode == enMode.Update)
+            {
+                UpdateMode();
+            }
+        }
+
+        private async Task LoadBookAndMemberInfo()
         {
             if (_BookID.HasValue)
             {
-                if((!await  clsBookCopies.IsAvailablBook(_BookID.Value)))
+                bool isAvailable = await clsBookCopies.IsAvailablBook(_BookID.Value);
+                if (!isAvailable)
                 {
-                    if (MessageBox.Show("This Book Is Not Available Now  ,Do you Want To Add Resarvation ", "XXX", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    DialogResult result = MessageBox.Show(
+                        "This Book Is Not Available Now. Do you want to add a reservation?",
+                        "XXX",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
+
+                    if (result == DialogResult.Yes)
                     {
                         frmAddUpdateReservations addReservations = new frmAddUpdateReservations(_BookID.Value);
                         this.Close();
                         addReservations.ShowDialog();
-
                     }
                     return;
                 }
+
                 ctrlBookCardWithFilter1.FilterEnabled = false;
                 ctrlBookCardWithFilter1.LoadBookInfo(_BookID.Value);
             }
+
             if (_MemberID.HasValue)
             {
-                ctrlMemberCardWhithFilter1.FilterEnabled=false;
+                ctrlMemberCardWhithFilter1.FilterEnabled = false;
                 ctrlMemberCardWhithFilter1.LoadMemberInfo(_MemberID.Value);
             }
+        }
 
-            if (_Mode == enMode.AddNew )
+        private void AddNewMode()
+        {
+            switch (_CreationMode)
             {
-                if (_CreationMode == enCreationMode.BorrowBook)
-                {
+                case enCreationMode.BorrowBook:
                     lblTitel.Text = "Borrow Book";
                     this.Text = "Borrow Book";
-                
-                    tpBookInfo.Enabled=false;
-                    tpLoanInfo.Enabled=false;
-
+                    tpBookInfo.Enabled = false;
+                    tpLoanInfo.Enabled = false;
                     _Loan = new clsLoanes();
+                    break;
 
-                }
-                if(_CreationMode == enCreationMode.ReturnBook)
-                { 
-                    ctrlBookCardWithFilter1 .FilterEnabled = false;
-                    ctrlMemberCardWhithFilter1 .FilterEnabled = false;
-
-                        lblTitel.Text = "Return Book";
-                        this.Text = "Return Book";
-                   
-
-                }
-
-                lblLoanDate.Text = DateTime.Now.ToString("yyyy|MM|dd");
-                DateTime dateTime = DateTime.Now.Date.AddDays(clsSettings.GetDefualtBorrrowDays());
-                lblDueDate.Text = dateTime.ToString("yyyy|MM|dd");
-                lblLoanByUser.Text = clsGlobal.CurrentUser.UserName;
-                ctrlMemberCardWhithFilter1.FilterFocus();
-                lblCopyID.Text = _CopyID.ToString();
-
+                case enCreationMode.ReturnBook:
+                    ctrlBookCardWithFilter1.FilterEnabled = false;
+                    ctrlMemberCardWhithFilter1.FilterEnabled = false;
+                    lblReturnDate.Text = DateTime.Now.ToString("yyyy-MM-dd");
+                    lblTitel.Text = "Return Book";
+                    this.Text = "Return Book";
+                    break;
             }
-            else if(_Mode==enMode.Update) 
+
+            lblLoanDate.Text = DateTime.Now.ToString("yyyy-MM-dd");
+            DateTime dueDate = DateTime.Now.Date.AddDays(clsSettings.GetDefualtBorrrowDays());
+            lblDueDate.Text = dueDate.ToString("yyyy-MM-dd");
+            lblLoanByUser.Text = clsGlobal.CurrentUser.UserName;
+            ctrlMemberCardWhithFilter1.FilterFocus();
+            lblCopyID.Text = _CopyID.ToString();
+        }
+
+        private void UpdateMode()
+        {
+            tpLoanInfo.Enabled = true;
+            lblReturnByUser.Text = clsGlobal.CurrentUser.UserName;
+            lblReturnDate.Text = DateTime.Now.ToString("yyyy-MM-dd");
+
+            if (_CreationMode == enCreationMode.BorrowBook)
             {
-
-
-                tpLoanInfo.Enabled = true;
-                btnSave.Enabled = true;
-                lblReturnByUser.Text = clsGlobal.CurrentUser.UserName;
-              
-                lblReturnDate.Text = DateTime.Now.ToString("yyyy|MM|dd");
-
-
-
-                if (_CreationMode == enCreationMode.BorrowBook)
-                {
-                    lblTitel.Text = "Update Borrow Book";
-                    this.Text = "Undate Borrow Book";
-
-                }
-                else
-                {
-
-                    lblTitel.Text = "Update Return Book";
-                    this.Text = "Update Return Book";
-
-                }
-
-
+                lblTitel.Text = "Update Borrow Book";
+                this.Text = "Update Borrow Book";
             }
-
+            else
+            {
+                btnSave.Enabled = false;
+                lblTitel.Text = "Update Return Book";
+                this.Text = "Update Return Book";
+            }
 
         }
-        private void _ResetFineInfo(int DifferenceDays)
+
+        private async void _ResetFineInfo(int DifferenceDays)
         {
-            _FillPaymentTypeInComoboBox();
+           await  _FillPaymentTypeInComoboBox();
             lblAmount.Text = (DifferenceDays * clsSettings.GetDefualtFineDays()).ToString();
             lblPaymentDate.Text = DateTime.Now.ToString("yyyy|MM|dd");
             lblPaymentStatus.Text = Convert.ToString(clsPayments.enPaymentStatus.Pending);
             cbPaymentType.SelectedIndex = 0;
 
         }
-      
+
         private bool _CheckIsLateInReturning()
         {
             if (DateTime.Now > _Loan.DueDate)
@@ -180,31 +184,22 @@ namespace Library_Manegment_System
             return false;
         }
 
-
-        private async void _FillPaymentTypeInComoboBox()
+        private async Task  _FillPaymentTypeInComoboBox()
         {
-            DataTable dtPayment = await  clsPaymentTypes.GetListPaymentTypes();
+            DataTable dtPayment = await clsPaymentTypes.GetListPaymentTypes();
             foreach (DataRow row in dtPayment.Rows)
             {
                 cbPaymentType.Items.Add(row["TypeName"]);
             }
         }
-
-
-        private bool _IsHasApyment()
+      
+        private bool _HasPayment()
         {
             _PaymentDetails = clsPaymentDetails.FindByEntityID(_Loan.LoanID, (byte)clsPaymentEntities.enEntityType.LateFees);
-
-            if (_PaymentDetails != null)
-            
-                return true;
-
-            
-            return false;
-                    
+            return _PaymentDetails != null;
         }
-       
-        private void _LoadData()
+
+        private async void _LoadData()
         {
 
             _Loan = clsLoanes.FindByID(_LoanID);
@@ -217,17 +212,17 @@ namespace Library_Manegment_System
                 return;
             }
 
-            if(_IsHasApyment())
+            if (_HasPayment())
             {
-                
-                _FillPaymentTypeInComoboBox();
-                lblAmount.Text =_PaymentDetails.Amount.ToString();
+
+               await  _FillPaymentTypeInComoboBox();
+                lblAmount.Text = _PaymentDetails.Amount.ToString();
                 lblPaymentDate.Text = _PaymentDetails.PaymentDate.ToString("yyyy:MM:dd");
                 lblPaymentStatus.Text = clsPayments.GetPaymentStatusText((clsPayments.enPaymentStatus)_PaymentDetails._PaymentStatus);
                 cbPaymentType.SelectedIndex = cbPaymentType.FindString(_PaymentDetails.PaymentTypesInfo.TypeName);
                 lblPaymentID.Text = _PaymentDetails.PaymentID.ToString();
                 TimeSpan time = _Loan.DueDate - _Loan.ReturnDate;
-                lblDays.Text = time.Days. ToString();
+                lblDays.Text = time.Days.ToString();
 
             }
 
@@ -241,10 +236,10 @@ namespace Library_Manegment_System
             ctrlBookCardWithFilter1.LoadBookInfo(_Loan.BookCopiesInfo.BookID);
         }
 
-        private void frmBorrowBook2_Load(object sender, EventArgs e)
+        private async void frmBorrowBook2_Load(object sender, EventArgs e)
         {
-            _ResetDefualtValues();
-            if (_Mode == enMode.Update||_CreationMode==enCreationMode.ReturnBook)
+           await  _ResetDefualtValues();
+            if (_Mode == enMode.Update || _CreationMode == enCreationMode.ReturnBook)
                 _LoadData();
         }
 
@@ -252,7 +247,7 @@ namespace Library_Manegment_System
         {
             if (_Mode == enMode.Update)
             {
-                btnSave.Enabled = true;
+        
                 tpBookInfo.Enabled = true;
                 tabControl1.SelectedTab = tabControl1.TabPages["tpBookInfo"];
                 return;
@@ -260,24 +255,20 @@ namespace Library_Manegment_System
 
 
             if (ctrlMemberCardWhithFilter1.MemberID != -1)
-            { 
-                if(ctrlMemberCardWhithFilter1.SelectedMemberInfo.IsActive!=true)
+            {
+                if (ctrlMemberCardWhithFilter1.SelectedMemberInfo.IsActive != true)
                 {
                     MessageBox.Show("This Member Is Not Active ,Choose Anuther One", "Select a Book", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
-                btnSave.Enabled = true;
                 tpBookInfo.Enabled = true;
                 tabControl1.SelectedTab = tabControl1.TabPages["tpBookInfo"];
-
             }
             else
-
             {
                 MessageBox.Show("Please Select a Member", "Select a Book", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 ctrlMemberCardWhithFilter1.FilterFocus();
-
             }
         }
 
@@ -286,16 +277,15 @@ namespace Library_Manegment_System
 
             if (_Mode == enMode.Update)
             {
-                btnSave.Enabled = true;
                 tpLoanInfo.Enabled = true;
                 tabControl1.SelectedTab = tabControl1.TabPages["tpLoanInfo"];
-         
+
                 return;
             }
             else
             {
-               if(_CreationMode==enCreationMode.ReturnBook)
-                _CheckIsLateInReturning();
+                if (_CreationMode == enCreationMode.ReturnBook)
+                    _CheckIsLateInReturning();
 
             }
             if (ctrlBookCardWithFilter1.BookID != -1)
@@ -303,7 +293,7 @@ namespace Library_Manegment_System
 
                 if (_CreationMode == enCreationMode.BorrowBook && _Mode == enMode.AddNew)
                 {
-                    _CopyID =  await  clsBookCopies.GetCopyIDAvailabl(ctrlBookCardWithFilter1.BookID);
+                    _CopyID = await clsBookCopies.GetCopyIDAvailabl(ctrlBookCardWithFilter1.BookID);
                     if (_CopyID == -1)
                     {
                         if (MessageBox.Show("This Book Is Not Available Now  ,Do you Want To Add Resarvation ", "XXX", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
@@ -311,16 +301,15 @@ namespace Library_Manegment_System
                             frmAddUpdateReservations addReservations = new frmAddUpdateReservations(ctrlBookCardWithFilter1.BookID);
                             this.Close();
                             addReservations.ShowDialog();
-                           
+
                         }
                         return;
                     }
-                    lblCopyID.Text=_CopyID.ToString();
+                    lblCopyID.Text = _CopyID.ToString();
                 }
-                btnSave.Enabled = true;
+
                 tpLoanInfo.Enabled = true;
                 tabControl1.SelectedTab = tabControl1.TabPages["tpLoanInfo"];
-
             }
             else
             {
@@ -332,109 +321,80 @@ namespace Library_Manegment_System
 
         private void btnClose_Click(object sender, EventArgs e)
         {
-            this .Close();
+            this.Close();
         }
-
-        private async Task< bool> _IsThisBookReservation()
+     
+        private async Task<bool> _IsBookReservedAsync()
         {
-
-            if (await  clsBookCopies.IsAvailablBook(ctrlBookCardWithFilter1.BookID))
-            {
-
-                if (clsReservations.IsThereReservationsForThisBook(ctrlBookCardWithFilter1.BookID))
-                {
-                    return true;
-
-                }
-            }
-
-            return false;
+            return await clsBookCopies.IsAvailablBook(ctrlBookCardWithFilter1.BookID)
+                && await clsReservations.IsThereReservationsForThisBook(ctrlBookCardWithFilter1.BookID);
         }
 
+
+        private int? _PaymentID = null;
 
         private async void btnSave_Click(object sender, EventArgs e)
         {
-            if (!this.ValidateChildren())
-            {
 
-                MessageBox.Show("Some fileds are not valide!, put the mouse over the red icon(s) to see the erro",
-                    "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            if (!ValidateChildren())
+            {
+                MessageBox.Show("Some fields are invalid. Hover over the red icon(s) to see the error.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
-
             }
 
-            if (_Mode == enMode.AddNew)
+            if (_CreationMode == enCreationMode.BorrowBook)
             {
-                if (_CreationMode == enCreationMode.BorrowBook)
+                if (_Mode == enMode.AddNew)
                 {
-  
-
-                 _Loan =await  _Loan.BorrowBook(ctrlMemberCardWhithFilter1.MemberID, clsGlobal.CurrentUser.UserID, _CopyID,DateTime.Now);
-            
+                    _Loan = await clsLoanes.BorrowBook(ctrlMemberCardWhithFilter1.MemberID, clsGlobal.CurrentUser.UserID, _CopyID);
                     if (_Loan != null)
                     {
-                        clsReservations reservations = clsReservations.FindByBOOKIDAndMemberID(ctrlBookCardWithFilter1.BookID, ctrlMemberCardWhithFilter1.MemberID);
-                        if(reservations!=null)
-                        {
-                            reservations.ChangeResrvationStatus(clsReservations.enReservationsStatus.ConvertToBorrowing);
-                        }
-                       
                         _Mode = enMode.Update;
-                        _CreationMode = enCreationMode.BorrowBook;
                         lblTitel.Text = "Update Borrow Book";
-                        this.Text = "Update Borrow Book";
+                        Text = lblTitel.Text;
                         lblLoanID.Text = _Loan.LoanID.ToString();
-                        MessageBox.Show("Data Saved Successfully.", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        return;
+                        MessageBox.Show("Data saved successfully.", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
-                else if (_CreationMode == enCreationMode.ReturnBook)
+                else
                 {
-
-                    if(_Loan.ISLateInReturningAndReturnDifferenceDays()!=0)
-                    _Loan =await  _Loan.ReturnBook(clsGlobal.CurrentUser.UserID, clsPaymentTypes.FindByTypeName(cbPaymentType.Text.Trim()).PaymentTypeID,DateTime.Now);
-                    else
-                        _Loan = await _Loan.ReturnBook(clsGlobal.CurrentUser.UserID, -1, DateTime.Now);
-
-                    if (_Loan != null)
-                    {
- 
-
-                        lblReturnByUser.Text = clsGlobal.CurrentUser.UserName;
-                        _Mode = enMode.Update;
-                        lblTitel.Text = "Update Return Book";
-                        this.Text = "Update Return Book";
-                        btnSave.Enabled = false;
-                        MessageBox.Show("Data Saved Successfully.", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                        if (await  _IsThisBookReservation())
-                        {
-                            MessageBox.Show("This Book iS Availble Now,There Are Active Reservation For This Book ", "RESERVATIONs", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);  
-                        }
-
-                    }
-
+                    _Loan.MemberID = ctrlMemberCardWhithFilter1.MemberID;
+                    if (await _Loan.Save())
+                        MessageBox.Show("Data updated successfully.", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
-            else
+            else if (_CreationMode == enCreationMode.ReturnBook)
             {
+                int paymentTypeID = DateTime.Now <= _Loan.DueDate ? -1 :
+                    clsPaymentTypes.FindByTypeName(cbPaymentType.Text.Trim()).PaymentTypeID;
 
-                _Loan.MemberID=ctrlMemberCardWhithFilter1.MemberID;
+                _PaymentID = await clsLoanes.ReturnBook(_Loan.LoanID, clsGlobal.CurrentUser.UserID, paymentTypeID);
 
-                if(await  _Loan.Save())
+                if (_PaymentID.HasValue)
                 {
-                    MessageBox.Show("Data Saved Successfully.", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    lblPaymentID.Text = _PaymentID.Value.ToString();
+                    lblReturnByUser.Text = clsGlobal.CurrentUser.UserName;
+                    lblPaymentStatus.Text = Convert.ToString(clsPayments.enPaymentStatus.Paid);
+
+                    _Mode = enMode.Update;
+                    lblTitel.Text = "Update Return Book";
+                    Text = lblTitel.Text;
+                    btnSave.Enabled = false;
+                    btnNext1.Enabled = false;
+                    btnNext2.Enabled = false;
+
+                    MessageBox.Show("Return processed successfully.", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    if (await _IsBookReservedAsync())
+                    {
+                        MessageBox.Show("This book is now available and has active reservations.", "Reservations", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                    }
                 }
-
             }
-
-
 
         }
 
         private void ctrlMemberCardWhithFilter1_OnMemberSelected(object sender, ctrlMemberCardWhithFilter.MemberSelectedEventArgs e) => _MemberID = e.MemberID;
-
-
 
         private async void ctrlBookCardWithFilter1_OnBookSelected(int obj)
         {
@@ -447,13 +407,11 @@ namespace Library_Manegment_System
 
                 if (_CopyID == -1)
                 {
-                    if (MessageBox.Show("This Book Is Not Available Now  ,Do you Want To Add Resarvation", "XXX", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    if (MessageBox.Show("This book is not available. Do you want to add a reservation?", "Reservation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
-                        frmAddUpdateReservations addReservations = new frmAddUpdateReservations(_BookID.Value);
-                        addReservations.ShowDialog();
-
-                    }
-                    this.Close();
+                        new frmAddUpdateReservations(ctrlBookCardWithFilter1.BookID).ShowDialog();
+                        Close();
+                    };
                 }
 
                 lblCopyID.Text=_CopyID.ToString();
@@ -469,8 +427,6 @@ namespace Library_Manegment_System
             }
         }
 
-
-
-
+    
     }
 }

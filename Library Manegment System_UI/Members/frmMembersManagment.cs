@@ -18,9 +18,10 @@ namespace Library_Manegment_System
         {
             InitializeComponent();
         }
-        DataTable _DTMember;// = clsMembers.GetListMembers();
 
-        private async void _RefreshMemberList()
+        DataTable _DTMember=null;
+
+        private async Task  _RefreshMemberList()
         {
             _DTMember =await  clsMembers.GetListMembers();
             dgvListMembers.DataSource = _DTMember;
@@ -37,9 +38,9 @@ namespace Library_Manegment_System
 
         }
 
-        private void frmMembersManagment_Load(object sender, EventArgs e)
+        private async void frmMembersManagment_Load(object sender, EventArgs e)
         {
-            _RefreshMemberList();
+            await  _RefreshMemberList();
             dgvListMembers .DataSource = _DTMember;
             cbFiterBy .SelectedIndex = 0;
             lblRecordsCount.Text = dgvListMembers.Rows.Count.ToString();
@@ -64,13 +65,7 @@ namespace Library_Manegment_System
                 dgvListMembers.Columns[10].Width = 135;
                 dgvListMembers.Columns[11].HeaderText = "Created By UserID";
                 dgvListMembers.Columns[11].Width = 130;
-
-
-
             }
-
-
-
 
         }
 
@@ -224,18 +219,18 @@ namespace Library_Manegment_System
                 e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
 
-        private void btnAddMember_Click(object sender, EventArgs e)
+        private async void btnAddMember_Click(object sender, EventArgs e)
         {
             frmAddUpdateMembers frm = new frmAddUpdateMembers();
             frm.ShowDialog();
-            _RefreshMemberList();
+          await   _RefreshMemberList();
         }
 
-        private void editToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmAddUpdateMembers frm = new frmAddUpdateMembers((int)dgvListMembers.CurrentRow.Cells[0].Value);
             frm.ShowDialog();
-            _RefreshMemberList();
+           await  _RefreshMemberList();
         }
 
         private void memberDetailsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -263,7 +258,7 @@ namespace Library_Manegment_System
                     if (await  members.DeleteMembers())
                     {
                         MessageBox.Show("MemberID Deleted Successfully.", "Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        _RefreshMemberList();
+                       await  _RefreshMemberList();
                     }
                 }
                 else
@@ -289,18 +284,18 @@ namespace Library_Manegment_System
             subscriptionInfo.ShowDialog();
         }
 
-        private void showListSubscriptionsToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void showListSubscriptionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmManageSubscriptionForthisMember frmManageSubscriptionForthisMember = new frmManageSubscriptionForthisMember((int)dgvListMembers.CurrentRow.Cells[0].Value);
             frmManageSubscriptionForthisMember.ShowDialog();
-            _RefreshMemberList();
+           await _RefreshMemberList();
         }
 
-        private void renewSubscriptionToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void renewSubscriptionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmAdd_UpdateSubscriptions frmAdd_UpdateSubscriptions = new frmAdd_UpdateSubscriptions((int)dgvListMembers.CurrentRow.Cells[0].Value);
             frmAdd_UpdateSubscriptions.ShowDialog();
-            _RefreshMemberList();
+          await  _RefreshMemberList();
         }
     }
 }

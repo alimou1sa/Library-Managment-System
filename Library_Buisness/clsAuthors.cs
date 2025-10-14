@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Data;
 using System.IO;
 using Library_DataAccessLayer;
+using System.Security.Policy;
 
 
 namespace Library_Business
@@ -104,9 +105,9 @@ string BIi = " ";
 
     }
 
-} public static async Task<bool> DeleteAuthors( int AutherID )
+} public static async Task<bool> DeleteAuthors( string Name)
 {
-    return await  clsAuthorsDataAccess.DeleteAuthors(AutherID);
+    return await  clsAuthorsDataAccess.DeleteAuthors(Name);
 
 }
 public static async Task<DataTable> GetListAuthors()

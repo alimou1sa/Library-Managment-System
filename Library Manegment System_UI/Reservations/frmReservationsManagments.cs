@@ -22,17 +22,17 @@ namespace Library_Manegment_System
         {
             InitializeComponent();
         }
-        DataTable _DTResevation =clsReservations.GetListReservations();
+        DataTable _DTResevation;// =clsReservations.GetListReservations();
 
-        private void _RefreshReservationsList()
+        private async Task  _RefreshReservationsList()
         {
-            _DTResevation = clsReservations.GetListReservations();
+            _DTResevation =await  clsReservations.GetListReservations();
             dgvListReservations .DataSource = _DTResevation;
             lblRecordsCount.Text = dgvListReservations .Rows.Count.ToString();
         }
-        private void frmReservationsManagments_Load(object sender, EventArgs e)
+        private async void frmReservationsManagments_Load(object sender, EventArgs e)
         {
-            _RefreshReservationsList();
+          await  _RefreshReservationsList();
             dgvListReservations.DataSource = _DTResevation;
             cbFiterBy.SelectedIndex = 0;
             lblRecordsCount.Text = dgvListReservations.Rows.Count.ToString();
@@ -175,14 +175,14 @@ namespace Library_Manegment_System
 
         }
 
-        private void editeToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void editeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmAddUpdateReservations frm=new frmAddUpdateReservations((int)dgvListReservations.CurrentRow.Cells[0].Value, (int)dgvListReservations.CurrentRow.Cells[5].Value);
             frm.ShowDialog();
-            _RefreshReservationsList();
+           await  _RefreshReservationsList();
         }
 
-        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int Reservationid = (int)dgvListReservations .CurrentRow.Cells[0].Value;
 
@@ -190,7 +190,7 @@ namespace Library_Manegment_System
                 return;
 
 
-                if (clsReservations.DeleteReservations(Reservationid))
+                if (await  clsReservations.DeleteReservations(Reservationid))
                 {
 
 
@@ -205,11 +205,11 @@ namespace Library_Manegment_System
             
         }
 
-        private void reservationDetailsToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void reservationDetailsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmReservationsDetails frmReservationsDetails = new frmReservationsDetails((int)dgvListReservations.CurrentRow.Cells[0].Value);
             frmReservationsDetails.ShowDialog();
-            _RefreshReservationsList();
+           await  _RefreshReservationsList();
                     
         }
     }

@@ -80,7 +80,7 @@ namespace Library_Manegment_System
             lblMemberID.Text = _Member.MemberID.ToString();
             lblLibraryCardNum.Text = _Member.LibraryCardNumber.ToString();
             lblCreatedByUser.Text=_Member.UsersInfo.UserName;
-            lblSbscriptionID.Text= _Member.LasrSubscriptionID.ToString();
+            lblSbscriptionID.Text= _Member.LastSubscriptionID.ToString();
 
             if (_Member.IsActive)
                 lblIsActive.Text = "Yes";
@@ -139,7 +139,7 @@ namespace Library_Manegment_System
 
         private void linklblSubscribtion_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            frmSubscriptionInfo frmSubscriptionInfo = new frmSubscriptionInfo(_Member.LasrSubscriptionID);
+            frmSubscriptionInfo frmSubscriptionInfo = new frmSubscriptionInfo(_Member.LastSubscriptionID);
             frmSubscriptionInfo.ShowDialog();
         }
     }

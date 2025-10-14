@@ -68,8 +68,9 @@ namespace Library_DataAccessLayer
             return IsFound;
 
         }
-        public static async Task<int> AddNewMemberSubscriptions(int PlanID, int MemberID, DateTime StartDate,
-            DateTime EndDate, bool IsActive, byte SubscriptionStatus, int CreatedByUserID)
+     
+        public static async Task<int> AddNewMemberSubscriptions(int PlanID, int MemberID
+          , byte SubscriptionStatus, int CreatedByUserID,bool IsActive)
         {
             int InsertedID = -1;
 
@@ -78,49 +79,28 @@ namespace Library_DataAccessLayer
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
-
-                    string query = @"
-INSERT INTO [dbo].[MemberSubscriptions]
-           ([PlanID]
-,[MemberID]
-           ,[StartDate]
-           ,[EndDate]
-           ,[IsActive]
-           ,[SubscriptionStatus]
-           ,[CreatedByUserID])
-     VALUES
-           (@PlanID
-,@MemberID
-           ,@StartDate
-           ,@EndDate
-           ,@IsActive
-           ,@SubscriptionStatus
-           ,@CreatedByUserID)
-                                SELECT SCOPE_IDENTITY();";
+                   await connection.OpenAsync();
 
 
-                    using (SqlCommand command = new SqlCommand(query, connection))
+                    using (SqlCommand command = new SqlCommand("SP_AddNewMemberSubscriptions", connection))
                     {
+                        command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@MemberID", MemberID);
                         command.Parameters.AddWithValue("@PlanID", PlanID);
-                        command.Parameters.AddWithValue("@StartDate", StartDate);
-                        command.Parameters.AddWithValue("@EndDate", EndDate);
-                        command.Parameters.AddWithValue("@IsActive", IsActive);
                         command.Parameters.AddWithValue("@SubscriptionStatus", SubscriptionStatus);
                         command.Parameters.AddWithValue("@CreatedByUserID", CreatedByUserID);
+                        command.Parameters.AddWithValue("@IsActive", IsActive);
 
 
-                        object Result = command.ExecuteScalar();
 
-                        int ID = 0;
-
-                        if (Result != null && int.TryParse(Result.ToString(), out ID))
+                        SqlParameter outputIdParam = new SqlParameter("@NewSubscriptionID", SqlDbType.Int)
                         {
-                            InsertedID = ID;
+                            Direction = ParameterDirection.Output
+                        };
 
-                        }
-
+                        command.Parameters.Add(outputIdParam);
+                        await command.ExecuteNonQueryAsync();
+                        InsertedID = (int)command.Parameters["@NewSubscriptionID"].Value;
                     }
                 }
             }
@@ -132,6 +112,7 @@ INSERT INTO [dbo].[MemberSubscriptions]
             return InsertedID;
 
         }
+
         public static async Task<bool> UpdateMemberSubscriptions(int SubscriptionID, int PlanID, int MemberID,
             DateTime StartDate, DateTime EndDate, bool IsActive, byte SubscriptionStatus, int CreatedByUserID)
         {
@@ -142,24 +123,11 @@ INSERT INTO [dbo].[MemberSubscriptions]
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
-                    string query = @"UPDATE [dbo].[MemberSubscriptions]
-   SET [PlanID] = @PlanID
-      ,[MemberID] = @MemberID
-      ,[StartDate] = @StartDate
-      ,[EndDate] = @EndDate
-      ,[IsActive] = @IsActive
-      ,[SubscriptionStatus] = @SubscriptionStatus
-      ,[CreatedByUserID] = @CreatedByUserID
-                                    WHERE SubscriptionID= @SubscriptionID;
-
- Update Members SET IsActive =@IsActive where Members.LastSubscriptionID=@SubscriptionID
-";
-
-
-                    using (SqlCommand command = new SqlCommand(query, connection))
+                    using (SqlCommand command = new SqlCommand("SP_UpdateMemberSubscriptions", connection))
                     {
+                        command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@MemberID", MemberID);
                         command.Parameters.AddWithValue("@SubscriptionID", SubscriptionID);
                         command.Parameters.AddWithValue("@PlanID", PlanID);
@@ -169,10 +137,7 @@ INSERT INTO [dbo].[MemberSubscriptions]
                         command.Parameters.AddWithValue("@SubscriptionStatus", SubscriptionStatus);
                         command.Parameters.AddWithValue("@CreatedByUserID", CreatedByUserID);
 
-
-                        RowsAffected = command.ExecuteNonQuery();
-
-
+                        RowsAffected =await command.ExecuteNonQueryAsync();
 
                     }
                 }
@@ -195,18 +160,14 @@ INSERT INTO [dbo].[MemberSubscriptions]
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                   await connection.OpenAsync();
 
-                    string query = @"
-select * from dbo.GetMemberSubscriptionsByMemberID(@MemberID)";
-
-
-                    using (SqlCommand command = new SqlCommand(query, connection))
+                    using (SqlCommand command = new SqlCommand("SP_GetMemberSubscriptionsByMemberID", connection))
                     {
                         command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@MemberID", MemberID);
 
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader =await  command.ExecuteReaderAsync())
                         {
 
                             if (reader.HasRows)
@@ -230,6 +191,7 @@ select * from dbo.GetMemberSubscriptionsByMemberID(@MemberID)";
             return dtList;
 
         }
+      
         public static async Task<bool> DeleteMemberSubscriptions(int SubscriptionID)
         {
             int RowsAffected = -1;
@@ -237,9 +199,10 @@ select * from dbo.GetMemberSubscriptionsByMemberID(@MemberID)";
             try
             {
 
+
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
                     string query = @" Delete From MemberSubscriptions Where SubscriptionID = @SubscriptionID";
 
@@ -248,11 +211,7 @@ select * from dbo.GetMemberSubscriptionsByMemberID(@MemberID)";
                     {
                         command.Parameters.AddWithValue("@SubscriptionID", SubscriptionID);
 
-
-                        RowsAffected = command.ExecuteNonQuery();
-
-
-
+                        RowsAffected =await command.ExecuteNonQueryAsync();
                     }
                 }
             }
@@ -264,6 +223,7 @@ select * from dbo.GetMemberSubscriptionsByMemberID(@MemberID)";
             return (RowsAffected != -1);
 
         }
+    
         public static async Task<bool> IsMemberSubscriptionsExisteByID(int SubscriptionID)
         {
             bool IsFound = false;
@@ -273,7 +233,7 @@ select * from dbo.GetMemberSubscriptionsByMemberID(@MemberID)";
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
                     string query = @" Select Found = 1 From MemberSubscriptions Where SubscriptionID = @SubscriptionID";
 
@@ -283,7 +243,7 @@ select * from dbo.GetMemberSubscriptionsByMemberID(@MemberID)";
                         command.Parameters.AddWithValue("@SubscriptionID", SubscriptionID);
 
 
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader =await command.ExecuteReaderAsync())
                         {
 
                             if (reader.Read())
@@ -311,7 +271,6 @@ select * from dbo.GetMemberSubscriptionsByMemberID(@MemberID)";
 
         }
 
-
         public static async Task<bool> ChangeMemberSubscriptionsActive(int SubscriptionID, bool IsActive)
         {
             int RowsAffected = -1;
@@ -321,7 +280,7 @@ select * from dbo.GetMemberSubscriptionsByMemberID(@MemberID)";
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
                     string query = @"
 			 Update MemberSubscriptions SET IsActive = @IsActive
@@ -339,7 +298,7 @@ from MemberSubscriptions where SubscriptionID =@SubscriptionID)
 
 
 
-                        RowsAffected = command.ExecuteNonQuery();
+                        RowsAffected =await command.ExecuteNonQueryAsync();
 
 
 
@@ -355,11 +314,6 @@ from MemberSubscriptions where SubscriptionID =@SubscriptionID)
 
         }
 
-
-
-
-
-
         public static async Task<bool> IsMembersHasActiveSubscription(int MemberID)
         {
             bool IsFound = false;
@@ -369,7 +323,7 @@ from MemberSubscriptions where SubscriptionID =@SubscriptionID)
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
                     string query = @" 
 select Found=1 from MemberSubscriptions where MemberID=@MemberID and IsActive=1";
@@ -380,7 +334,7 @@ select Found=1 from MemberSubscriptions where MemberID=@MemberID and IsActive=1"
                         command.Parameters.AddWithValue("@MemberID", MemberID);
 
 
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader =await command.ExecuteReaderAsync())
                         {
 
                             if (reader.Read())

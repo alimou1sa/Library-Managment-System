@@ -28,7 +28,7 @@ public string AdditionalDetails { set; get; }
 public int CategoryID { set; get; }
 public int AuthorID { set; get; }
 public double BookPrice { set; get; }
-
+        public short NumberOfCopies {  set; get; }
 
         public clsPublishers PublishersInfo { set; get; }
 public clsAuthors AuthorsInfo { set; get; }
@@ -51,7 +51,7 @@ this.AdditionalDetails = " ";
 this.CategoryID = -1;
 this.AuthorID = -1;
 this.BookPrice = -1;
- 
+ this.NumberOfCopies = -1;
 
  this.PublishersInfo = null ;
 this.AuthorsInfo = null ;
@@ -111,10 +111,10 @@ int AuthorID = -1;
 
 }
 
-    private async Task<bool> _AddNewBooks()
+    private async Task<bool> _AddNewBooksAndCopies()
 { 
-    this.BookID = await clsBooksDataAccess.AddNewBooks(this.Title,this.ISBN,this.GenreID,this.PublisherID,
-        this.YearPublished,this.AdditionalDetails,this.CategoryID,this.AuthorID,this.BookPrice);
+    this.BookID = await clsBooksDataAccess.AddNewBooksAndCopies(this.Title,this.ISBN,this.GenreID,this.PublisherID,
+        this.YearPublished,this.AdditionalDetails,this.CategoryID,this.AuthorID,this.BookPrice,this.NumberOfCopies,(byte)clsBookCopies.enStatusCopy.Available);
 
     return (this.BookID != -1); 
             
@@ -131,7 +131,7 @@ int AuthorID = -1;
     {
         case enMode.AddNew :
             
-            if (await  _AddNewBooks())
+            if (await _AddNewBooksAndCopies())
             {
 
                 _Mode = enMode.Update;
@@ -155,11 +155,14 @@ int AuthorID = -1;
     return await  clsBooksDataAccess.DeleteBooks(BookID);
 
 }
-public static async Task<DataTable> GetListBooks()
-{
 
-    return await clsBooksDataAccess.GetListBooks();
-}
+
+        public static async Task<DataTable> GetListBooks()
+        {
+
+            return await clsBooksDataAccess.GetListBooks();
+        }
+
 
 public static async Task< bool> IsBooksExisteByID( int BookID )
 {
@@ -194,7 +197,11 @@ public static async Task< bool> IsBooksExisteByID( int BookID )
         }
 
 
+        public static bool IsBooksExisteByISBN(string ISBN)
+        {
+            return  clsBooksDataAccess.IsBooksExisteByISBN(ISBN);
 
+        }
 
     }
 }

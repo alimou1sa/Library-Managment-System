@@ -15,7 +15,7 @@ namespace Library_DataAccessLayer
     public class clsBookCopiesDataAccess
     {
 
-public static bool GetBookCopiesInfoByID(int CopyID,ref int BookID,ref byte Status)
+        public static bool GetBookCopiesInfoByID(int CopyID,ref int BookID,ref byte Status)
     {
         bool IsFound  = false;
 
@@ -62,6 +62,7 @@ public static bool GetBookCopiesInfoByID(int CopyID,ref int BookID,ref byte Stat
         return IsFound ;
           
     }
+
         public static async Task<int> AddNewBookCopies(int BookID, byte Status)
         {
             int InsertedID = -1;
@@ -71,7 +72,7 @@ public static bool GetBookCopiesInfoByID(int CopyID,ref int BookID,ref byte Stat
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                   await connection.OpenAsync();
 
                     string query = @"INSERT INTO BookCopies(BookID, Status)
                                    
@@ -110,7 +111,6 @@ public static bool GetBookCopiesInfoByID(int CopyID,ref int BookID,ref byte Stat
 
         }
 
-
         public static async Task<bool> UpdateBookCopies(int CopyID,int BookID, byte Status)
     {
         int RowsAffected  = -1;
@@ -120,7 +120,7 @@ public static bool GetBookCopiesInfoByID(int CopyID,ref int BookID,ref byte Stat
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
                     string query = @"Update BookCopies SET BookID = @BookID,Status = @Status
 
@@ -152,6 +152,7 @@ public static bool GetBookCopiesInfoByID(int CopyID,ref int BookID,ref byte Stat
             return (RowsAffected != -1 ) ;
           
     }
+      
         public static async Task<DataTable> GetListBookCopies(int BookID)
     {
         DataTable dtList = new DataTable();
@@ -161,25 +162,14 @@ public static bool GetBookCopiesInfoByID(int CopyID,ref int BookID,ref byte Stat
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                 await  connection.OpenAsync();
 
-                    string query = @"SELECT BookCopies.CopyID, BookCopies.BookID, Books.Title, Books.ISBN,
-CASE WHEN BookCopies.Status = 1 THEN 'Available'
-WHEN BookCopies.Status = 2 THEN 'Damaged'
-WHEN BookCopies.Status = 3 THEN 'Lost'
-WHEN BookCopies.Status = 4 THEN 'Borrowed'
-WHEN BookCopies.Status = 5 THEN 'Sold'
- ELSE 'Lost' END AS CopyStatus,Books.BookPrice
-FROM   BookCopies INNER JOIN
-             Books ON BookCopies.BookID = Books.BookID
-WHERE (BookCopies.BookID = @BookID)";
-
-
-                    using (SqlCommand command = new SqlCommand(query, connection))
+                    using (SqlCommand command = new SqlCommand("SP_GetListBookCopies", connection))
                     {
+                        command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@BookID", BookID);
 
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader =await  command.ExecuteReaderAsync())
                         {
 
                             if (reader.HasRows)
@@ -205,10 +195,6 @@ WHERE (BookCopies.BookID = @BookID)";
             return dtList ;
           
     }
-
-
-
-     
         
         public static async Task<bool> DeleteBookCopies(int CopyID)
     {
@@ -219,7 +205,7 @@ WHERE (BookCopies.BookID = @BookID)";
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
                     string query = @" Delete From BookCopies Where CopyID = @CopyID";
 
@@ -246,8 +232,7 @@ WHERE (BookCopies.BookID = @BookID)";
             return (RowsAffected != -1 ) ;
           
     }
-   
-      
+        
         public static async Task<bool> IsBookCopiesExisteByID(int CopyID)
     {
         bool IsFound  = false;
@@ -257,7 +242,7 @@ WHERE (BookCopies.BookID = @BookID)";
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
                     string query = @" Select Found = 1 From BookCopies Where CopyID = @CopyID";
 
@@ -295,9 +280,6 @@ WHERE (BookCopies.BookID = @BookID)";
           
     }
 
-
-
-
         public static async Task<int >GetNumberOfAllBookCopies(int BookID)
         {
 
@@ -314,7 +296,9 @@ WHERE (BookCopies.BookID = @BookID)";
 
             try
             {
-                connection.Open();
+
+                await connection.OpenAsync();
+
 
                 object result = command.ExecuteScalar();
 
@@ -360,7 +344,8 @@ WHERE (BookCopies.BookID = @BookID)";
 
             try
             {
-                connection.Open();
+                await connection.OpenAsync();
+
 
                 object result = command.ExecuteScalar();
 
@@ -391,7 +376,7 @@ WHERE (BookCopies.BookID = @BookID)";
             return Num;
         }
 
-        public static async Task<bool> DeleteBookCopiesByBooID (int BookID)
+        public static async Task<bool> DeleteBookCopiesByBooKID (int BookID)
         {
             int RowsAffected = -1;
 
@@ -400,7 +385,9 @@ WHERE (BookCopies.BookID = @BookID)";
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+
+                    await connection.OpenAsync();
+
 
                     string query = @" DELETE FROM [dbo].[BookCopies]
                                    WHERE  BookID=@BookID";
@@ -411,7 +398,7 @@ WHERE (BookCopies.BookID = @BookID)";
                         command.Parameters.AddWithValue("@BookID", BookID);
 
 
-                        RowsAffected = command.ExecuteNonQuery();
+                        RowsAffected =await  command.ExecuteNonQueryAsync();
 
 
 
@@ -446,7 +433,9 @@ WHERE (BookCopies.BookID = @BookID)";
 
             try
             {
-                connection.Open();
+
+                await connection.OpenAsync();
+
 
                 object result = command.ExecuteScalar();
 
@@ -485,7 +474,9 @@ WHERE (BookCopies.BookID = @BookID)";
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+
+                    await connection.OpenAsync();
+
 
                     string query = @" Select top(1) Found = 1 From BookCopies Where BookID = @BookID";
 

@@ -112,9 +112,7 @@ int CreatedByUserID = -1;
 
     private async Task<bool> _AddNewMemberSubscriptions()
 { 
-    this.SubscriptionID =await  clsMemberSubscriptionsDataAccess.AddNewMemberSubscriptions(this.PlanID,this .MemberID,
-        this.StartDate,this.EndDate,this.IsActive,this.SubscriptionStatus, this.CreatedByUserID);
-
+    this.SubscriptionID =await  clsMemberSubscriptionsDataAccess.AddNewMemberSubscriptions(this.PlanID,this .MemberID,this.SubscriptionStatus, this.CreatedByUserID,this.IsActive );
     return (this.SubscriptionID != -1); 
             
 }private async Task<bool> _UpdateMemberSubscriptions()

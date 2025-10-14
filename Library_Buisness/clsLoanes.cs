@@ -27,10 +27,9 @@ namespace Library_Business
         public DateTime DueDate { set; get; }
         public DateTime ReturnDate { set; get; }
         public int ReturnByUserID { set; get; }
-
+        public byte CopyStatus { set; get; }
 
         public clsBookCopies BookCopiesInfo { set; get; }
-
         public clsUsers LoanUserInfo { set; get; }
 
 
@@ -47,7 +46,7 @@ namespace Library_Business
             this.DueDate = DateTime.MinValue;
             this.ReturnDate = DateTime.MinValue;
             this.ReturnByUserID = -1;
-
+            this.CopyStatus = 0;
 
             this.BookCopiesInfo = null;
 
@@ -93,18 +92,22 @@ namespace Library_Business
 
         }
 
+   
+        
         private async Task<bool> _AddNewLoanes()
         {
-            this.LoanID = await clsLoanesDataAccess.AddNewLoanes(this.CopyID, this.MemberID, this.LoanByUserID, this.LoanDate, this.DueDate, this.ReturnDate, this.ReturnByUserID);
+            this.LoanID = await clsLoanesDataAccess.AddNewBorrowBook(this.CopyID, this.MemberID, this.LoanByUserID
+               , this.DueDate,(byte)clsBookCopies.enStatusCopy.Borrowed,(byte)clsReservations.enReservationsStatus.ConvertToBorrowing);
 
             return (this.LoanID != -1);
 
         }
+
         private async Task<bool> _UpdateLoanes()
         {
             return await clsLoanesDataAccess.UpdateLoanes(this.LoanID, this.CopyID, this.MemberID, this.LoanByUserID, this.LoanDate, this.DueDate, this.ReturnDate, this.ReturnByUserID);
         }
-
+     
         public async Task<bool> Save()
         {
             switch (_Mode)
@@ -130,11 +133,13 @@ namespace Library_Business
             }
 
         }
+      
         public static async Task<bool >DeleteLoanes(int LoanID)
         {
             return await  clsLoanesDataAccess.DeleteLoanes(LoanID);
 
         }
+       
         public  static async Task<DataTable> GetListLoanes()
         {
 
@@ -146,13 +151,14 @@ namespace Library_Business
             return await  clsLoanesDataAccess.IsLoanesExisteByID(LoanID);
 
         }
+       
         public static async Task<bool> IsLoanesBorrowedeByLoanID(int LoanID)
         {
             return await  clsLoanesDataAccess.IsLoanesBorrowedeByLoanID(LoanID);
 
         }
 
-
+        [Obsolete("This method is marked as obsolete, and will be deprecated in the future.")]
         public  int ISLateInReturningAndReturnDifferenceDays()
         {
             clsLoanes loanes = this;
@@ -166,118 +172,29 @@ namespace Library_Business
             return 0;
         }
 
-
-        /*
-                public class NewBorrow
-                {
-                    public event EventHandler<clsLoanes> AddNewBorrow;
-                    public bool SaveLoan(clsLoanes loanes)
-                    {
-                        if (loanes.Save())
-                        {
-                            OnAddNewLoan(loanes);
-                            return true;
-                        }
-                        return false;
-                    }
-
-                    protected virtual void OnAddNewLoan(clsLoanes Borrow)
-                    {
-                        AddNewBorrow?.Invoke(this, Borrow);
-                    }
-
-                }
-
-
-                public class ChangeBookCopy
-                {
-                    public void Subscribe(NewBorrow borrow )
-                    {
-                        borrow.AddNewBorrow += HandleBookCopyStatus;
-                    }
-
-                    public void HandleBookCopyStatus(object sender, clsLoanes loanes )
-                    {
-                        clsBookCopies.ChangeCopyStatus(loanes.CopyID, clsBookCopies.enStatusCopy.Borrowed);
-                    }
-
-                }
-        */
-
-        public async Task<clsLoanes> BorrowBook(int MemberID, int CreateByUserID, int CopyID, DateTime LoanDate)
+        public static async Task<clsLoanes> BorrowBook(int MemberID, int CreateByUserID, int CopyID)
         {
-            //  NewBorrow borrow  = new NewBorrow();
-            //  ChangeBookCopy bookCopy = new ChangeBookCopy();
-            //  bookCopy.Subscribe(borrow);
-
-
-            clsLoanes _Loan = this;
+    
+            clsLoanes _Loan = new clsLoanes() ;
             _Loan.MemberID = MemberID;
             _Loan.CopyID = CopyID;
             _Loan.LoanByUserID = CreateByUserID;
-            _Loan.LoanDate = LoanDate;
-            _Loan.DueDate = _Loan.LoanDate.Date.AddDays(clsSettings.GetDefualtBorrrowDays());
-
-            //  if(borrow.SaveLoan(_Loan))
-            //return _Loan;
-
-            if (await  _Loan.Save())
-            {
-                clsBookCopies.ChangeCopyStatus(CopyID, clsBookCopies.enStatusCopy.Borrowed);
-
+            _Loan.DueDate =DateTime.Now.Date.AddDays(clsSettings.GetDefualtBorrrowDays());
+         
+            if (await _Loan.Save())
                 return _Loan;
-            }
-
+            
             return null;
         }
 
+        public static  async Task<int> ReturnBook(int LoanID,int ReturnByUserID, int PaymentTypeID)
+        { 
+            int? PaymentDetailsID = null;
 
-        [Obsolete("This method is marked as obsolete, and will be deprecated in the future.")]
-        public  async Task<clsLoanes> ReturnBook(int ReturnByUserID, int PaymentTypeiD, DateTime ReturnDate)
-        {
-            clsLoanes _Loan = this;
-            _Loan.ReturnByUserID = ReturnByUserID;
-            _Loan.ReturnDate = ReturnDate;
-            _Loan.MemberID = this.MemberID;
-            _Loan.CopyID = this.CopyID;
-            _Loan.LoanByUserID = this.LoanByUserID;
-            _Loan.LoanDate = this.LoanDate;
-            _Loan.DueDate = this.DueDate;
+            PaymentDetailsID = await clsLoanesDataAccess.ReturnBook(LoanID, ReturnByUserID,
+                (byte)clsBookCopies.enStatusCopy.Available, PaymentTypeID, (byte)clsPayments.enPaymentStatus.Paid);
 
-
-            if (! await  _Loan.Save())
-            {
-                return null;
-            }
-
-
-
-           await clsBookCopies.ChangeCopyStatus(_Loan.CopyID, clsBookCopies.enStatusCopy.Available);
-
-            int Days = ISLateInReturningAndReturnDifferenceDays();
-            if (Days != 0 || PaymentTypeiD != -1)
-            {
-                clsPaymentDetails _PaymentDetails = new clsPaymentDetails();
-
-                _PaymentDetails.PaymentTypeID = PaymentTypeiD;
-                _PaymentDetails.MemberID = this.MemberID;
-                _PaymentDetails.Amount = Days * clsSettings.GetDefualtFineDays();
-                _PaymentDetails.PaymentStatus = (byte)clsPayments.enPaymentStatus.Paid;
-                _PaymentDetails.CreateByUserID = ReturnByUserID;
-                _PaymentDetails.PaymentDate = DateTime.Now;
-                int EntityTypeID = (byte)clsPaymentEntities.enEntityType.LateFees;
-                _PaymentDetails.EntityTypeID = clsPaymentEntities.FindByID(EntityTypeID).EntityTypeID;
-                _PaymentDetails.EntityID = _Loan.LoanID;
-
-                if (! await _PaymentDetails.Save())
-                {
-                    return null;
-
-                }
-
-            }
-
-            return _Loan;
+            return PaymentDetailsID.Value;
         }
 
 

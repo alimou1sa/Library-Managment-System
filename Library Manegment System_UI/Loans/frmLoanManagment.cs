@@ -23,17 +23,17 @@ namespace Library_Manegment_System
 
         DataTable _DtLoan;
 
-        private async void _RefreshLOansList()
+        private async Task  _RefreshLOansList()
         {
             _DtLoan =await  clsLoanes.GetListLoanes();
             dgvListLoan.DataSource = _DtLoan;
             lblRecordsCount.Text = dgvListLoan.Rows.Count.ToString();
         }
 
-        private void frmLoanManagment_Load(object sender, EventArgs e)
+        private async void frmLoanManagment_Load(object sender, EventArgs e)
         {
  
-            _RefreshLOansList();
+           await  _RefreshLOansList();
             dgvListLoan.DataSource = _DtLoan;
             cbFiterBy.SelectedIndex = 0;
             lblRecordsCount.Text = dgvListLoan.Rows.Count.ToString();
@@ -126,13 +126,14 @@ namespace Library_Manegment_System
                 if (cbFiterBy.Text == "None")
                 {
                     txtFiter.Enabled = false;
-
+                   // _DtLoan.DefaultView.RowFilter = "";
                 }
                 else
                     txtFiter.Enabled = true;
 
 
-                _DtLoan.DefaultView.RowFilter = "";
+                //    _DtLoan.DefaultView.RowFilter = "";
+                dgvListLoan.DataSource = _DtLoan;
                 txtFiter.Text = "";
                 lblRecordsCount.Text = dgvListLoan.Rows.Count.ToString();
                 txtFiter.Focus();
@@ -167,11 +168,11 @@ namespace Library_Manegment_System
             lblRecordsCount.Text = dgvListLoan.Rows.Count.ToString();
         }
 
-        private void returnBookToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void returnBookToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmLoanBook  frmBorrowBook2 = new frmLoanBook((int)dgvListLoan.CurrentRow.Cells[0].Value,false );
             frmBorrowBook2.ShowDialog();
-            _RefreshLOansList();
+           await  _RefreshLOansList();
         }
 
         private void txtFiter_KeyPress(object sender, KeyPressEventArgs e)
@@ -188,18 +189,18 @@ namespace Library_Manegment_System
                 returnBookToolStripMenuItem.Enabled = true;
         }
 
-        private void btnPeopleManagment_Click(object sender, EventArgs e)
+        private async void btnPeopleManagment_Click(object sender, EventArgs e)
         {
             frmLoanBook frmBorrowBook2 = new frmLoanBook();
             frmBorrowBook2.ShowDialog();
-            _RefreshLOansList();
+            await _RefreshLOansList();
         }
 
-        private void loanDetailsToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void loanDetailsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmLoanDetails frmLoanDetails =new frmLoanDetails((int)dgvListLoan.CurrentRow.Cells[0].Value);
             frmLoanDetails.ShowDialog();
-            _RefreshLOansList();
+           await  _RefreshLOansList();
         }
 
         private async void deleteToolStripMenuItem_Click(object sender, EventArgs e)

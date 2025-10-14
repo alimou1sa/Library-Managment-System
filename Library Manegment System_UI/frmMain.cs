@@ -58,6 +58,7 @@ namespace Library_Manegment_System
             if (!clsGlobal.CurrentUser.CheckAccessPermission(clsUsers.enPermissions.ManageBooks))
             {
                 MessageBox.Show(" Access Denied! Contact your Admin..");
+                listBookCopiesToolStripMenuItem.Enabled = false;
                 return;
 
             }
@@ -66,7 +67,12 @@ namespace Library_Manegment_System
 
         private void xToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            if (!clsGlobal.CurrentUser.CheckAccessPermission(clsUsers.enPermissions.ManageBooks))
+            {
+                MessageBox.Show(" Access Denied! Contact your Admin..");
+                xToolStripMenuItem.Enabled = false;
+                return;
+            }
         }
 
         private void listMembersToolStripMenuItem_Click(object sender, EventArgs e)
@@ -210,6 +216,91 @@ namespace Library_Manegment_System
         {
             frmFindBook frmFindBook = new frmFindBook();
             frmFindBook.ShowDialog();
+        }
+
+        private void lblJobtitle_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void purchasesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!clsGlobal.CurrentUser.CheckAccessPermission(clsUsers.enPermissions.ManagePurchasesBook))
+            {
+                MessageBox.Show(" Access Denied! Contact your Admin..");
+                purchasesToolStripMenuItem.Enabled = false;
+                return;
+            }
+        }
+
+        private async void addUserToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmAddUpdateUser frmAddUpdateUser = new frmAddUpdateUser();
+            frmAddUpdateUser.ShowDialog();
+        
+        }
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void membersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!clsGlobal.CurrentUser.CheckAccessPermission(clsUsers.enPermissions.ManageMembers))
+            {
+                MessageBox.Show(" Access Denied! Contact your Admin..");
+                membersToolStripMenuItem.Enabled = false;
+                return;
+            }
+         
+        }
+
+        private void pictureBox1_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void usersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!clsGlobal.CurrentUser.CheckAccessPermission(clsUsers.enPermissions.ManageUsers))
+            {
+                MessageBox.Show(" Access Denied! Contact your Admin..");
+                usersToolStripMenuItem.Enabled = false;
+                return;
+            }
+        }
+
+        private void loanBooksToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!clsGlobal.CurrentUser.CheckAccessPermission(clsUsers.enPermissions.ManageLoan))
+            {
+                MessageBox.Show(" Access Denied! Contact your Admin..");
+                loanBooksToolStripMenuItem.Enabled = false;
+                return;
+            }
+        }
+
+        private void resevationsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!clsGlobal.CurrentUser.CheckAccessPermission(clsUsers.enPermissions.ManageReservation))
+            {
+                MessageBox.Show(" Access Denied! Contact your Admin..");
+                resevationsToolStripMenuItem.Enabled = false;
+                
+                return;
+            }
+        }
+
+        private void paymentsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!clsGlobal.CurrentUser.CheckAccessPermission(clsUsers.enPermissions.ManagePayments))
+            {
+                MessageBox.Show(" Access Denied! Contact your Admin..");
+                paymentsToolStripMenuItem.Enabled = false;
+            
+                return;
+            }
         }
     }
 }

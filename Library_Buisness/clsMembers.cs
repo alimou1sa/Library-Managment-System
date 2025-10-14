@@ -24,7 +24,7 @@ namespace Library_Business
         public bool IsActive { set; get; }
         public string LibraryCardNumber { set; get; }
         public int CreatedByUserID { set; get; }
-        public int LasrSubscriptionID { set; get; }
+        public int LastSubscriptionID { set; get; }
 
         public clsUsers UsersInfo { set; get; }
         public clsPeople PeopleInfo { set; get; }
@@ -41,7 +41,7 @@ namespace Library_Business
             this.IsActive = false;
             this.LibraryCardNumber = " ";
             this.CreatedByUserID = -1;
-            this.LasrSubscriptionID = -1;
+            this.LastSubscriptionID = -1;
             this.SubscriptionsInfo = null;
             this.UsersInfo = null;
             this.PeopleInfo = null;
@@ -59,7 +59,7 @@ namespace Library_Business
             this.PersonID = PersonID;
             this.IsActive = IsActive;
             this.LibraryCardNumber = LibraryCardNumber;
-            this.LasrSubscriptionID = LasrSubscriptionID;
+            this.LastSubscriptionID = LasrSubscriptionID;
             this.CreatedByUserID = CreatedByUserID;
             this.FirstName = FirstName;
             this.SecondName = SecondName;
@@ -81,6 +81,7 @@ namespace Library_Business
 
 
         }
+
 
         public static clsMembers FindByID(int MemberID)
         {
@@ -109,15 +110,16 @@ namespace Library_Business
         private async Task<bool> _AddNewMembers()
         {
             this.MemberID = await  clsMembersDataAccess.AddNewMembers(this.PersonID, this.IsActive,
-                this.LibraryCardNumber, this.LasrSubscriptionID, this.CreatedByUserID);
+                this.LibraryCardNumber, this.LastSubscriptionID, this.CreatedByUserID);
 
             return (this.MemberID != -1);
 
         }
+   
         private async Task<bool> _UpdateMembers()
         {
             return await  clsMembersDataAccess.UpdateMembers(this.MemberID, this.PersonID, this.IsActive,
-                this.LibraryCardNumber, this.LasrSubscriptionID, this.CreatedByUserID);
+                this.LibraryCardNumber, this.LastSubscriptionID, this.CreatedByUserID);
         }
 
         public async Task<bool> Save()
@@ -148,6 +150,7 @@ namespace Library_Business
             }
 
         }
+   
         public async Task<bool> DeleteMembers()
         {
 
@@ -162,6 +165,7 @@ namespace Library_Business
             IsBasePersonDeleted = await base.Delete();
             return IsBasePersonDeleted;
         }
+   
         public static async Task<DataTable> GetListMembers()
         {
 
@@ -173,6 +177,12 @@ namespace Library_Business
             return await  clsMembersDataAccess.IsMembersExisteByID(MemberID);
 
         }
+   
+        public static async Task<bool> IsMembersExisteByLCN(string LibraryCardNumber)
+        {
+            return await clsMembersDataAccess.IsMembersExisteByLCN(LibraryCardNumber);
+        }
+
         public static async Task<bool> IsMembersExisteByPersonID(int PersonID)
         {
             return await clsMembersDataAccess.IsMembersExisteByPersonID(PersonID);
@@ -202,14 +212,10 @@ namespace Library_Business
 
         }
 
-
-
-
         public static async Task<bool> ChangeIsMemberActive(int MemberID, bool IsActive)
         {
             return await  clsMembersDataAccess.ChangeIsMembersActive(MemberID, IsActive);
         }
-
 
         public static async Task<bool> UpdateLastSubscriptionID(int MemberID, int LastSubscriptioID)
         {

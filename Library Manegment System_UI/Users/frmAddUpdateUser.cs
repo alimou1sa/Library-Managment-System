@@ -6,6 +6,7 @@ using System;
 using System.ComponentModel;
 using System.Data;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using static Library_Manegment_System.frmAddUpdatePersons;
 
@@ -30,7 +31,7 @@ namespace Library_Manegment_System
         private int _UserID = -1;
         clsUsers _User;
 
-        private async void _FillCountriesInComoboBox()
+        private async Task  _FillCountriesInComoboBox()
         {
             DataTable dtCountries = await  clsCountries.GetListCountries();
 
@@ -39,9 +40,9 @@ namespace Library_Manegment_System
                 cbCountry.Items.Add(row["CountryName"]);
             }
         }
-        private void _ResetDefualtValues()
+        private async Task  _ResetDefualtValues()
         {
-            _FillCountriesInComoboBox();
+           await  _FillCountriesInComoboBox();
             if (_Mode == enMode.AddNew)
             {
                 lblTitel.Text = "Add New User";
@@ -92,105 +93,6 @@ namespace Library_Manegment_System
             txtAddress.Text = "";
         }
 
-        /*
-        void _SetCheckedPemissions()
-        {
-            if (_User.Permissions == -1)
-            {
-                chbFullAccess.Checked = true;
-                chbManageMember.Checked = true;
-                chbManagrBooks.Checked = true;
-                chbMenageUsers.Checked = true;
-                chbManageLoan.Checked = true;
-                chbManagePayments.Checked = true;
-                chbManageReservations.Checked = true;
-                chbManagePurchases.Checked = true;
-                return ;
-            }
-
-            else if (_User.CheckAccessPermission(clsUsers.enPermissions.ManageMembers))
-            {
-                chbFullAccess.Checked = false ;
-                chbManageMember.Checked = true ;
-                chbManagrBooks.Checked = false ;
-                chbMenageUsers.Checked = false;
-                chbManageLoan.Checked = false;
-               chbManagePayments.Checked = false;
-                chbManageReservations.Checked = false;
-                chbManagePurchases.Checked = false;
-            }
-
-            else if (_User.CheckAccessPermission(clsUsers.enPermissions.ManageBooks))
-            {
-                chbFullAccess.Checked = false;
-                chbManageMember.Checked = false  ;
-                chbManagrBooks.Checked = true  ;
-                chbMenageUsers.Checked = false ;
-                chbManageLoan.Checked = false;
-                chbManagePayments.Checked = false;
-                chbManageReservations.Checked = false;
-                chbManagePurchases.Checked = false;
-            }
-            else if (_User.CheckAccessPermission(clsUsers.enPermissions.ManageUsers))
-            {
-                chbFullAccess.Checked = false;
-                chbManageMember.Checked = false ;
-                chbManagrBooks.Checked = false;
-                chbMenageUsers.Checked = true ;
-                chbManageLoan.Checked = false;
-                chbManagePayments.Checked = false;
-                chbManageReservations.Checked = false;
-                chbManagePurchases.Checked = false;
-            }
-            else if(_User.CheckAccessPermission(clsUsers.enPermissions.ManageLoan))
-            {
-                chbFullAccess.Checked = false;
-                chbManageMember.Checked = false;
-                chbManagrBooks.Checked = false;
-                chbMenageUsers.Checked = false;
-                chbManageLoan.Checked = true;
-                chbManagePayments.Checked = false;
-                chbManageReservations.Checked = false;
-                chbManagePurchases.Checked = false;
-            }
-            else if(_User.CheckAccessPermission(clsUsers.enPermissions.ManageReservation))
-            {
-                chbFullAccess.Checked = false;
-                chbManageMember.Checked = false;
-                chbManagrBooks.Checked = false;
-                chbMenageUsers.Checked = false;
-                chbManageLoan.Checked = false;
-                chbManagePayments.Checked = false;
-                chbManageReservations.Checked = true;
-                chbManagePurchases.Checked = false;
-            }
-           else if(_User.CheckAccessPermission(clsUsers.enPermissions.ManagePayments))
-            {
-                chbFullAccess.Checked = false;
-                chbManageMember.Checked = false;
-                chbManagrBooks.Checked = false;
-                chbMenageUsers.Checked = false;
-                chbManageLoan.Checked = false;
-                chbManagePayments.Checked = true;
-                chbManageReservations.Checked = false;
-                chbManagePurchases.Checked = false;
-
-            }
-            else if(_User.CheckAccessPermission(clsUsers.enPermissions.ManagePurchasesBook))
-            {
-                chbFullAccess.Checked = false;
-                chbManageMember.Checked = false;
-                chbManagrBooks.Checked = false;
-                chbMenageUsers.Checked = false;
-                chbManageLoan.Checked = false;
-                chbManagePayments.Checked = false;
-                chbManageReservations.Checked = false;
-                chbManagePurchases.Checked = true;
-            }
-
-
-        }
-        */
         private void _LoadData()
         {
 
@@ -271,7 +173,7 @@ namespace Library_Manegment_System
             return Permissions;
         }
 
-        private void frmAddUpdateUser_Load(object sender, EventArgs e)
+        private async void frmAddUpdateUser_Load(object sender, EventArgs e)
         {
             if (!_AllItemChecked())
             {
@@ -283,7 +185,7 @@ namespace Library_Manegment_System
             }
 
 
-            _ResetDefualtValues();
+           await  _ResetDefualtValues();
 
             if (_Mode == enMode.Update)
                 _LoadData();
@@ -422,7 +324,7 @@ namespace Library_Manegment_System
 
         }
 
-        private void txtUserName_Validating(object sender, CancelEventArgs e)
+        private async void txtUserName_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrEmpty(txtUserName.Text.Trim()))
             {
@@ -439,7 +341,7 @@ namespace Library_Manegment_System
             if (_Mode == enMode.AddNew)
             {
 
-                if (clsUsers .isUserExist(txtUserName.Text.Trim()))
+                if (await  clsUsers .isUserExist(txtUserName.Text.Trim()))
                 {
                     e.Cancel = true;
                     errorProvider1.SetError(txtUserName, "username is used by another user");
@@ -453,7 +355,7 @@ namespace Library_Manegment_System
             {
                 if (_User.UserName != txtUserName.Text.Trim())
                 {
-                    if (clsUsers .isUserExist(txtUserName.Text.Trim()))
+                    if (await  clsUsers .isUserExist(txtUserName.Text.Trim()))
                     {
                         e.Cancel = true;
                         errorProvider1.SetError(txtUserName, "username is used by another user");
@@ -552,28 +454,11 @@ namespace Library_Manegment_System
 
         private void chbFullAccess_CheckedChanged(object sender, EventArgs e)
         {
-            if (chbFullAccess.Checked)
+            foreach (Guna2CheckBox item in gbPermissions.Controls)
             {
-                chbManageMember.Checked = true;
-                chbManagrBooks.Checked = true;
-                chbMenageUsers.Checked = true;
-                chbManageLoan.Checked = true;
-                chbManagePurchases.Checked = true;
-                chbManageReservations.Checked = true;
-                chbManagePayments.Checked = true;
-            }
-            if (!chbFullAccess.Checked)
-            {
-                chbManageMember.Checked = false;
-                chbManagrBooks.Checked = false;
-                chbMenageUsers.Checked = false;
-                chbManageLoan.Checked = false;
-                chbManagePurchases.Checked = false;
-                chbManageReservations.Checked = false;
-                chbManagePayments.Checked = false;
-            }
+                item.Checked = chbFullAccess.Checked;
 
-
+            }
         }
 
         private void llSetImage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -653,13 +538,13 @@ namespace Library_Manegment_System
         private void rbMale_CheckedChanged(object sender, EventArgs e)
         {
             if (pbPersonImage.ImageLocation == null)
-                pbPersonImage.Image = Resources.undraw_female_avatar_7t6k;
+                pbPersonImage.Image = Resources.undraw_male_avatar_zkzx;
         }
 
         private void rbFemale_CheckedChanged(object sender, EventArgs e)
         {
-            if (pbPersonImage.ImageLocation == null)
-                pbPersonImage.Image = Resources.undraw_male_avatar_zkzx;
+            if (pbPersonImage.ImageLocation == null) 
+                pbPersonImage.Image = Resources.undraw_female_avatar_7t6k;
         }
 
         private void ValidateEmptyTextBox(object sender, CancelEventArgs e)

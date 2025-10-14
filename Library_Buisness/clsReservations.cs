@@ -93,24 +93,24 @@ int CreateByUserID = -1;
 
 }
 
-    private bool _AddNewReservations()
+    private async Task<bool> _AddNewReservations()
 { 
-    this.ReservationID = clsReservationsDataAccess.AddNewReservations(this.MemberID,this.BookID, this.ReservationDate,this.Status,this.CreateByUserID);
+    this.ReservationID =await   clsReservationsDataAccess.AddNewReservations(this.MemberID,this.BookID, this.ReservationDate,this.Status,this.CreateByUserID);
 
     return (this.ReservationID != -1); 
             
-}private bool _UpdateReservations()
+}private async Task<bool> _UpdateReservations()
 {
-    return clsReservationsDataAccess.UpdateReservations(this.ReservationID,this.MemberID,this.BookID, this.ReservationDate,this.Status,this.CreateByUserID);
+    return await  clsReservationsDataAccess.UpdateReservations(this.ReservationID,this.MemberID,this.BookID, this.ReservationDate,this.Status,this.CreateByUserID);
 }
 
- public bool Save()
+ public async Task<bool> Save()
 {
     switch (_Mode)
     {
         case enMode.AddNew :
             
-            if ( _AddNewReservations())
+            if (await  _AddNewReservations())
             {
 
                 _Mode = enMode.Update;
@@ -121,27 +121,27 @@ int CreateByUserID = -1;
 
         case enMode.Update :
             
-            return _UpdateReservations(); 
+            return await  _UpdateReservations(); 
            
         default :
             return false;
 
     }
 
-} public static bool DeleteReservations( int ReservationID )
+} public static async Task<bool> DeleteReservations( int ReservationID )
 {
-    return clsReservationsDataAccess.DeleteReservations(ReservationID);
+    return await  clsReservationsDataAccess.DeleteReservations(ReservationID);
 
 }
-public static DataTable GetListReservations()
+public static async Task<DataTable> GetListReservations()
 {
 
-    return clsReservationsDataAccess.GetListReservations();
+    return await clsReservationsDataAccess.GetListReservations();
 }
 
-public static bool IsReservationsExisteByBookIDAndMemberID( int BookID,int MemberID )
+public static async Task<bool> IsReservationsExisteByBookIDAndMemberID( int BookID,int MemberID )
 {
-    return clsReservationsDataAccess.IsReservationsExisteByBookIDAndMemberID(BookID,MemberID);
+    return await  clsReservationsDataAccess.IsReservationsExisteByBookIDAndMemberID(BookID,MemberID);
 
 }
 
@@ -166,14 +166,14 @@ public static bool IsReservationsExisteByBookIDAndMemberID( int BookID,int Membe
         }
 
 
-        public clsReservations ChangeResrvationStatus(clsReservations.enReservationsStatus reservationsStatus)
+        public async Task<clsReservations> ChangeResrvationStatus(clsReservations.enReservationsStatus reservationsStatus)
         {
 
             clsReservations clsReservations = this ;
 
             clsReservations.Status=(byte )reservationsStatus;
 
-            if(clsReservations.Save())
+            if(await  clsReservations.Save())
                 return clsReservations;
 
             return null;
@@ -203,9 +203,9 @@ public static bool IsReservationsExisteByBookIDAndMemberID( int BookID,int Membe
 
 
 
-        public static bool IsThereReservationsForThisBook(int BookID)
+        public static async Task<bool> IsThereReservationsForThisBook(int BookID)
         {
-            return clsReservationsDataAccess.IsThereReservationsForThisBook(BookID);
+            return  await clsReservationsDataAccess.IsThereReservationsForThisBook(BookID);
 
         }
 

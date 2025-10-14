@@ -93,20 +93,20 @@ namespace Library_Business
        public  enPermissions _permissions;
 
 
-        private bool _AddNewUser()
+        private async Task<bool> _AddNewUser()
         {
             //call DataAccess Layer 
 
-            this.UserID = clsUsersDataAccess.AddNewUsers(this.PersonID, this.UserName,
+            this.UserID =await  clsUsersDataAccess.AddNewUsers(this.PersonID, this.UserName,
                 this.Password, this.IsActive,this.JobTitle,this.Permissions,this.Salary);
 
             return (this.UserID != -1);
         }
-        private bool _UpdateUser()
+        private async Task<bool> _UpdateUser()
         {
             //call DataAccess Layer 
 
-            return clsUsersDataAccess.UpdateUsers(this.UserID, this.PersonID, this.UserName,
+            return await  clsUsersDataAccess.UpdateUsers(this.UserID, this.PersonID, this.UserName,
                 this.Password, this.IsActive, this.JobTitle, this.Permissions, this.Salary
                 );
         }
@@ -188,7 +188,7 @@ namespace Library_Business
             switch (Mode)
             {
                 case enMode.AddNew:
-                    if (_AddNewUser())
+                    if (await  _AddNewUser())
                     {
 
                         Mode = enMode.Update;
@@ -201,56 +201,44 @@ namespace Library_Business
 
                 case enMode.Update:
 
-                    return _UpdateUser();
+                    return await  _UpdateUser();
 
             }
 
             return false;
         }
 
-        public static DataTable GetAllUsers()
+        public static async Task<DataTable> GetAllUsers()
         {
-            return clsUsersDataAccess.GetListUsers();
+            return await clsUsersDataAccess.GetListUsers();
         }
 
-        //public bool DeleteUser()
-        //{
-        //    bool IsUserDeleted = false;
-        //    bool IsBasePersonDeleted = false;
-
-        //    IsUserDeleted = clsUsersDataAccess.DeleteUsers(this.UserID);
-        //    if (!IsUserDeleted)
-        //        return false;
-
-        //    IsBasePersonDeleted = base.Delete();
-        //    return IsBasePersonDeleted;
-        //}
         public async Task<bool> DeleteUser()
         {
             bool IsUserDeleted = false;
             bool IsBasePersonDeleted = false;
 
-            IsUserDeleted = clsUsersDataAccess.DeleteUsers(this.UserID);
+            IsUserDeleted =await  clsUsersDataAccess.DeleteUsers(this.UserID);
             if (!IsUserDeleted)
                 return false;
 
             IsBasePersonDeleted = await  base.Delete();
             return IsUserDeleted;
         }
-        public static bool isUserExist(int UserID)
+        public static async Task<bool> isUserExist(int UserID)
         {
-            return clsUsersDataAccess.IsUsersExisteByID(UserID);
+            return await  clsUsersDataAccess.IsUsersExisteByID(UserID);
         }
 
-        public static bool isUserExist(string UserName)
+        public static async Task<bool> isUserExist(string UserName)
         {
-            return clsUsersDataAccess.IsUserExist(UserName);
+            return await clsUsersDataAccess.IsUserExist(UserName);
         }
 
 
-        public static bool isUserExistForPersonID(int PersonID)
+        public static async Task<bool> isUserExistForPersonID(int PersonID)
         {
-            return clsUsersDataAccess.IsUserExistForPersonID(PersonID);
+            return await clsUsersDataAccess.IsUserExistForPersonID(PersonID);
         }
 
         public bool CheckAccessPermission(enPermissions Permission)
@@ -291,6 +279,7 @@ namespace Library_Business
                 Permissions += " Manage Purchases Book , ";
 
             return Permissions.Remove(Permissions.Length - 2);
+
            }
 
         }

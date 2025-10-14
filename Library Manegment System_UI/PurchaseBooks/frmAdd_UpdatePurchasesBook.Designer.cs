@@ -1,6 +1,6 @@
 ﻿namespace Library_Manegment_System
 {
-    partial class frmPurchasesBook
+    partial class frmAdd_UpdatePurchasesBook
     {
         /// <summary>
         /// Required designer variable.
@@ -112,8 +112,9 @@
             // 
             // ctrlBookCardWithFilter1
             // 
+            this.ctrlBookCardWithFilter1.BackColor = System.Drawing.Color.Gainsboro;
             this.ctrlBookCardWithFilter1.FilterEnabled = true;
-            this.ctrlBookCardWithFilter1.Location = new System.Drawing.Point(12, 6);
+            this.ctrlBookCardWithFilter1.Location = new System.Drawing.Point(14, 6);
             this.ctrlBookCardWithFilter1.Name = "ctrlBookCardWithFilter1";
             this.ctrlBookCardWithFilter1.ShowAddBook = true;
             this.ctrlBookCardWithFilter1.Size = new System.Drawing.Size(819, 462);

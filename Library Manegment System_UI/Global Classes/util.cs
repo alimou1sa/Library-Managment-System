@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Guna.UI2.WinForms;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -85,10 +87,6 @@ namespace DVLD.Classes
             return true;
         }
 
-
-
-
-
         public static string  GetPublicKey()
         { 
             string publicKey="";
@@ -119,8 +117,6 @@ namespace DVLD.Classes
             }
         }
 
-
-
         static private Random number = new Random();
 
         static private char GeneratRandomcharacter()
@@ -149,7 +145,6 @@ namespace DVLD.Classes
 
         public static string Key 
         {
-
             get { return _key; }
         }
 
@@ -266,6 +261,12 @@ namespace DVLD.Classes
                     fsInput.CopyTo(cryptoStream);
                 }
             }
+        }
+
+        public static void FillComboBox(Guna2ComboBox comboBox, DataTable dataTable, string displayMember)
+        {
+            comboBox.DataSource = dataTable;
+            comboBox.DisplayMember = displayMember;
         }
 
 

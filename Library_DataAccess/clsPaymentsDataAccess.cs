@@ -67,6 +67,7 @@ namespace Library_DataAccessLayer
             return IsFound;
 
         }
+      
         public static async Task<int> AddNewPayments(int PaymentTypeID, int MemberID, double Amount, byte PaymentStatus, int CreateByUserID, DateTime PaymentDate)
         {
             int InsertedID = -1;
@@ -76,7 +77,7 @@ namespace Library_DataAccessLayer
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
                     string query = @"INSERT INTO Payments(PaymentTypeID, MemberID, Amount, PaymentStatus, CreateByUserID, PaymentDate)
                                    
@@ -95,7 +96,7 @@ namespace Library_DataAccessLayer
                         command.Parameters.AddWithValue("@PaymentDate", PaymentDate);
 
 
-                        object Result = command.ExecuteScalar();
+                        object Result =await command.ExecuteScalarAsync();
 
                         int ID = 0;
 
@@ -116,6 +117,7 @@ namespace Library_DataAccessLayer
             return InsertedID;
 
         }
+      
         public static async Task<bool> UpdatePayments(int PaymentID, int PaymentTypeID, int MemberID, double Amount, byte PaymentStatus, int CreateByUserID, DateTime PaymentDate)
         {
             int RowsAffected = -1;
@@ -125,7 +127,7 @@ namespace Library_DataAccessLayer
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                  await  connection.OpenAsync();
 
                     string query = @"Update Payments SET PaymentTypeID = @PaymentTypeID,MemberID = @MemberID,Amount = @Amount,PaymentStatus = @PaymentStatus,CreateByUserID = @CreateByUserID,PaymentDate = @PaymentDate
 
@@ -144,7 +146,7 @@ namespace Library_DataAccessLayer
                         command.Parameters.AddWithValue("@PaymentDate", PaymentDate);
 
 
-                        RowsAffected = command.ExecuteNonQuery();
+                        RowsAffected = await command.ExecuteNonQueryAsync();
 
 
 
@@ -159,6 +161,7 @@ namespace Library_DataAccessLayer
             return (RowsAffected != -1);
 
         }
+     
         public static async Task<DataTable> GetListPayments()
         {
             DataTable dtList = new DataTable();
@@ -168,37 +171,17 @@ namespace Library_DataAccessLayer
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
-
-                    string query = @"
-SELECT PaymentDetails.PaymentDetailID,Payments.PaymentID, PaymentTypes.TypeName, People.FirstName+' '+ People.SecondName+' '+ People.ThirdName+' '+
-People.LastName as FullName, Members.LibraryCardNumber, Payments.Amount, 
-CASE WHEN Payments.PaymentStatus = 1 THEN 'Pending'
-WHEN Payments.PaymentStatus = 2 THEN 'Paid'
-WHEN Payments.PaymentStatus = 3 THEN 'Refunded'
-WHEN Payments.PaymentStatus = 4 THEN 'Cancelled'
- ELSE 'Pending' END AS PaymentStatus, Users.UserName, Payments.PaymentDate, 
-             PaymentEntities.EntityName, PaymentDetails.EntityID
-FROM   PaymentDetails INNER JOIN
-             Payments ON PaymentDetails.PaymentID = Payments.PaymentID INNER JOIN
-             PaymentEntities ON PaymentDetails.EntityTypeID = PaymentEntities.EntityTypeID INNER JOIN
-             PaymentTypes ON Payments.PaymentTypeID = PaymentTypes.PaymentTypeID INNER JOIN
-             Members ON Payments.MemberID = Members.MemberID INNER JOIN
-             People ON Members.PersonID = People.PersonID INNER JOIN
-             Users ON Payments.CreateByUserID = Users.UserID AND People.PersonID = Users.PersonID";
+                    await connection.OpenAsync();
 
 
-                    using (SqlCommand command = new SqlCommand(query, connection))
+                    using (SqlCommand command = new SqlCommand("SP_GetListPayments", connection))
                     {
-
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        command.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader reader =await command.ExecuteReaderAsync())
                         {
-
                             if (reader.HasRows)
                             {
-
                                 dtList.Load(reader);
-
                             }
                         }
 
@@ -215,6 +198,7 @@ FROM   PaymentDetails INNER JOIN
             return dtList;
 
         }
+     
         public static async Task<bool> DeletePayments(int PaymentID)
         {
             int RowsAffected = -1;
@@ -224,7 +208,7 @@ FROM   PaymentDetails INNER JOIN
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
                     string query = @" Delete From Payments Where PaymentID = @PaymentID";
 
@@ -234,7 +218,7 @@ FROM   PaymentDetails INNER JOIN
                         command.Parameters.AddWithValue("@PaymentID", PaymentID);
 
 
-                        RowsAffected = command.ExecuteNonQuery();
+                        RowsAffected =await command.ExecuteNonQueryAsync();
 
 
 
@@ -249,6 +233,7 @@ FROM   PaymentDetails INNER JOIN
             return (RowsAffected != -1);
 
         }
+     
         public static async Task<bool> IsPaymentsExisteByID(int PaymentID)
         {
             bool IsFound = false;
@@ -258,7 +243,7 @@ FROM   PaymentDetails INNER JOIN
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
                     string query = @" Select Found = 1 From Payments Where PaymentID = @PaymentID";
 
@@ -268,7 +253,7 @@ FROM   PaymentDetails INNER JOIN
                         command.Parameters.AddWithValue("@PaymentID", PaymentID);
 
 
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader =await command.ExecuteReaderAsync())
                         {
 
                             if (reader.Read())
@@ -295,5 +280,6 @@ FROM   PaymentDetails INNER JOIN
             return IsFound;
 
         }
+  
     }
 }

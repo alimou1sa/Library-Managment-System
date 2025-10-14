@@ -71,7 +71,8 @@ namespace Library_DataAccessLayer
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
+
 
                     string query = @"INSERT INTO Genres(GenreName)
                                    
@@ -85,7 +86,7 @@ namespace Library_DataAccessLayer
                         command.Parameters.AddWithValue("@GenreName", GenreName);
 
 
-                        object Result = command.ExecuteScalar();
+                        object Result =await command.ExecuteScalarAsync();
 
                         int ID = 0;
 
@@ -115,7 +116,8 @@ namespace Library_DataAccessLayer
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
+
 
                     string query = @"Update Genres SET GenreName = @GenreName
 
@@ -129,7 +131,7 @@ namespace Library_DataAccessLayer
                         command.Parameters.AddWithValue("@GenreName", GenreName);
 
 
-                        RowsAffected = command.ExecuteNonQuery();
+                        RowsAffected =await command.ExecuteNonQueryAsync();
 
 
 
@@ -153,15 +155,16 @@ namespace Library_DataAccessLayer
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
                     string query = @" Select * From Genres";
 
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
+                  
 
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader = await  command.ExecuteReaderAsync())
                         {
 
                             if (reader.HasRows)
@@ -185,7 +188,7 @@ namespace Library_DataAccessLayer
             return dtList;
 
         }
-        public static async Task<bool> DeleteGenres(int GenreID)
+        public static async Task<bool> DeleteGenres(string GenreName)
         {
             int RowsAffected = -1;
 
@@ -194,20 +197,16 @@ namespace Library_DataAccessLayer
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
-                    string query = @" Delete From Genres Where GenreID = @GenreID";
+
+                    string query = @" Delete From Genres Where GenreName = @GenreName";
 
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@GenreID", GenreID);
-
-
-                        RowsAffected = command.ExecuteNonQuery();
-
-
-
+                        command.Parameters.AddWithValue("@GenreName", GenreName);
+                        RowsAffected =await command.ExecuteNonQueryAsync();
                     }
                 }
             }
@@ -228,7 +227,8 @@ namespace Library_DataAccessLayer
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
+
 
                     string query = @" Select Found = 1 From Genres Where GenreID = @GenreID";
 
@@ -238,7 +238,7 @@ namespace Library_DataAccessLayer
                         command.Parameters.AddWithValue("@GenreID", GenreID);
 
 
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader =await  command.ExecuteReaderAsync())
                         {
 
                             if (reader.Read())

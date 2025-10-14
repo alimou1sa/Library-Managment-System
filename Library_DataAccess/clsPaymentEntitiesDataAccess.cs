@@ -74,7 +74,7 @@ namespace Library_DataAccessLayer
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
                     string query = @"INSERT INTO PaymentEntities(EntityName)
                                    
@@ -88,7 +88,7 @@ namespace Library_DataAccessLayer
                         command.Parameters.AddWithValue("@EntityName", EntityName);
 
 
-                        object Result = command.ExecuteScalar();
+                        object Result =await command.ExecuteScalarAsync();
 
                         int ID = 0;
 
@@ -118,7 +118,7 @@ namespace Library_DataAccessLayer
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
                     string query = @"Update PaymentEntities SET EntityName = @EntityName
 
@@ -132,7 +132,7 @@ namespace Library_DataAccessLayer
                         command.Parameters.AddWithValue("@EntityName", EntityName);
 
 
-                        RowsAffected = command.ExecuteNonQuery();
+                        RowsAffected =await  command.ExecuteNonQueryAsync();
 
 
 
@@ -156,7 +156,7 @@ namespace Library_DataAccessLayer
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
                     string query = @" Select * From PaymentEntities";
 
@@ -164,7 +164,7 @@ namespace Library_DataAccessLayer
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
 
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader =await command.ExecuteReaderAsync())
                         {
 
                             if (reader.HasRows)
@@ -197,8 +197,7 @@ namespace Library_DataAccessLayer
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
-
+                    await connection.OpenAsync();
                     string query = @" Delete From PaymentEntities Where EntityTypeID = @EntityTypeID";
 
 
@@ -207,7 +206,7 @@ namespace Library_DataAccessLayer
                         command.Parameters.AddWithValue("@EntityTypeID", EntityTypeID);
 
 
-                        RowsAffected = command.ExecuteNonQuery();
+                        RowsAffected =await command.ExecuteNonQueryAsync();
 
 
 
@@ -231,8 +230,8 @@ namespace Library_DataAccessLayer
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
 
+                    await connection.OpenAsync();
                     string query = @" Select Found = 1 From PaymentEntities Where EntityTypeID = @EntityTypeID";
 
 
@@ -241,7 +240,7 @@ namespace Library_DataAccessLayer
                         command.Parameters.AddWithValue("@EntityTypeID", EntityTypeID);
 
 
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader =await command.ExecuteReaderAsync())
                         {
 
                             if (reader.Read())

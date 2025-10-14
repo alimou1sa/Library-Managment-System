@@ -67,6 +67,7 @@ namespace Library_DataAccessLayer
             return IsFound;
 
         }
+     
         public static async Task<int> AddNewMembers(int PersonID, bool IsActive, string LibraryCardNumber, int LastSubscriptionID, int CreatedByUserID)
         {
             int InsertedID = -1;
@@ -76,19 +77,12 @@ namespace Library_DataAccessLayer
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
-
-                    string query = @"INSERT INTO Members(PersonID, IsActive, LibraryCardNumber,
-LastSubscriptionID, CreatedByUserID)
-                                   
-                                       VALUES (@PersonID, @IsActive, @LibraryCardNumber,
-@LastSubscriptionID ,@CreatedByUserID) 
-                
-                                SELECT SCOPE_IDENTITY();";
+                   await connection.OpenAsync();
 
 
-                    using (SqlCommand command = new SqlCommand(query, connection))
+                    using (SqlCommand command = new SqlCommand("SP_AddNewMembers", connection))
                     {
+                        command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@PersonID", PersonID);
                         command.Parameters.AddWithValue("@IsActive", IsActive);
                         command.Parameters.AddWithValue("@LibraryCardNumber", LibraryCardNumber);
@@ -99,15 +93,14 @@ LastSubscriptionID, CreatedByUserID)
                         else
                             command.Parameters.AddWithValue("@LastSubscriptionID", LastSubscriptionID);
 
-                        object Result = command.ExecuteScalar();
-
-                        int ID = 0;
-
-                        if (Result != null && int.TryParse(Result.ToString(), out ID))
+                        SqlParameter outputIdParam = new SqlParameter("@NewMemberID", SqlDbType.Int)
                         {
-                            InsertedID = ID;
+                            Direction = ParameterDirection.Output
+                        };
 
-                        }
+                        command.Parameters.Add(outputIdParam);
+                        await command.ExecuteNonQueryAsync();
+                        InsertedID = (int)command.Parameters["@NewMemberID"].Value;
 
                     }
                 }
@@ -120,6 +113,7 @@ LastSubscriptionID, CreatedByUserID)
             return InsertedID;
 
         }
+   
         public static async Task<bool> UpdateMembers(int MemberID, int PersonID, bool IsActive, string LibraryCardNumber,
             int LastSubscriptionID, int CreatedByUserID)
         {
@@ -130,7 +124,8 @@ LastSubscriptionID, CreatedByUserID)
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
+
 
                     string query = @"Update Members SET PersonID = @PersonID,IsActive =
 @IsActive,LibraryCardNumber = @LibraryCardNumber,CreatedByUserID = @CreatedByUserID,LastSubscriptionID=@LastSubscriptionID
@@ -152,7 +147,7 @@ LastSubscriptionID, CreatedByUserID)
                             command.Parameters.AddWithValue("@LastSubscriptionID", DBNull.Value);
                         else
                             command.Parameters.AddWithValue("@LastSubscriptionID", LastSubscriptionID);
-                        RowsAffected = command.ExecuteNonQuery();
+                        RowsAffected =await command.ExecuteNonQueryAsync();
 
 
 
@@ -177,31 +172,13 @@ LastSubscriptionID, CreatedByUserID)
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
-
-                    string query = @"
-SELECT Members.MemberID, Members.PersonID, Members.IsActive,
-Members.LibraryCardNumber, People.NationalNo,
-People.FirstName+' '+ People.SecondName+' '+ISNULL(dbo.People.ThirdName, '')  +' '+ People.LastName as FullName,
-MembershipPlans.PlanName, MemberSubscriptions.SubscriptionID,MemberSubscriptions.StartDate, 
-             MemberSubscriptions.EndDate,
-			    CASE
-      WHEN MemberSubscriptions.SubscriptionStatus = 1 THEN 'Active'
-	        WHEN MemberSubscriptions.SubscriptionStatus = 2 THEN 'Expired'
-			      WHEN MemberSubscriptions.SubscriptionStatus = 3 THEN 'Pending'
-      ELSE 'Active'
-
-      END as SubscriptionStatus, MemberSubscriptions.CreatedByUserID
-FROM   Members INNER JOIN
-             MemberSubscriptions ON Members.LastSubscriptionID = MemberSubscriptions.SubscriptionID INNER JOIN
-             MembershipPlans ON MemberSubscriptions.PlanID = MembershipPlans.PlanID INNER JOIN
-             People ON Members.PersonID = People.PersonID";
+                    await connection.OpenAsync();
 
 
-                    using (SqlCommand command = new SqlCommand(query, connection))
+                    using (SqlCommand command = new SqlCommand("SP_GetListMembers", connection))
                     {
-
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        command.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader reader =await command.ExecuteReaderAsync())
                         {
 
                             if (reader.HasRows)
@@ -225,6 +202,8 @@ FROM   Members INNER JOIN
             return dtList;
 
         }
+      
+   
         public static async Task<bool> DeleteMembers(int MemberID)
         {
             int RowsAffected = -1;
@@ -234,19 +213,13 @@ FROM   Members INNER JOIN
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
-                    string query = @" Delete From Members Where MemberID = @MemberID";
-
-
-                    using (SqlCommand command = new SqlCommand(query, connection))
+                    using (SqlCommand command = new SqlCommand("SP_DeleteMembers", connection))
                     {
+                        command.CommandType= CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@MemberID", MemberID);
-
-
-                        RowsAffected = command.ExecuteNonQuery();
-
-
+                        RowsAffected =await command.ExecuteNonQueryAsync();
 
                     }
                 }
@@ -259,6 +232,7 @@ FROM   Members INNER JOIN
             return (RowsAffected != -1);
 
         }
+     
         public static async Task<bool> IsMembersExisteByID(int MemberID)
         {
             bool IsFound = false;
@@ -268,7 +242,8 @@ FROM   Members INNER JOIN
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
+
 
                     string query = @" Select Found = 1 From Members Where MemberID = @MemberID";
 
@@ -278,7 +253,49 @@ FROM   Members INNER JOIN
                         command.Parameters.AddWithValue("@MemberID", MemberID);
 
 
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader =await command.ExecuteReaderAsync())
+                        {
+
+                            if (reader.Read())
+                            {
+                                IsFound = true;
+
+
+                            }
+                        }
+
+
+
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                clsErrorEventLog.LogError(ex.Message);
+
+                IsFound = false;
+
+            }
+
+            return IsFound;
+
+        }
+        public static async Task<bool> IsMembersExisteByLCN(string LibraryCardNumber)
+        {
+            bool IsFound = false;
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
+                {
+                    await connection.OpenAsync();
+                    string query = @" Select Found = 1 From Members Where LibraryCardNumber = @LibraryCardNumber";
+
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@LibraryCardNumber", LibraryCardNumber);
+
+
+                        using (SqlDataReader reader = await command.ExecuteReaderAsync())
                         {
 
                             if (reader.Read())
@@ -306,8 +323,6 @@ FROM   Members INNER JOIN
 
         }
 
-
-
         public static async Task<bool> IsMembersExisteByPersonID(int PersonID)
         {
             bool IsFound = false;
@@ -317,7 +332,7 @@ FROM   Members INNER JOIN
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
                     string query = @" 
 			 Select Found = 1 From Members Where PersonID=@PersonID";
@@ -328,7 +343,7 @@ FROM   Members INNER JOIN
                         command.Parameters.AddWithValue("@PersonID", PersonID);
 
 
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader =await command.ExecuteReaderAsync())
                         {
 
                             if (reader.Read())
@@ -408,9 +423,6 @@ FROM   Members INNER JOIN
 
         }
 
-
-
-
         public static async Task<bool> ChangeIsMembersActive(int MemberID, bool IsActive)
         {
             int RowsAffected = -1;
@@ -420,7 +432,8 @@ FROM   Members INNER JOIN
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
+
 
                     string query = @" Update Members SET IsActive =@IsActive where MemberID=@MemberID";
 
@@ -433,7 +446,7 @@ FROM   Members INNER JOIN
 
 
 
-                        RowsAffected = command.ExecuteNonQuery();
+                        RowsAffected =await command.ExecuteNonQueryAsync();
 
 
 
@@ -449,7 +462,6 @@ FROM   Members INNER JOIN
 
         }
 
-
         public static async Task<bool> UpdateLastSubscriptionID(int MemberID, int LastSubscriptionID)
         {
             int RowsAffected = -1;
@@ -459,9 +471,10 @@ FROM   Members INNER JOIN
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
-                    string query = @" Update Members SET LastSubscriptionID =@LastSubscriptionID where MemberID=@MemberID";
+                    string query = @" Update Members SET LastSubscriptionID =@LastSubscriptionID 
+where MemberID=@MemberID";
 
 
                     using (SqlCommand command = new SqlCommand(query, connection))
@@ -476,7 +489,7 @@ FROM   Members INNER JOIN
 
 
 
-                        RowsAffected = command.ExecuteNonQuery();
+                        RowsAffected =await command.ExecuteNonQueryAsync();
 
 
 

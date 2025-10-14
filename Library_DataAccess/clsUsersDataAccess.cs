@@ -15,23 +15,20 @@ namespace Library_DataAccessLayer
     public class clsUsersDataAccess
     {
 
-public static bool GetUsersInfoByID(int UserID,ref int PersonID,ref string UserName,ref string Password,
-    ref bool IsActive,ref string JobTitle,ref int Permissions,ref double Salary)
-    {
-        bool IsFound  = false;
+        public static bool GetUsersInfoByID(int UserID, ref int PersonID, ref string UserName, ref string Password,
+            ref bool IsActive, ref string JobTitle, ref int Permissions, ref double Salary)
+        {
+            bool IsFound = false;
 
             try
             {
-
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
                     connection.Open();
-
-                    string query = @" Select * From Users Where UserID = @UserID";
-
-
-                    using (SqlCommand command = new SqlCommand(query, connection))
+                   
+                    using (SqlCommand command = new SqlCommand("SP_GetUsersInfoByID", connection))
                     {
+                        command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@UserID", UserID);
 
 
@@ -65,30 +62,24 @@ public static bool GetUsersInfoByID(int UserID,ref int PersonID,ref string UserN
 
             }
 
-        return IsFound ;
-          
-    }
-        public static int AddNewUsers(int PersonID,string UserName,string Password,bool IsActive,
+            return IsFound;
+
+        }
+        public static async Task<int> AddNewUsers(int PersonID, string UserName, string Password, bool IsActive,
             string JobTitle, int Permissions, double Salary)
-    {
-        int InsertedID  = -1;
+        {
+            int InsertedID = -1;
 
             try
             {
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
-                    string query = @"INSERT INTO Users(PersonID, UserName, Password, IsActive, JobTitle,Permissions,Salary)
-                                   
-                                       VALUES (@PersonID, @UserName, @Password, @IsActive,@JobTitle ,@Permissions ,@Salary) 
-                
-                                SELECT SCOPE_IDENTITY();";
-
-
-                    using (SqlCommand command = new SqlCommand(query, connection))
+                    using (SqlCommand command = new SqlCommand("SP_AddNewUsers", connection))
                     {
+                        command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@PersonID", PersonID);
                         command.Parameters.AddWithValue("@UserName", UserName);
                         command.Parameters.AddWithValue("@Password", Password);
@@ -97,15 +88,15 @@ public static bool GetUsersInfoByID(int UserID,ref int PersonID,ref string UserN
                         command.Parameters.AddWithValue("@Permissions", Permissions);
                         command.Parameters.AddWithValue("@Salary", Salary);
 
-                        object Result = command.ExecuteScalar();
 
-                        int ID = 0;
-
-                        if (Result != null && int.TryParse(Result.ToString(), out ID))
+                        SqlParameter outputIdParam = new SqlParameter("@NewUserID", SqlDbType.Int)
                         {
-                            InsertedID = ID;
+                            Direction = ParameterDirection.Output
+                        };
 
-                        }
+                        command.Parameters.Add(outputIdParam);
+                        await command.ExecuteNonQueryAsync();
+                         InsertedID = (int)command.Parameters["@NewUserID"].Value;
 
                     }
                 }
@@ -115,29 +106,25 @@ public static bool GetUsersInfoByID(int UserID,ref int PersonID,ref string UserN
                 clsErrorEventLog.LogError(ex.Message);
             }
 
-            return InsertedID ;
-          
-    }
-        public static bool UpdateUsers(int UserID,int PersonID, string UserName, string Password, bool IsActive, 
+            return InsertedID;
+
+        }
+        public static async Task<bool> UpdateUsers(int UserID, int PersonID, string UserName, string Password, bool IsActive,
             string JobTitle, int Permissions, double Salary)
-    {
-        int RowsAffected  = -1;
+        {
+            int RowsAffected = -1;
 
             try
             {
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
+              
 
-                    string query = @"Update Users SET PersonID = @PersonID,UserName = @UserName,Password = @Password,IsActive
-= @IsActive,JobTitle = @JobTitle,Permissions = @Permissions,Salary = @Salary
-
-                                    WHERE UserID= @UserID";
-
-
-                    using (SqlCommand command = new SqlCommand(query, connection))
+                    using (SqlCommand command = new SqlCommand("SP_UpdateUsers", connection))
                     {
+                        command.CommandType = CommandType.StoredProcedure;
 
                         command.Parameters.AddWithValue("@UserID", UserID);
                         command.Parameters.AddWithValue("@PersonID", PersonID);
@@ -148,9 +135,7 @@ public static bool GetUsersInfoByID(int UserID,ref int PersonID,ref string UserN
                         command.Parameters.AddWithValue("@Permissions", Permissions);
                         command.Parameters.AddWithValue("@Salary", Salary);
 
-                        RowsAffected = command.ExecuteNonQuery();
-
-
+                        RowsAffected =await  command.ExecuteNonQueryAsync();
 
                     }
                 }
@@ -160,37 +145,23 @@ public static bool GetUsersInfoByID(int UserID,ref int PersonID,ref string UserN
                 clsErrorEventLog.LogError(ex.Message);
             }
 
-            return (RowsAffected != -1 ) ;
-          
-    }
-        public static DataTable GetListUsers()
-    {
-        DataTable dtList = new DataTable();
+            return (RowsAffected != -1);
+
+        }
+
+        public static async Task<DataTable> GetListUsers()
+        {
+            DataTable dtList = new DataTable();
 
             try
             {
-
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
-
-                    string query = @"
-
-SELECT Users.UserID, Users.UserName, Users.Password, Users.IsActive, Users.JobTitle,  People.FirstName + ' ' + People.SecondName + ' ' +ISNULL(dbo.People.ThirdName, '')   + ' ' + People.LastName AS FullName,
-Users.Permissions, Users.Salary, People.NationalNo, People.DateOfBirth, 
-CASE WHEN People.Gendor = 0 THEN 'Male' ELSE 'Female' END AS GendorCaption, People.Email, Countries.CountryName,People.Phone
-FROM   Users INNER JOIN
-             People ON Users.PersonID = People.PersonID INNER JOIN
-             Countries ON People.NationalityCountryID = Countries.CountryID
-
-
-";
-
-
-                    using (SqlCommand command = new SqlCommand(query, connection))
+                   await connection.OpenAsync();
+                    using (SqlCommand command = new SqlCommand("SP_GetListUsers", connection))
                     {
-
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        command.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader reader = await command.ExecuteReaderAsync())
                         {
 
                             if (reader.HasRows)
@@ -211,31 +182,26 @@ FROM   Users INNER JOIN
                 clsErrorEventLog.LogError(ex.Message);
             }
 
-            return dtList ;
-          
-    }
-        public static bool DeleteUsers(int UserID)
-    {
-        int RowsAffected  = -1;
+            return dtList;
+
+        }
+        public static async Task<bool> DeleteUsers(int UserID)
+        {
+            int RowsAffected = -1;
 
             try
             {
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
-                    string query = @" Delete From Users Where UserID = @UserID";
-
-
-                    using (SqlCommand command = new SqlCommand(query, connection))
+                    using (SqlCommand command = new SqlCommand("SP_DeleteUsers", connection))
                     {
+                        command.CommandType= CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@UserID", UserID);
 
-
-                        RowsAffected = command.ExecuteNonQuery();
-
-
+                        RowsAffected =await  command.ExecuteNonQueryAsync();
 
                     }
                 }
@@ -245,40 +211,34 @@ FROM   Users INNER JOIN
                 clsErrorEventLog.LogError(ex.Message);
             }
 
-            return (RowsAffected != -1 ) ;
-          
-    }
-        
-        public static bool IsUsersExisteByID(int UserID)
-    {
-        bool IsFound  = false;
+            return (RowsAffected != -1);
+
+        }
+
+        public static async Task<bool> IsUsersExisteByID(int UserID)
+        {
+            bool IsFound = false;
 
             try
             {
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
-
-                    string query = @" Select Found = 1 From Users Where UserID = @UserID";
-
-
-                    using (SqlCommand command = new SqlCommand(query, connection))
+                    await connection.OpenAsync();
+                    using (SqlCommand command = new SqlCommand("SP_IsUsersExisteByID", connection))
                     {
+                        command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@UserID", UserID);
 
-
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        SqlParameter returnParameter = new SqlParameter("@ReturnVal", SqlDbType.Int)
                         {
+                            Direction = ParameterDirection.ReturnValue
+                        };
 
-                            if (reader.Read())
-                            {
-                                IsFound = true;
+                        command.Parameters.Add(returnParameter);
+                        await command.ExecuteNonQueryAsync();
 
-
-                            }
-                        }
-
+                        IsFound = (int)returnParameter.Value == 1;
 
 
                     }
@@ -292,64 +252,62 @@ FROM   Users INNER JOIN
 
             }
 
-        return IsFound ;
-          
-    }
+            return IsFound;
+
+        }
 
 
-        public static bool GetUserInfoByUsernameAndPassword( string UserName, string Password,ref int UserID,ref int PersonID, 
+        public static bool GetUserInfoByUsernameAndPassword(string UserName, string Password, ref int UserID, ref int PersonID,
            ref bool IsActive, ref string JobTitle, ref int Permissions, ref double Salary)
         {
             bool isFound = false;
 
-            SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString);
-
-            string query = "SELECT * FROM Users WHERE Username = @Username and Password=@Password;";
-
-            SqlCommand command = new SqlCommand(query, connection);
-
-            command.Parameters.AddWithValue("@Username", UserName);
-            command.Parameters.AddWithValue("@Password", Password);
-
-
-            try
+            using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
             {
-                connection.Open();
-                SqlDataReader reader = command.ExecuteReader();
 
-                if (reader.Read())
+                using (SqlCommand command = new SqlCommand("SP_GetUserInfoByUsernameAndPassword", connection))
                 {
-                    // The record was found
-                    isFound = true;
-                    UserID = (int)reader["UserID"];
-                    PersonID = (int)reader["PersonID"];
-                    UserName = (string)reader["UserName"];
-                    Password = (string)reader["Password"];
-                    IsActive = (bool)reader["IsActive"];
-                    JobTitle = (string)reader["JobTitle"];
-                    Permissions = (int)reader["Permissions"];
-                    Salary = Convert.ToDouble(reader["Salary"]);
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@Username", UserName);
+                    command.Parameters.AddWithValue("@Password", Password);
 
+
+                    try
+                    {
+                        connection.Open();
+                        SqlDataReader reader = command.ExecuteReader();
+
+                        if (reader.Read())
+                        {
+                            // The record was found
+                            isFound = true;
+                            UserID = (int)reader["UserID"];
+                            PersonID = (int)reader["PersonID"];
+                            UserName = (string)reader["UserName"];
+                            Password = (string)reader["Password"];
+                            IsActive = (bool)reader["IsActive"];
+                            JobTitle = (string)reader["JobTitle"];
+                            Permissions = (int)reader["Permissions"];
+                            Salary = Convert.ToDouble(reader["Salary"]);
+
+                        }
+                        else
+                        {
+                            // The record was not found
+                            isFound = false;
+                        }
+
+                        reader.Close();
+
+
+                    }
+                    catch (SqlException ex)
+                    {
+                        clsErrorEventLog.LogError(ex.Message);
+
+                        isFound = false;
+                    }
                 }
-                else
-                {
-                    // The record was not found
-                    isFound = false;
-                }
-
-                reader.Close();
-
-
-            }
-            catch (SqlException ex)
-            {
-                clsErrorEventLog.LogError(ex.Message);
-
-                isFound = false;
-            }
-            finally
-            {
-                connection.Close();
             }
 
             return isFound;
@@ -357,7 +315,7 @@ FROM   Users INNER JOIN
 
 
 
-        public static bool GetUsersInfoByPersonID(int PersonID, ref int UserID,  ref string UserName, ref string Password,
+        public static bool GetUsersInfoByPersonID(int PersonID, ref int UserID, ref string UserName, ref string Password,
     ref bool IsActive, ref string JobTitle, ref int Permissions, ref double Salary)
         {
             bool IsFound = false;
@@ -403,8 +361,8 @@ FROM   Users INNER JOIN
             catch (SqlException ex)
             {
                 clsErrorEventLog.LogError(ex.Message);
-            
-            IsFound = false;
+
+                IsFound = false;
 
             }
 
@@ -413,7 +371,7 @@ FROM   Users INNER JOIN
         }
 
 
-        public static bool IsUserExist(string UserName)
+        public static async Task<bool> IsUserExist(string UserName)
         {
             bool isFound = false;
 
@@ -427,7 +385,7 @@ FROM   Users INNER JOIN
 
             try
             {
-                connection.Open();
+               await  connection.OpenAsync();
                 SqlDataReader reader = command.ExecuteReader();
 
                 isFound = reader.HasRows;
@@ -437,8 +395,8 @@ FROM   Users INNER JOIN
             catch (SqlException ex)
             {
                 clsErrorEventLog.LogError(ex.Message);
-            
-            isFound = false;
+
+                isFound = false;
             }
             finally
             {
@@ -449,7 +407,7 @@ FROM   Users INNER JOIN
         }
 
 
-        public static bool IsUserExistForPersonID(int PersonID)
+        public static async Task< bool> IsUserExistForPersonID(int PersonID)
         {
             bool isFound = false;
 
@@ -463,7 +421,7 @@ FROM   Users INNER JOIN
 
             try
             {
-                connection.Open();
+               await connection.OpenAsync();
                 SqlDataReader reader = command.ExecuteReader();
 
                 isFound = reader.HasRows;
@@ -473,8 +431,8 @@ FROM   Users INNER JOIN
             catch (SqlException ex)
             {
                 clsErrorEventLog.LogError(ex.Message);
-            
-            isFound = false;
+
+                isFound = false;
             }
             finally
             {

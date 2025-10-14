@@ -79,7 +79,7 @@ namespace Library_DataAccessLayer
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                   await connection.OpenAsync();
 
                     string query = @"INSERT INTO MembershipPlans(PlanName, DurationMonths, Price)
                                    
@@ -95,7 +95,7 @@ namespace Library_DataAccessLayer
                         command.Parameters.AddWithValue("@Price", Price);
 
 
-                        object Result = command.ExecuteScalar();
+                        object Result =await command.ExecuteScalarAsync();
 
                         int ID = 0;
 
@@ -125,7 +125,7 @@ namespace Library_DataAccessLayer
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
                     string query = @"Update MembershipPlans SET PlanName = @PlanName,DurationMonths = @DurationMonths,Price = @Price
 
@@ -141,7 +141,7 @@ namespace Library_DataAccessLayer
                         command.Parameters.AddWithValue("@Price", Price);
 
 
-                        RowsAffected = command.ExecuteNonQuery();
+                        RowsAffected =await command.ExecuteNonQueryAsync();
 
 
 
@@ -165,7 +165,8 @@ namespace Library_DataAccessLayer
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
+
 
                     string query = @" Select * From MembershipPlans";
 
@@ -173,7 +174,7 @@ namespace Library_DataAccessLayer
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
 
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader =await command.ExecuteReaderAsync())
                         {
 
                             if (reader.HasRows)
@@ -205,7 +206,8 @@ namespace Library_DataAccessLayer
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
+
 
                     string query = @" Delete From MembershipPlans Where PlanID = @PlanID";
 
@@ -215,7 +217,7 @@ namespace Library_DataAccessLayer
                         command.Parameters.AddWithValue("@PlanID", PlanID);
 
 
-                        RowsAffected = command.ExecuteNonQuery();
+                        RowsAffected =await command.ExecuteNonQueryAsync();
 
 
 
@@ -239,7 +241,8 @@ namespace Library_DataAccessLayer
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
+
 
                     string query = @" Select Found = 1 From MembershipPlans Where PlanID = @PlanID";
 
@@ -249,7 +252,7 @@ namespace Library_DataAccessLayer
                         command.Parameters.AddWithValue("@PlanID", PlanID);
 
 
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader =await command.ExecuteReaderAsync())
                         {
 
                             if (reader.Read())

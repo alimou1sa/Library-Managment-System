@@ -55,13 +55,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="clsGlobal.cs" />
-    <Compile Include="clsLogger.cs" />
-    <Compile Include="clsLogin.cs" />
-    <Compile Include="clsLoginEventArgs.cs" />
-    <Compile Include="clsLogType.cs" />
-    <Compile Include="clsSaveLoginInRegjistry.cs" />
-    <Compile Include="clsValidation.cs" />
+    <Compile Include="Global Classes\clsGlobal.cs" />
+    <Compile Include="Global Classes\clsLogger.cs" />
+    <Compile Include="Global Classes\clsLogin.cs" />
+    <Compile Include="Global Classes\clsLoginEventArgs.cs" />
+    <Compile Include="Global Classes\clsLogType.cs" />
+    <Compile Include="Global Classes\clsSaveLoginInRegjistry.cs" />
+    <Compile Include="Global Classes\clsValidation.cs" />
     <Compile Include="Books\Controls\ctrBookInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -152,12 +152,6 @@
     <Compile Include="Members\frmManageSubscriptionForthisMember.Designer.cs">
       <DependentUpon>frmManageSubscriptionForthisMember.cs</DependentUpon>
     </Compile>
-    <Compile Include="Supscribtions\frmMemberSubscribtionManagment.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Supscribtions\frmMemberSubscribtionManagment.Designer.cs">
-      <DependentUpon>frmMemberSubscribtionManagment.cs</DependentUpon>
-    </Compile>
     <Compile Include="PurchaseBooks\frmPurchasesBookDetails.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -218,11 +212,11 @@
     <Compile Include="Payments\frmPaymentManagments.Designer.cs">
       <DependentUpon>frmPaymentManagments.cs</DependentUpon>
     </Compile>
-    <Compile Include="PurchaseBooks\frmPurchasesBook.cs">
+    <Compile Include="PurchaseBooks\frmAdd_UpdatePurchasesBook.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PurchaseBooks\frmPurchasesBook.Designer.cs">
-      <DependentUpon>frmPurchasesBook.cs</DependentUpon>
+    <Compile Include="PurchaseBooks\frmAdd_UpdatePurchasesBook.Designer.cs">
+      <DependentUpon>frmAdd_UpdatePurchasesBook.cs</DependentUpon>
     </Compile>
     <Compile Include="Books\Publisher&amp;Author\frmAddUpdateAuther_Publisher.cs">
       <SubType>Form</SubType>
@@ -358,7 +352,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="util.cs" />
+    <Compile Include="Global Classes\util.cs" />
     <EmbeddedResource Include="Books\Controls\ctrBookInfo.resx">
       <DependentUpon>ctrBookInfo.cs</DependentUpon>
     </EmbeddedResource>
@@ -404,9 +398,6 @@
     <EmbeddedResource Include="Members\frmManageSubscriptionForthisMember.resx">
       <DependentUpon>frmManageSubscriptionForthisMember.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Supscribtions\frmMemberSubscribtionManagment.resx">
-      <DependentUpon>frmMemberSubscribtionManagment.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="PurchaseBooks\frmPurchasesBookDetails.resx">
       <DependentUpon>frmPurchasesBookDetails.cs</DependentUpon>
     </EmbeddedResource>
@@ -437,8 +428,8 @@
     <EmbeddedResource Include="Payments\frmPaymentManagments.resx">
       <DependentUpon>frmPaymentManagments.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PurchaseBooks\frmPurchasesBook.resx">
-      <DependentUpon>frmPurchasesBook.cs</DependentUpon>
+    <EmbeddedResource Include="PurchaseBooks\frmAdd_UpdatePurchasesBook.resx">
+      <DependentUpon>frmAdd_UpdatePurchasesBook.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Books\Publisher&amp;Author\frmAddUpdateAuther_Publisher.resx">
       <DependentUpon>frmAddUpdateAuther_Publisher.cs</DependentUpon>
@@ -600,6 +591,7 @@
     <None Include="Resources\icons8-return-book-64.png" />
     <None Include="Resources\icons8-orange-book-96.png" />
     <None Include="Resources\reset-password.png" />
+    <None Include="Resources\photo-1519682337058-a94d519337bc1.jpeg" />
     <Content Include="Resources\undraw_bibliophile_sbt0.png" />
     <None Include="Resources\undraw_bibliophile_sbt01.png" />
   </ItemGroup>

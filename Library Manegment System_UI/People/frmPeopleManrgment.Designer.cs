@@ -42,7 +42,6 @@
             this.cbFiterBy = new Guna.UI2.WinForms.Guna2ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.cbGender = new Guna.UI2.WinForms.Guna2ComboBox();
-            this.btnAddPerson = new Guna.UI2.WinForms.Guna2Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvListPeople)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
@@ -228,24 +227,6 @@
             this.cbGender.Visible = false;
             this.cbGender.SelectedIndexChanged += new System.EventHandler(this.cbGender_SelectedIndexChanged);
             // 
-            // btnAddPerson
-            // 
-            this.btnAddPerson.BorderRadius = 11;
-            this.btnAddPerson.BorderThickness = 3;
-            this.btnAddPerson.CheckedState.Parent = this.btnAddPerson;
-            this.btnAddPerson.CustomImages.Parent = this.btnAddPerson;
-            this.btnAddPerson.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.btnAddPerson.Font = new System.Drawing.Font("Rockwell", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAddPerson.ForeColor = System.Drawing.Color.White;
-            this.btnAddPerson.HoverState.Parent = this.btnAddPerson;
-            this.btnAddPerson.Location = new System.Drawing.Point(1224, 191);
-            this.btnAddPerson.Name = "btnAddPerson";
-            this.btnAddPerson.ShadowDecoration.Parent = this.btnAddPerson;
-            this.btnAddPerson.Size = new System.Drawing.Size(180, 45);
-            this.btnAddPerson.TabIndex = 21;
-            this.btnAddPerson.Text = "Add Person";
-            this.btnAddPerson.Click += new System.EventHandler(this.btnAddPerson_Click);
-            // 
             // pictureBox1
             // 
             this.pictureBox1.Image = global::Library_Manegment_System.Properties.Resources.icons8_people_100;
@@ -262,7 +243,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1475, 776);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.btnAddPerson);
             this.Controls.Add(this.cbGender);
             this.Controls.Add(this.txtFiter);
             this.Controls.Add(this.cbFiterBy);
@@ -294,7 +274,6 @@
         private Guna.UI2.WinForms.Guna2ComboBox cbFiterBy;
         private System.Windows.Forms.Label label2;
         private Guna.UI2.WinForms.Guna2ComboBox cbGender;
-        private Guna.UI2.WinForms.Guna2Button btnAddPerson;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem personDetailsToolStripMenuItem;

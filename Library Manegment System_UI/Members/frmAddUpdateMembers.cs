@@ -54,7 +54,7 @@ namespace Library_Manegment_System
         private int ? PaymentDetailsID=null;
         clsPaymentDetails _PaymentDetails;
 
-        private async void _FillSubscriptionPlansInComoboBox()
+        private async Task _FillSubscriptionPlansInComoboBox()
         {
             DataTable dtSubscription =await  clsMembershipPlans.GetListMembershipPlans();
 
@@ -64,7 +64,7 @@ namespace Library_Manegment_System
             }
         }
 
-        private async void _FillPaymentTypeInComoboBox()
+        private async Task _FillPaymentTypeInComoboBox()
         {
             DataTable dtPayment = await  clsPaymentTypes.GetListPaymentTypes();
             foreach (DataRow row in dtPayment.Rows)
@@ -73,7 +73,7 @@ namespace Library_Manegment_System
             }
         }
 
-        private async void _FillCountriesInComoboBox()
+        private async Task _FillCountriesInComoboBox()
         {
             DataTable dtCountries = await  clsCountries.GetListCountries();
 
@@ -83,13 +83,13 @@ namespace Library_Manegment_System
             }
         }
 
-        private void _ResetDefualtValues()
+        private  async Task _ResetDefualtValues()
         {
-            _FillSubscriptionPlansInComoboBox();
-            _FillPaymentTypeInComoboBox();
-            _FillCountriesInComoboBox();
+           await  _FillSubscriptionPlansInComoboBox();
+           await  _FillPaymentTypeInComoboBox();
+           await  _FillCountriesInComoboBox();
 
-
+          
             if (_Mode == enMode.AddNew)
             {
                 lblTitel.Text = "Add New Member";
@@ -98,7 +98,7 @@ namespace Library_Manegment_System
                 _MemberSubscriptions=new clsMemberSubscriptions();
                 _PaymentDetails = new clsPaymentDetails();
                 tpMembershipInfo.Enabled = false;
-                cbSubStatus.Enabled = false;
+       
             
             }
             else
@@ -112,11 +112,11 @@ namespace Library_Manegment_System
                 cbPaymentType.Enabled = false;
             }
 
-            cbIsActive.Enabled = false;
-            chbIsSubscribtionActive.Enabled = false;
+            cbIsActive.Enabled = true ;
+            chbIsSubscribtionActive.Enabled = true ;
           
 
-            cbIsActive.Checked = false;
+
             txtLibrayCardNum.Text = "";
             lblCreatedByUserID.Text =clsGlobal.CurrentUser.UserName;
 
@@ -129,7 +129,7 @@ namespace Library_Manegment_System
             cbSubStatus.SelectedIndex = 1;
             cbPlane.SelectedIndex = 0;
             lblStartDate.Text = DateTime.Now.ToString("yyyy:MM:dd");
-            chbIsSubscribtionActive.Checked = false;
+   
 
 
             if (rbMale.Checked)
@@ -142,7 +142,7 @@ namespace Library_Manegment_System
             dtpDateOfBirth.MaxDate = DateTime.Now.AddYears(-10);
             dtpDateOfBirth.Value = dtpDateOfBirth.MaxDate;
             dtpDateOfBirth.MinDate = DateTime.Now.AddYears(-100);
-            cbCounties.SelectedIndex = 1;
+            cbCounties.SelectedIndex = 0;
             txtFirstName.Text = "";
             txtSecondName.Text = "";
             txtThirdName.Text = "";
@@ -152,7 +152,6 @@ namespace Library_Manegment_System
             txtPhone.Text = "";
             txtEmail.Text = "";
             txtAddress.Text = "";
-
 
 
             lblCreatedByUserID.Text=clsGlobal.CurrentUser.UserName;
@@ -174,12 +173,12 @@ namespace Library_Manegment_System
             }
 
             _PaymentDetails = clsPaymentDetails.FindByEntityID(_Member.SubscriptionsInfo.SubscriptionID, (byte)clsPaymentEntities.enEntityType.MemberSubscription);
-            if(_PaymentDetails==null ){
+            if(_PaymentDetails==null )
+            {
                 MessageBox.Show("No Member with ID = " + _MemberID, ",MemberID Not Found", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 this.Close();
 
                 return;
-
             }
 
             _MemberSubscriptions = _Member.SubscriptionsInfo;
@@ -204,18 +203,15 @@ namespace Library_Manegment_System
             if (_Member.ImagePath != "")
             {
                 pbPersonImage.ImageLocation = _Member.ImagePath;
-
             }
-            llRemoveImage.Visible = (_Member.ImagePath != "");
 
+            llRemoveImage.Visible = (_Member.ImagePath != "");
 
             lblMemberID.Text = _Member.MemberID.ToString();
             txtLibrayCardNum.Text = _Member.LibraryCardNumber;
             lblCreatedByUserID.Text=_Member.CreatedByUserID.ToString();
             cbIsActive.Checked = _Member.IsActive;
           
-
-
 
             lblPaymentID.Text = _PaymentDetails.PaymentID.ToString();
             cbPaymentType.SelectedIndex = _PaymentDetails.PaymentTypeID - 1;
@@ -225,7 +221,7 @@ namespace Library_Manegment_System
 
             
             cbSubStatus.SelectedIndex = _Member.SubscriptionsInfo.SubscriptionStatus - 1;
-            lblSubscriptionID.Text = _Member.LasrSubscriptionID.ToString();
+            lblSubscriptionID.Text = _Member.LastSubscriptionID.ToString();
             lblStartDate.Text = _Member.SubscriptionsInfo. StartDate.ToString("yyyy:MM:dd");
             lblEndDate.Text = _Member.SubscriptionsInfo.EndDate.ToString("yyyy:MM:dd");
             cbPlane.SelectedIndex = _Member.SubscriptionsInfo.PlanID - 1;
@@ -234,9 +230,9 @@ namespace Library_Manegment_System
 
         }
 
-        private void frmAddUpdateMembers_Load(object sender, EventArgs e)
+        private async void frmAddUpdateMembers_Load(object sender, EventArgs e)
         {
-            _ResetDefualtValues();
+           await  _ResetDefualtValues();
             if (_Mode == enMode.Update)
                 _LoadData();
         }
@@ -259,7 +255,6 @@ namespace Library_Manegment_System
             {
                 if (_Member.ImagePath != "")
                 {
-
                     try
                     {
                         File.Delete(_Member.ImagePath);
@@ -292,21 +287,11 @@ namespace Library_Manegment_System
             return true;
         }
 
-        private async void btnSave_Click(object sender, EventArgs e)
+        private void _FillMemberInfo()
         {
-           if (!this.ValidateChildren())
-            {
-                MessageBox.Show("Some fileds are not valide!, put the mouse over the red icon(s) to see the erro",
-                    "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-           }
-
-            if (!_HandlePersonImage())
-                return;
-
             _Member.LibraryCardNumber = txtLibrayCardNum.Text.Trim();
             _Member.CreatedByUserID=clsGlobal.CurrentUser.UserID;
-            _Member.IsActive = true;
+            _Member.IsActive = cbIsActive.Checked;
 
             int NationalityCountryID = clsCountries.Find(cbCounties.Text).CountryID;
             _Member.FirstName = txtFirstName.Text.Trim();
@@ -328,20 +313,11 @@ namespace Library_Manegment_System
                 _Member.ImagePath = pbPersonImage.ImageLocation;
             else
                 _Member.ImagePath = "";
+        }
 
-            if (_Mode == enMode.AddNew)
-            {
-                _MembershipPlans = clsMembershipPlans.FindByPlanName(cbPlane.Text);
-                _MemberSubscriptions.StartDate = DateTime.Now;
-                _MemberSubscriptions.IsActive = true;
-                _MemberSubscriptions.PlanID = _MembershipPlans.PlanID;
-                _MemberSubscriptions.CreatedByUserID = clsGlobal.CurrentUser.UserID;
-                _MemberSubscriptions.EndDate =
-                    DateTime.Now.Date.AddMonths(_MembershipPlans.DurationMonths);
-                _MemberSubscriptions.SubscriptionStatus =(byte)clsMemberSubscriptions.enSubscriptionStatus.Active;
-                
-
-                _PaymentDetails.PaymentTypeID = clsPaymentTypes.FindByTypeName(cbPaymentType.Text.Trim()).PaymentTypeID;
+        private void _FillPaymentInfo()
+        {
+                 _PaymentDetails.PaymentTypeID = clsPaymentTypes.FindByTypeName(cbPaymentType.Text.Trim()).PaymentTypeID;
                 _PaymentDetails.MemberID = _Member.MemberID;
                 _PaymentDetails.Amount = _MembershipPlans.Price;
                 _PaymentDetails.PaymentStatus = (byte)clsPayments.enPaymentStatus.Paid;
@@ -349,54 +325,99 @@ namespace Library_Manegment_System
                 _PaymentDetails.PaymentDate = DateTime.Now;
                 int EntityTypeID = (byte)clsPaymentEntities.enEntityType.MemberSubscription;
                 _PaymentDetails.EntityTypeID = clsPaymentEntities.FindByID(EntityTypeID).EntityTypeID;
+
+        }
+
+        private void _FilMemberSubscriptionsInfo()
+        {
+            _MembershipPlans = clsMembershipPlans.FindByPlanName(cbPlane.Text);
+            _MemberSubscriptions.PlanID = _MembershipPlans.PlanID;
+            _MemberSubscriptions.CreatedByUserID = clsGlobal.CurrentUser.UserID;
+            _MemberSubscriptions.IsActive =chbIsSubscribtionActive.Checked; 
+            _MemberSubscriptions.SubscriptionStatus = clsMemberSubscriptions.GetSubscriptionStatusAsByte(cbSubStatus.Text.Trim());
+              
+        }
+
+
+        private async void btnSave_Click(object sender, EventArgs e)
+        {
+            if (!this.ValidateChildren())
+            {
+                MessageBox.Show("Some fileds are not valide!, put the mouse over the red icon(s) to see the erro",
+                    "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (!_HandlePersonImage())
+                return;
+
+            if(_Mode==enMode.AddNew)
+            {
+        
+
+            }
+
+
+            _FillMemberInfo();
+
+            _FilMemberSubscriptionsInfo();
+
+            _FillPaymentInfo();
+           
+             /*
+              
+                if (_Mode == enMode.AddNew)
+            {
+       
             }
             else
             {
-                if (!clsMemberSubscriptions.IsSubscriptionActivByStatus((clsMemberSubscriptions.enSubscriptionStatus)clsMemberSubscriptions.GetSubscriptionStatusAsByte(cbSubStatus.Text.Trim())))
-                {
-                    _MemberSubscriptions.IsActive = false;
-                    _Member.IsActive = false;
-                }
-                else
-                {
-                    _MemberSubscriptions.IsActive = true;
-                    _Member.IsActive = true;
-                }
+                 if (!clsMemberSubscriptions.IsSubscriptionActivByStatus((clsMemberSubscriptions
+                     .enSubscriptionStatus)clsMemberSubscriptions.GetSubscriptionStatusAsByte(cbSubStatus.Text.Trim())))
+                 {
+                     _Member.IsActive = false;
+                 }
+                 else
+                 {
+                     _Member.IsActive = true;
+                 }
+
                 _MemberSubscriptions.SubscriptionStatus = clsMemberSubscriptions.GetSubscriptionStatusAsByte(cbSubStatus.Text.Trim());
+
                 _PaymentDetails.PaymentTypeID = clsPaymentTypes.FindByTypeName(cbPaymentType.Text.Trim()).PaymentTypeID;
             }
+             
+              */
 
 
 
-            if (!await  _Member.Save())
+            if (!await _Member.Save())
             {
                 MessageBox.Show("Error:Payment Details  Is not Saved Successfully.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-             cbIsActive.Checked = true;
-            _PaymentDetails.MemberID= _Member.MemberID;
-            _MemberSubscriptions.MemberID = _Member.MemberID;
 
-            if (! await _MemberSubscriptions.Save())
+            _PaymentDetails.MemberID = _Member.MemberID;
+            _MemberSubscriptions.MemberID = _Member.MemberID;
+        
+
+            if (!await _MemberSubscriptions.Save())
             {
                 MessageBox.Show("Error:Member Subscriptions  Is not Saved Successfully.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
             _PaymentDetails.EntityID = _MemberSubscriptions.SubscriptionID;
-            _Member.LasrSubscriptionID = _MemberSubscriptions.SubscriptionID;
-            chbIsSubscribtionActive.Checked= true;
-            
+            _Member.LastSubscriptionID = _MemberSubscriptions.SubscriptionID;
 
-          await   clsMembers.UpdateLastSubscriptionID(_Member.MemberID, _MemberSubscriptions.SubscriptionID);
-      
 
-            if ( await _PaymentDetails.Save())
+            if (await _PaymentDetails.Save())
             {
 
-                lblPaymentID.Text=_PaymentDetails.PaymentID.ToString();
-                lblPaymentDetailsID.Text=_PaymentDetails.PaymentDetailID.ToString();
-                lblSubscriptionID.Text = _Member.LasrSubscriptionID.ToString();
+                lblPaymentID.Text = _PaymentDetails.PaymentID.ToString();
+                lblPaymentDetailsID.Text = _PaymentDetails.PaymentDetailID.ToString();
+                lblSubscriptionID.Text = _Member.LastSubscriptionID.ToString();
                 lblMemberID.Text = _Member.MemberID.ToString();
                 cbSubStatus.Enabled = true;
                 cbPaymentType.Enabled = false;
@@ -413,14 +434,13 @@ namespace Library_Manegment_System
             }
             else
                 MessageBox.Show("Error: Data Is not Saved Successfully.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-           
+
         }
 
-        private void txtLibrayCardNum_Validating(object sender, CancelEventArgs e)
+        private async void txtLibrayCardNum_Validating(object sender, CancelEventArgs e)
         {
             if (string.IsNullOrEmpty(txtLibrayCardNum.Text.Trim()))
             {
-               
                 e.Cancel = true;
                 errorProvider1.SetError(txtLibrayCardNum, "Library Card Number cannot be blank");
             }
@@ -428,6 +448,17 @@ namespace Library_Manegment_System
             {
                 errorProvider1.SetError(txtLibrayCardNum, null);
             };
+
+            if (txtLibrayCardNum.Text.Trim() != _Member.NationalNo && await clsMembers.IsMembersExisteByLCN(txtLibrayCardNum.Text.Trim()))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtLibrayCardNum, "Library Card Number  is used for another person!");
+
+            }
+            else
+            {
+                errorProvider1.SetError(txtLibrayCardNum, null);
+            }
         }
 
         private void btnNext_Click(object sender, EventArgs e)
@@ -476,8 +507,6 @@ namespace Library_Manegment_System
         private void llRemoveImage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             pbPersonImage.ImageLocation = null;
-
-
 
             if (rbMale.Checked)
                 pbPersonImage.Image = Resources.undraw_male_avatar_zkzx;
@@ -534,18 +563,17 @@ namespace Library_Manegment_System
         private void rbMale_CheckedChanged(object sender, EventArgs e)
         {
             if (pbPersonImage.ImageLocation == null)
-                pbPersonImage.Image = Resources.undraw_female_avatar_7t6k;
+                pbPersonImage.Image = Resources.undraw_male_avatar_zkzx;
         }
 
         private void rbFemale_CheckedChanged(object sender, EventArgs e)
         {
             if (pbPersonImage.ImageLocation == null)
-                pbPersonImage.Image = Resources.undraw_male_avatar_zkzx;
+                pbPersonImage.Image = Resources.undraw_female_avatar_7t6k;
         }
       
         private void ValidateEmptyTextBox(object sender, CancelEventArgs e)
         {
-
 
             Guna2TextBox Temp = ((Guna2TextBox)sender);
             if (string.IsNullOrEmpty(Temp.Text.Trim()))
@@ -564,16 +592,16 @@ namespace Library_Manegment_System
         {
             if (string.IsNullOrEmpty(cbSubStatus.Text))
                 return;
-
             
             if (!clsMemberSubscriptions.IsSubscriptionActivByStatus((clsMemberSubscriptions.enSubscriptionStatus)clsMemberSubscriptions.GetSubscriptionStatusAsByte(cbSubStatus.Text.Trim())))
             {
                 chbIsSubscribtionActive.Checked = false;
                 cbIsActive.Checked = false;
-               // _MemberSubscriptions.IsActive = false;
-             //   _Member.IsActive = false;
+       
             }
 
         }
+   
+    
     }
 }

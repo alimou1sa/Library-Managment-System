@@ -196,10 +196,7 @@ namespace Library_Manegment_System
 
                     _Mode = enMode.Update;
                     lblTitl.Text = "Update Authors";
-
                     MessageBox.Show("Data Saved Successfully.", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-
 
                     DataBack?.Invoke(this, _Authors.Name);
                 }

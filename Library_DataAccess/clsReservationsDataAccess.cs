@@ -15,24 +15,20 @@ namespace Library_DataAccessLayer
     public class clsReservationsDataAccess
     {
 
-public static bool GetReservationsInfoByID(int ReservationID,ref int MemberID,ref int BookID, ref DateTime ReservationDate,ref byte Status,ref int CreateByUserID)
-    {
-        bool IsFound  = false;
+        public static bool GetReservationsInfoByID(int ReservationID, ref int MemberID, ref int BookID, ref DateTime ReservationDate, ref byte Status, ref int CreateByUserID)
+        {
+            bool IsFound = false;
 
             try
             {
-
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
                     connection.Open();
 
-                    string query = @" Select * From Reservations Where ReservationID = @ReservationID";
-
-
-                    using (SqlCommand command = new SqlCommand(query, connection))
+                    using (SqlCommand command = new SqlCommand("SP_GetReservationsInfoByID", connection))
                     {
+                        command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@ReservationID", ReservationID);
-
 
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
@@ -63,34 +59,24 @@ public static bool GetReservationsInfoByID(int ReservationID,ref int MemberID,re
 
             }
 
-        return IsFound ;
-          
-    }
-     
-        
-        
-        
-        
-        public static int AddNewReservations(int MemberID,int BookID, DateTime ReservationDate,byte Status,int CreateByUserID)
-    {
-        int InsertedID  = -1;
+            return IsFound;
+
+        }
+
+        public static async Task<int> AddNewReservations(int MemberID, int BookID, DateTime ReservationDate, byte Status, int CreateByUserID)
+        {
+            int InsertedID = -1;
 
             try
             {
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
-                    string query = @"INSERT INTO Reservations(MemberID, BookID, ReservationDate, Status, CreateByUserID)
-                                   
-                                       VALUES (@MemberID, @BookID, @ReservationDate, @Status, @CreateByUserID) 
-                
-                                SELECT SCOPE_IDENTITY();";
-
-
-                    using (SqlCommand command = new SqlCommand(query, connection))
+                    using (SqlCommand command = new SqlCommand("SP_AddNewReservations", connection))
                     {
+                        command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@MemberID", MemberID);
                         command.Parameters.AddWithValue("@BookID", BookID);
                         command.Parameters.AddWithValue("@ReservationDate", ReservationDate);
@@ -98,15 +84,14 @@ public static bool GetReservationsInfoByID(int ReservationID,ref int MemberID,re
                         command.Parameters.AddWithValue("@CreateByUserID", CreateByUserID);
 
 
-                        object Result = command.ExecuteScalar();
-
-                        int ID = 0;
-
-                        if (Result != null && int.TryParse(Result.ToString(), out ID))
+                        SqlParameter outputIdParam = new SqlParameter("@NewReservationID", SqlDbType.Int)
                         {
-                            InsertedID = ID;
+                            Direction = ParameterDirection.Output
+                        };
 
-                        }
+                        command.Parameters.Add(outputIdParam);
+                        await command.ExecuteNonQueryAsync();
+                        InsertedID = (int)command.Parameters["@NewReservationID"].Value;
 
                     }
                 }
@@ -116,10 +101,11 @@ public static bool GetReservationsInfoByID(int ReservationID,ref int MemberID,re
                 clsErrorEventLog.LogError(ex.Message);
             }
 
-            return InsertedID ;
-          
-    }
-        public static bool UpdateReservations(int ReservationID,int MemberID, int BookID, DateTime ReservationDate, byte Status, int CreateByUserID)
+            return InsertedID;
+
+        }
+      
+        public static async Task<bool> UpdateReservations(int ReservationID,int MemberID, int BookID, DateTime ReservationDate, byte Status, int CreateByUserID)
     {
         int RowsAffected  = -1;
 
@@ -128,15 +114,11 @@ public static bool GetReservationsInfoByID(int ReservationID,ref int MemberID,re
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
-                    string query = @"Update Reservations SET MemberID = @MemberID,BookID = @BookID,ReservationDate = @ReservationDate,Status = @Status,CreateByUserID = @CreateByUserID
-
-                                    WHERE ReservationID= @ReservationID";
-
-
-                    using (SqlCommand command = new SqlCommand(query, connection))
+                    using (SqlCommand command = new SqlCommand("SP_UpdateReservations", connection))
                     {
+                        command.CommandType = CommandType.StoredProcedure;
 
                         command.Parameters.AddWithValue("@ReservationID", ReservationID);
                         command.Parameters.AddWithValue("@MemberID", MemberID);
@@ -146,10 +128,7 @@ public static bool GetReservationsInfoByID(int ReservationID,ref int MemberID,re
                         command.Parameters.AddWithValue("@CreateByUserID", CreateByUserID);
 
 
-                        RowsAffected = command.ExecuteNonQuery();
-
-
-
+                        RowsAffected =await command.ExecuteNonQueryAsync();
                     }
                 }
             }
@@ -160,7 +139,9 @@ public static bool GetReservationsInfoByID(int ReservationID,ref int MemberID,re
 
             return (RowsAffected != -1 ) ;
           
-    }public static DataTable GetListReservations()
+    }
+     
+        public static async Task< DataTable> GetListReservations()
     {
         DataTable dtList = new DataTable();
 
@@ -169,25 +150,15 @@ public static bool GetReservationsInfoByID(int ReservationID,ref int MemberID,re
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
-
-                    string query = @" 
-
-SELECT Reservations.ReservationID, Reservations.ReservationDate, 
-             CASE WHEN Reservations.Status = 2 THEN 'Conver To Borrowing' WHEN Reservations.Status = 3 THEN 'Cancelled' 
-			 WHEN Reservations.Status = 1 THEN 'Reserved' ELSE 'Cancelled' END AS ReservationsStatus, 
-			 Books.Title, Books.ISBN, Books.BookID, Users.UserName, 
-             Members.MemberID, Members.LibraryCardNumber, Members.IsActive as IsMemberActive
-FROM   Reservations INNER JOIN
-             Books ON Reservations.BookID = Books.BookID INNER JOIN
-             Users ON Reservations.CreateByUserID = Users.UserID INNER JOIN
-             Members ON Reservations.MemberID = Members.MemberID";
+                   await connection.OpenAsync();
 
 
-                    using (SqlCommand command = new SqlCommand(query, connection))
+                    using (SqlCommand command = new SqlCommand("SP_GetListReservations", connection))
                     {
+                        command.CommandType = CommandType.StoredProcedure;
+                     
 
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader =await command.ExecuteReaderAsync())
                         {
 
                             if (reader.HasRows)
@@ -211,7 +182,8 @@ FROM   Reservations INNER JOIN
             return dtList ;
           
     }
-        public static bool DeleteReservations(int ReservationID)
+      
+        public static async Task<bool> DeleteReservations(int ReservationID)
     {
         int RowsAffected  = -1;
 
@@ -220,20 +192,13 @@ FROM   Reservations INNER JOIN
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                   await connection.OpenAsync();
 
-                    string query = @" Delete From Reservations Where ReservationID = @ReservationID";
-
-
-                    using (SqlCommand command = new SqlCommand(query, connection))
+                    using (SqlCommand command = new SqlCommand("SP_DeleteReservations", connection))
                     {
+                        command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@ReservationID", ReservationID);
-
-
-                        RowsAffected = command.ExecuteNonQuery();
-
-
-
+                        RowsAffected =await command.ExecuteNonQueryAsync();
                     }
                 }
             }
@@ -245,7 +210,8 @@ FROM   Reservations INNER JOIN
             return (RowsAffected != -1 ) ;
           
     }
-        public static bool IsReservationsExisteByBookIDAndMemberID(int BookID,int MemberID)
+     
+        public static async Task<bool> IsReservationsExisteByBookIDAndMemberID(int BookID,int MemberID)
     {
         bool IsFound  = false;
 
@@ -254,28 +220,23 @@ FROM   Reservations INNER JOIN
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
-                    string query = @" 
-			 select top (1) Found=1 from Reservations where Reservations.BookID=@BookID 
-and Status=1 and MemberID=@MemberID";
-
-
-                    using (SqlCommand command = new SqlCommand(query, connection))
+                    using (SqlCommand command = new SqlCommand("SP_IsReservationsExisteByBookIDAndMemberID", connection))
                     {
+                        command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@BookID", BookID);
                         command.Parameters.AddWithValue("@MemberID", MemberID);
 
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        SqlParameter returnParameter = new SqlParameter("@ReturnVal", SqlDbType.Int)
                         {
+                            Direction = ParameterDirection.ReturnValue
+                        };
 
-                            if (reader.Read())
-                            {
-                                IsFound = true;
+                        command.Parameters.Add(returnParameter);
+                        await command.ExecuteNonQueryAsync();
 
-
-                            }
-                        }
+                        IsFound = (int)returnParameter.Value == 1;
 
 
 
@@ -293,7 +254,6 @@ and Status=1 and MemberID=@MemberID";
         return IsFound ;
           
     }
-
 
         public static bool GetReservationsInfoByBookID(int BookID, ref int ReservationID, ref int MemberID,  ref DateTime ReservationDate, ref byte Status, ref int CreateByUserID)
         {
@@ -350,8 +310,7 @@ and Reservations.Status=1
 
         }
 
-
-        public static bool IsThereReservationsForThisBook(int BookID)
+        public static async Task<bool> IsThereReservationsForThisBook(int BookID)
         {
             bool IsFound = false;
 
@@ -360,7 +319,7 @@ and Reservations.Status=1
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
                     string query = @" 
 			 select top (1) Found=1 from Reservations where Reservations.BookID=@BookID
@@ -371,7 +330,7 @@ and Status=1 ";
                     {
                         command.Parameters.AddWithValue("@BookID", BookID);
 
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader =await command.ExecuteReaderAsync())
                         {
 
                             if (reader.Read())
@@ -399,8 +358,6 @@ and Status=1 ";
 
         }
 
-
-
         public static bool GetActiveReservationsInfoByBookIDAndMemberID(int MemberID,int BookID,ref int ReservationID,  
             ref DateTime ReservationDate, ref byte Status, ref int CreateByUserID)
         {
@@ -413,7 +370,8 @@ and Status=1 ";
                 {
                     connection.Open();
 
-                    string query = @"select * from Reservations where BookID=@BookID and MemberID=@MemberID and Status=1";
+                    string query = @"select * from Reservations where BookID=@BookID 
+and MemberID=@MemberID and Status=1";
 
 
                     using (SqlCommand command = new SqlCommand(query, connection))

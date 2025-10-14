@@ -97,9 +97,9 @@ namespace Library_Business
             }
 
         }
-        public static async Task<bool> DeleteGenres(int GenreID)
+        public static async Task<bool> DeleteGenres(string GenreName)
         {
-            return await  clsGenresDataAccess.DeleteGenres(GenreID);
+            return await  clsGenresDataAccess.DeleteGenres(GenreName);
 
         }
         public static async Task<DataTable> GetListGenres()

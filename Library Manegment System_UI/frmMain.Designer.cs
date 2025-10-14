@@ -32,12 +32,11 @@
             this.xToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listBooksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listBookCopiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.findBookToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.membersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.listMembersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.addNewMemberToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.listMemberSubscriptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.usersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.usersManagmentToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addUserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loanBooksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listLosnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resevationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,9 +61,12 @@
             this.lblTimeNow = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.lblUserName = new System.Windows.Forms.Label();
-            this.findBookToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.listMembersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addNewMemberToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -89,6 +91,7 @@
             this.menuStrip1.Size = new System.Drawing.Size(1831, 45);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
             // xToolStripMenuItem
             // 
@@ -119,50 +122,37 @@
             this.listBookCopiesToolStripMenuItem.Text = "Add New Book";
             this.listBookCopiesToolStripMenuItem.Click += new System.EventHandler(this.listBookCopiesToolStripMenuItem_Click);
             // 
+            // findBookToolStripMenuItem
+            // 
+            this.findBookToolStripMenuItem.Font = new System.Drawing.Font("Lucida Calligraphy", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.findBookToolStripMenuItem.Name = "findBookToolStripMenuItem";
+            this.findBookToolStripMenuItem.Size = new System.Drawing.Size(279, 34);
+            this.findBookToolStripMenuItem.Text = "Find Book";
+            this.findBookToolStripMenuItem.Click += new System.EventHandler(this.findBookToolStripMenuItem_Click);
+            // 
             // membersToolStripMenuItem
             // 
+            this.membersToolStripMenuItem.DoubleClickEnabled = true;
             this.membersToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.listMembersToolStripMenuItem,
-            this.addNewMemberToolStripMenuItem,
-            this.listMemberSubscriptionsToolStripMenuItem});
+            this.addNewMemberToolStripMenuItem});
             this.membersToolStripMenuItem.Font = new System.Drawing.Font("Lucida Bright", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.membersToolStripMenuItem.Image = global::Library_Manegment_System.Properties.Resources.icons8_members_64;
             this.membersToolStripMenuItem.Name = "membersToolStripMenuItem";
             this.membersToolStripMenuItem.Size = new System.Drawing.Size(209, 41);
             this.membersToolStripMenuItem.Text = "Members";
-            // 
-            // listMembersToolStripMenuItem
-            // 
-            this.listMembersToolStripMenuItem.Font = new System.Drawing.Font("Lucida Calligraphy", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.listMembersToolStripMenuItem.Name = "listMembersToolStripMenuItem";
-            this.listMembersToolStripMenuItem.Size = new System.Drawing.Size(411, 34);
-            this.listMembersToolStripMenuItem.Text = "List Members";
-            this.listMembersToolStripMenuItem.Click += new System.EventHandler(this.listMembersToolStripMenuItem_Click);
-            // 
-            // addNewMemberToolStripMenuItem
-            // 
-            this.addNewMemberToolStripMenuItem.Font = new System.Drawing.Font("Baskerville Old Face", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.addNewMemberToolStripMenuItem.Name = "addNewMemberToolStripMenuItem";
-            this.addNewMemberToolStripMenuItem.Size = new System.Drawing.Size(411, 34);
-            this.addNewMemberToolStripMenuItem.Text = "Add New Member";
-            this.addNewMemberToolStripMenuItem.Click += new System.EventHandler(this.addNewMemberToolStripMenuItem_Click);
-            // 
-            // listMemberSubscriptionsToolStripMenuItem
-            // 
-            this.listMemberSubscriptionsToolStripMenuItem.Font = new System.Drawing.Font("Lucida Calligraphy", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.listMemberSubscriptionsToolStripMenuItem.Name = "listMemberSubscriptionsToolStripMenuItem";
-            this.listMemberSubscriptionsToolStripMenuItem.Size = new System.Drawing.Size(411, 34);
-            this.listMemberSubscriptionsToolStripMenuItem.Text = "List Member Subscriptions";
-            this.listMemberSubscriptionsToolStripMenuItem.Click += new System.EventHandler(this.listMemberSubscriptionsToolStripMenuItem_Click);
+            this.membersToolStripMenuItem.Click += new System.EventHandler(this.membersToolStripMenuItem_Click);
             // 
             // usersToolStripMenuItem
             // 
             this.usersToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.usersManagmentToolStripMenuItem});
+            this.usersManagmentToolStripMenuItem,
+            this.addUserToolStripMenuItem});
             this.usersToolStripMenuItem.Image = global::Library_Manegment_System.Properties.Resources.icons8_users_50;
             this.usersToolStripMenuItem.Name = "usersToolStripMenuItem";
             this.usersToolStripMenuItem.Size = new System.Drawing.Size(159, 41);
             this.usersToolStripMenuItem.Text = "Users";
+            this.usersToolStripMenuItem.Click += new System.EventHandler(this.usersToolStripMenuItem_Click);
             // 
             // usersManagmentToolStripMenuItem
             // 
@@ -172,6 +162,14 @@
             this.usersManagmentToolStripMenuItem.Text = "List Users";
             this.usersManagmentToolStripMenuItem.Click += new System.EventHandler(this.usersManagmentToolStripMenuItem_Click);
             // 
+            // addUserToolStripMenuItem
+            // 
+            this.addUserToolStripMenuItem.Font = new System.Drawing.Font("Lucida Calligraphy", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.addUserToolStripMenuItem.Name = "addUserToolStripMenuItem";
+            this.addUserToolStripMenuItem.Size = new System.Drawing.Size(231, 34);
+            this.addUserToolStripMenuItem.Text = "Add User";
+            this.addUserToolStripMenuItem.Click += new System.EventHandler(this.addUserToolStripMenuItem_Click);
+            // 
             // loanBooksToolStripMenuItem
             // 
             this.loanBooksToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -180,6 +178,7 @@
             this.loanBooksToolStripMenuItem.Name = "loanBooksToolStripMenuItem";
             this.loanBooksToolStripMenuItem.Size = new System.Drawing.Size(159, 41);
             this.loanBooksToolStripMenuItem.Text = "Loans";
+            this.loanBooksToolStripMenuItem.Click += new System.EventHandler(this.loanBooksToolStripMenuItem_Click);
             // 
             // listLosnToolStripMenuItem
             // 
@@ -197,6 +196,7 @@
             this.resevationsToolStripMenuItem.Name = "resevationsToolStripMenuItem";
             this.resevationsToolStripMenuItem.Size = new System.Drawing.Size(299, 41);
             this.resevationsToolStripMenuItem.Text = "Reservations";
+            this.resevationsToolStripMenuItem.Click += new System.EventHandler(this.resevationsToolStripMenuItem_Click);
             // 
             // listReservationsToolStripMenuItem
             // 
@@ -214,6 +214,7 @@
             this.purchasesToolStripMenuItem.Name = "purchasesToolStripMenuItem";
             this.purchasesToolStripMenuItem.Size = new System.Drawing.Size(239, 41);
             this.purchasesToolStripMenuItem.Text = "Purchases";
+            this.purchasesToolStripMenuItem.Click += new System.EventHandler(this.purchasesToolStripMenuItem_Click);
             // 
             // listPurchasesToolStripMenuItem
             // 
@@ -231,6 +232,7 @@
             this.paymentsToolStripMenuItem.Name = "paymentsToolStripMenuItem";
             this.paymentsToolStripMenuItem.Size = new System.Drawing.Size(219, 41);
             this.paymentsToolStripMenuItem.Text = "Payments";
+            this.paymentsToolStripMenuItem.Click += new System.EventHandler(this.paymentsToolStripMenuItem_Click);
             // 
             // listPaymentsToolStripMenuItem
             // 
@@ -305,7 +307,6 @@
             // 
             // panel1
             // 
-            this.panel1.BackgroundImage = global::Library_Manegment_System.Properties.Resources.photo_1519682337058_a94d519337bc;
             this.panel1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.panel1.Controls.Add(this.lblJobtitle);
             this.panel1.Controls.Add(this.label2);
@@ -314,6 +315,7 @@
             this.panel1.Controls.Add(this.lblTimeNow);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.lblUserName);
+            this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 45);
             this.panel1.Name = "panel1";
@@ -324,19 +326,20 @@
             // lblJobtitle
             // 
             this.lblJobtitle.AutoSize = true;
-            this.lblJobtitle.BackColor = System.Drawing.Color.Transparent;
+            this.lblJobtitle.BackColor = System.Drawing.Color.Silver;
             this.lblJobtitle.Font = new System.Drawing.Font("Segoe Print", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblJobtitle.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.lblJobtitle.Location = new System.Drawing.Point(1422, 690);
+            this.lblJobtitle.Location = new System.Drawing.Point(1422, 688);
             this.lblJobtitle.Name = "lblJobtitle";
             this.lblJobtitle.Size = new System.Drawing.Size(152, 40);
             this.lblJobtitle.TabIndex = 6;
             this.lblJobtitle.Text = "User Name:";
+            this.lblJobtitle.Click += new System.EventHandler(this.lblJobtitle_Click);
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.Color.Transparent;
+            this.label2.BackColor = System.Drawing.Color.Silver;
             this.label2.Font = new System.Drawing.Font("Segoe Print", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.label2.Location = new System.Drawing.Point(1402, 690);
@@ -348,10 +351,10 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.BackColor = System.Drawing.Color.Transparent;
+            this.label4.BackColor = System.Drawing.Color.Silver;
             this.label4.Font = new System.Drawing.Font("Segoe Print", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label4.Location = new System.Drawing.Point(1210, 586);
+            this.label4.Location = new System.Drawing.Point(1210, 582);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(222, 40);
             this.label4.TabIndex = 4;
@@ -360,7 +363,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.BackColor = System.Drawing.Color.Silver;
             this.label1.Font = new System.Drawing.Font("Segoe Print", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.RoyalBlue;
             this.label1.Location = new System.Drawing.Point(1199, 688);
@@ -372,7 +375,7 @@
             // lblTimeNow
             // 
             this.lblTimeNow.AutoSize = true;
-            this.lblTimeNow.BackColor = System.Drawing.Color.Transparent;
+            this.lblTimeNow.BackColor = System.Drawing.Color.Silver;
             this.lblTimeNow.Font = new System.Drawing.Font("Segoe Print", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblTimeNow.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.lblTimeNow.Location = new System.Drawing.Point(1328, 642);
@@ -384,7 +387,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.BackColor = System.Drawing.Color.Transparent;
+            this.label3.BackColor = System.Drawing.Color.Silver;
             this.label3.Font = new System.Drawing.Font("Segoe Print", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.RoyalBlue;
             this.label3.Location = new System.Drawing.Point(1199, 642);
@@ -396,7 +399,7 @@
             // lblUserName
             // 
             this.lblUserName.AutoSize = true;
-            this.lblUserName.BackColor = System.Drawing.Color.Transparent;
+            this.lblUserName.BackColor = System.Drawing.Color.Silver;
             this.lblUserName.Font = new System.Drawing.Font("Segoe Print", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblUserName.ForeColor = System.Drawing.SystemColors.HotTrack;
             this.lblUserName.Location = new System.Drawing.Point(1337, 688);
@@ -405,13 +408,33 @@
             this.lblUserName.TabIndex = 1;
             this.lblUserName.Text = "User Name:";
             // 
-            // findBookToolStripMenuItem
+            // pictureBox1
             // 
-            this.findBookToolStripMenuItem.Font = new System.Drawing.Font("Lucida Calligraphy", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.findBookToolStripMenuItem.Name = "findBookToolStripMenuItem";
-            this.findBookToolStripMenuItem.Size = new System.Drawing.Size(279, 34);
-            this.findBookToolStripMenuItem.Text = "Find Book";
-            this.findBookToolStripMenuItem.Click += new System.EventHandler(this.findBookToolStripMenuItem_Click);
+            this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBox1.Image = global::Library_Manegment_System.Properties.Resources.photo_1519682337058_a94d519337bc1;
+            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(1831, 1006);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 7;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click_1);
+            // 
+            // listMembersToolStripMenuItem
+            // 
+            this.listMembersToolStripMenuItem.Font = new System.Drawing.Font("Lucida Calligraphy", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.listMembersToolStripMenuItem.Name = "listMembersToolStripMenuItem";
+            this.listMembersToolStripMenuItem.Size = new System.Drawing.Size(280, 34);
+            this.listMembersToolStripMenuItem.Text = "List Members";
+            this.listMembersToolStripMenuItem.Click += new System.EventHandler(this.listMembersToolStripMenuItem_Click);
+            // 
+            // addNewMemberToolStripMenuItem
+            // 
+            this.addNewMemberToolStripMenuItem.Font = new System.Drawing.Font("Baskerville Old Face", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.addNewMemberToolStripMenuItem.Name = "addNewMemberToolStripMenuItem";
+            this.addNewMemberToolStripMenuItem.Size = new System.Drawing.Size(280, 34);
+            this.addNewMemberToolStripMenuItem.Text = "Add New Member";
+            this.addNewMemberToolStripMenuItem.Click += new System.EventHandler(this.addNewMemberToolStripMenuItem_Click);
             // 
             // frmMain
             // 
@@ -432,6 +455,7 @@
             this.menuStrip1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -443,7 +467,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ToolStripMenuItem listBooksToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem membersToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem listMembersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem usersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem usersManagmentToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem listBookCopiesToolStripMenuItem;
@@ -464,14 +487,16 @@
         private System.Windows.Forms.ToolStripMenuItem crrentUserInfoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem changePasswordToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem singOutToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem addNewMemberToolStripMenuItem;
         private System.Windows.Forms.Label lblJobtitle;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ToolStripMenuItem listMemberSubscriptionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
         private System.Windows.Forms.ToolStripMenuItem findBookToolStripMenuItem;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.ToolStripMenuItem addUserToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem listMembersToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addNewMemberToolStripMenuItem;
     }
 }

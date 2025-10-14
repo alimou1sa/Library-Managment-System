@@ -21,18 +21,18 @@ namespace Library_Manegment_System
         {
             InitializeComponent();
         }
-        DataTable _dtPurchasesBooks = clsPurchasesBooks.GetListPurchasesBooks();
+        DataTable _dtPurchasesBooks = null;// clsPurchasesBooks.GetListPurchasesBooks();
 
-        private void _RefreshReservationsList()
+        private async Task  _RefreshReservationsList()
         {
-            _dtPurchasesBooks = clsPurchasesBooks.GetListPurchasesBooks();
+            _dtPurchasesBooks = await  clsPurchasesBooks.GetListPurchasesBooks();
             dgvListPurchasesBooks.DataSource = _dtPurchasesBooks;
             lblRecordsCount.Text = dgvListPurchasesBooks.Rows.Count.ToString();
         }
 
-        private void frmPurchasesBooksManagment_Load(object sender, EventArgs e)
+        private async void frmPurchasesBooksManagment_Load(object sender, EventArgs e)
         {
-            _RefreshReservationsList();
+           await  _RefreshReservationsList();
             dgvListPurchasesBooks.DataSource = _dtPurchasesBooks;
             cbFiterBy.SelectedIndex = 0;
             lblRecordsCount.Text = dgvListPurchasesBooks.Rows.Count.ToString();
@@ -134,19 +134,19 @@ namespace Library_Manegment_System
             
         }
 
-        private void btnAddMember_Click(object sender, EventArgs e)
+        private async void btnAddMember_Click(object sender, EventArgs e)
         {
-            frmPurchasesBook frmPurchases =new frmPurchasesBook();
+            frmAdd_UpdatePurchasesBook frmPurchases =new frmAdd_UpdatePurchasesBook();
             frmPurchases.ShowDialog();
-            _RefreshReservationsList();
+          await   _RefreshReservationsList();
 
         }
 
-        private void editToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            frmPurchasesBook frmPurchases = new frmPurchasesBook( (int)dgvListPurchasesBooks.CurrentRow.Cells[0].Value);
+            frmAdd_UpdatePurchasesBook frmPurchases = new frmAdd_UpdatePurchasesBook( (int)dgvListPurchasesBooks.CurrentRow.Cells[0].Value);
             frmPurchases.ShowDialog();
-            _RefreshReservationsList();
+           await  _RefreshReservationsList();
 
         }
 
@@ -156,7 +156,7 @@ namespace Library_Manegment_System
                 e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
 
-        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int PurchasesID = (int)dgvListPurchasesBooks .CurrentRow.Cells[0].Value;
 
@@ -164,10 +164,10 @@ namespace Library_Manegment_System
                 return;
 
 
-            if (clsPurchasesBooks.IsPurchasesBooksExisteByID(PurchasesID))
+            if (await  clsPurchasesBooks.IsPurchasesBooksExisteByID(PurchasesID))
             {
 
-                if (clsPurchasesBooks.DeletePurchasesBooks(PurchasesID))
+                if (await  clsPurchasesBooks.DeletePurchasesBooks(PurchasesID))
                 {
 
                     MessageBox.Show("Purchases Deleted Successfully.", "Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);

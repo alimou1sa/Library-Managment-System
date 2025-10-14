@@ -40,10 +40,10 @@ namespace Library_Manegment_System
             _Mode = enMode.Update;
             _PersonID = PersonID;
         }
-        private void _ResetDefualtValues()
+        private async Task  _ResetDefualtValues()
         {
          
-            _FillCountriesInComoboBox();
+           await  _FillCountriesInComoboBox();
 
             if (_Mode == enMode.AddNew)
             {
@@ -82,7 +82,7 @@ namespace Library_Manegment_System
 
         }
 
-        private async void _FillCountriesInComoboBox()
+        private async Task  _FillCountriesInComoboBox()
         {
             DataTable dtCountries = await  clsCountries.GetListCountries();
 
@@ -204,9 +204,9 @@ namespace Library_Manegment_System
             return true;
         }
 
-        private void frmAddUpdatePersons_Load(object sender, EventArgs e)
+        private async void frmAddUpdatePersons_Load(object sender, EventArgs e)
         {
-            _ResetDefualtValues();
+           await  _ResetDefualtValues();
 
             if (_Mode == enMode.Update)
                 _LoadData();

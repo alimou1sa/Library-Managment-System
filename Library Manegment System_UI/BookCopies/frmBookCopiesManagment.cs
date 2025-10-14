@@ -20,19 +20,20 @@ namespace Library_Manegment_System
         {
             InitializeComponent();
             _BookID = BooKID;
+
         }
 
         DataTable _dtBookCopies = null; 
-        private async void _RefreshBookCopiesList()
+        private async Task _RefreshBookCopiesList()
         {
             _dtBookCopies = await  clsBookCopies.GetListBookCopies(_BookID);
             dgvListBookCopies.DataSource = _dtBookCopies;
             lblRecordsCount.Text = dgvListBookCopies.Rows.Count.ToString();
         }
 
-        private void frmBookCopiesManagment_Load(object sender, EventArgs e)
+        private  async void frmBookCopiesManagment_Load(object sender, EventArgs e)
         {
-            _RefreshBookCopiesList();
+           await   _RefreshBookCopiesList();
             dgvListBookCopies.DataSource = _dtBookCopies;
             cbFiterBy.SelectedIndex = 0;
             lblRecordsCount.Text = dgvListBookCopies.Rows.Count.ToString();
@@ -41,23 +42,21 @@ namespace Library_Manegment_System
             if (dgvListBookCopies.Rows.Count > 0)
             {
 
-                //    dgvShowBooks.Columns[0].Width = 40;
-
-                //    dgvShowBooks.Columns[3].HeaderText = "Genre";
-                //    dgvShowBooks.Columns[4].HeaderText = "PublisherName";
-                //    dgvShowBooks.Columns[5].HeaderText = "Year Published";
-                //    dgvShowBooks.Columns[5].Width = 130;
-                //    dgvShowBooks.Columns[6].HeaderText = "Additional Details";
-                //    dgvShowBooks.Columns[6].Width = 160;
-                //    dgvShowBooks.Columns[7].HeaderText = "Category Name";
-                //    dgvShowBooks.Columns[7].Width = 130;
-                //    dgvShowBooks.Columns[8].HeaderText = "Author Name";
-                //    dgvShowBooks.Columns[8].Width = 130;
-                //    dgvShowBooks.Columns[9].HeaderText = "Book Price";
-                //    dgvShowBooks.Columns[10].HeaderText = "Total Copies";
-                //    dgvShowBooks.Columns[11].HeaderText = "Available Copies";
-                //    dgvShowBooks.Columns[11].Width = 130;
-
+                //dgvListBookCopies.Columns[0].Width = 40;
+                //dgvListBookCopies.Columns[3].HeaderText = "Genre";
+                //dgvListBookCopies.Columns[4].HeaderText = "PublisherName";
+                //dgvListBookCopies.Columns[5].HeaderText = "Year Published";
+                //dgvListBookCopies.Columns[5].Width = 130;
+                //dgvListBookCopies.Columns[6].HeaderText = "Additional Details";
+                //dgvListBookCopies.Columns[6].Width = 160;
+                //dgvListBookCopies.Columns[7].HeaderText = "Category Name";
+                //dgvListBookCopies.Columns[7].Width = 130;
+                //dgvListBookCopies.Columns[8].HeaderText = "Author Name";
+                //dgvListBookCopies.Columns[8].Width = 130;
+                //dgvListBookCopies.Columns[9].HeaderText = "Book Price";
+                //dgvListBookCopies.Columns[10].HeaderText = "Total Copies";
+                //dgvListBookCopies.Columns[11].HeaderText = "Available Copies";
+                //dgvListBookCopies.Columns[11].Width = 130;
             }
 
         }
@@ -70,7 +69,7 @@ namespace Library_Manegment_System
             switch (cbFiterBy.Text)
             {
                 case "Copy ID":
-                    FilterColumn = "_CopyID";
+                    FilterColumn = "CopyID";
                     break;
                 default:
                     FilterColumn = "None";
@@ -87,9 +86,7 @@ namespace Library_Manegment_System
             }
 
 
-            if ( FilterColumn == "_CopyID")
-
-
+            if ( FilterColumn == "CopyID")
                 _dtBookCopies.DefaultView.RowFilter = string.Format("[{0}] = {1}", FilterColumn, txtFiter.Text.Trim());
             else
                 _dtBookCopies.DefaultView.RowFilter = string.Format("[{0}] LIKE '{1}%'", FilterColumn, txtFiter.Text.Trim());
@@ -164,18 +161,18 @@ namespace Library_Manegment_System
             lblRecordsCount.Text = dgvListBookCopies .Rows.Count.ToString();
         }
 
-        private void btnAddBookCopy_Click(object sender, EventArgs e)
+        private async void btnAddBookCopy_Click(object sender, EventArgs e)
         {
             frmAddUpdatebookCopies frmAddUpdatebookCopies =new frmAddUpdatebookCopies(_BookID);
              frmAddUpdatebookCopies.ShowDialog();
-            _RefreshBookCopiesList();
+           await  _RefreshBookCopiesList();
         }
 
-        private void editToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmAddUpdatebookCopies frmAddUpdatebookCopies = new frmAddUpdatebookCopies((int)dgvListBookCopies.CurrentRow.Cells[0].Value, (int)dgvListBookCopies.CurrentRow.Cells[1].Value);
             frmAddUpdatebookCopies.ShowDialog();
-            _RefreshBookCopiesList();
+           await  _RefreshBookCopiesList();
         }
     }
  }

@@ -24,16 +24,16 @@ namespace Library_Manegment_System
 
         DataTable _dtPayments;//= clsPaymentDetails.GetListPaymentDetails();
 
-        private async void _RefreshPaymentsList()
+        private async Task  _RefreshPaymentsList()
         {
             _dtPayments = await  clsPaymentDetails.GetListPaymentDetails();
             dgvListPayments.DataSource = _dtPayments;
             lblRecordsCount.Text = dgvListPayments.Rows.Count.ToString();
         }
 
-        private void frmPaymentManagments_Load(object sender, EventArgs e)
+        private async void frmPaymentManagments_Load(object sender, EventArgs e)
         {
-            _RefreshPaymentsList();
+           await  _RefreshPaymentsList();
             dgvListPayments.DataSource = _dtPayments;
             cbFiterBy.SelectedIndex = 0;
             lblRecordsCount.Text = dgvListPayments.Rows.Count.ToString();
@@ -207,11 +207,11 @@ namespace Library_Manegment_System
 
         }
 
-        private void editToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmAddUpdatePayments updatePayments =new frmAddUpdatePayments((int)dgvListPayments.CurrentRow.Cells[0].Value);
             updatePayments.ShowDialog();
-            _RefreshPaymentsList();
+           await  _RefreshPaymentsList();
         }
 
         private void btnAddPayment_Click(object sender, EventArgs e)

@@ -15,9 +15,9 @@ namespace Library_DataAccessLayer
     public class clsPaymentTypesDataAccess
     {
 
-public static bool GetPaymentTypesInfoByID(int PaymentTypeID,ref string TypeName,ref string Description)
-    {
-        bool IsFound  = false;
+        public static bool GetPaymentTypesInfoByID(int PaymentTypeID, ref string TypeName, ref string Description)
+        {
+            bool IsFound = false;
 
             try
             {
@@ -60,19 +60,20 @@ public static bool GetPaymentTypesInfoByID(int PaymentTypeID,ref string TypeName
 
             }
 
-        return IsFound ;
-          
-    }
-        public static async Task<int> AddNewPaymentTypes(string TypeName,string Description)
-    {
-        int InsertedID  = -1;
+            return IsFound;
+
+        }
+      
+        public static async Task<int> AddNewPaymentTypes(string TypeName, string Description)
+        {
+            int InsertedID = -1;
 
             try
             {
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
                     string query = @"INSERT INTO PaymentTypes(TypeName, Description)
                                    
@@ -112,19 +113,21 @@ public static bool GetPaymentTypesInfoByID(int PaymentTypeID,ref string TypeName
             {
                 clsErrorEventLog.LogError(ex.Message);
             }
-            return InsertedID ;
-          
-    }
-        public static async Task<bool> UpdatePaymentTypes(int PaymentTypeID,string TypeName, string Description)
-    {
-        int RowsAffected  = -1;
+            return InsertedID;
+
+        }
+      
+        public static async Task<bool> UpdatePaymentTypes(int PaymentTypeID, string TypeName, string Description)
+        {
+            int RowsAffected = -1;
 
             try
             {
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
+
 
                     string query = @"Update PaymentTypes SET TypeName = @TypeName,Description = @Description
 
@@ -159,19 +162,20 @@ public static bool GetPaymentTypesInfoByID(int PaymentTypeID,ref string TypeName
                 clsErrorEventLog.LogError(ex.Message);
             }
 
-            return (RowsAffected != -1 ) ;
-          
-    }
+            return (RowsAffected != -1);
+
+        }
+      
         public static async Task<DataTable> GetListPaymentTypes()
-    {
-        DataTable dtList = new DataTable();
+        {
+            DataTable dtList = new DataTable();
 
             try
             {
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
                     string query = @" Select * From PaymentTypes";
 
@@ -200,19 +204,20 @@ public static bool GetPaymentTypesInfoByID(int PaymentTypeID,ref string TypeName
                 clsErrorEventLog.LogError(ex.Message);
             }
 
-            return dtList ;
-          
-    }
+            return dtList;
+
+        }
+       
         public static async Task<bool> DeletePaymentTypes(int PaymentTypeID)
-    {
-        int RowsAffected  = -1;
+        {
+            int RowsAffected = -1;
 
             try
             {
-
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
+            
 
                     string query = @" Delete From PaymentTypes Where PaymentTypeID = @PaymentTypeID";
 
@@ -234,19 +239,20 @@ public static bool GetPaymentTypesInfoByID(int PaymentTypeID,ref string TypeName
                 clsErrorEventLog.LogError(ex.Message);
             }
 
-            return (RowsAffected != -1 ) ;
-          
-    }
+            return (RowsAffected != -1);
+
+        }
+       
         public static async Task<bool> IsPaymentTypesExisteByID(int PaymentTypeID)
-    {
-        bool IsFound  = false;
+        {
+            bool IsFound = false;
 
             try
             {
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
                     string query = @" Select Found = 1 From PaymentTypes Where PaymentTypeID = @PaymentTypeID";
 
@@ -280,12 +286,11 @@ public static bool GetPaymentTypesInfoByID(int PaymentTypeID,ref string TypeName
 
             }
 
-        return IsFound ;
-          
-    }
+            return IsFound;
 
+        }
 
-        public static bool GetPaymentTypesInfoByTypeName(string TypeName,ref  int PaymentTypeID, ref string Description)
+        public static bool GetPaymentTypesInfoByTypeName(string TypeName, ref int PaymentTypeID, ref string Description)
         {
             bool IsFound = false;
 
@@ -333,10 +338,6 @@ public static bool GetPaymentTypesInfoByID(int PaymentTypeID,ref string TypeName
             return IsFound;
 
         }
-
-
-
-
 
     }
 }

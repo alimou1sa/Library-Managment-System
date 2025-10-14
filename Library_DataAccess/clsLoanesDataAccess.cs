@@ -1,12 +1,10 @@
- 
+
+using Library_Manegment_System;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
-using Library_Manegment_System;
+using System.Diagnostics.Eventing.Reader;
+using System.Threading.Tasks;
 
 
 namespace Library_DataAccessLayer
@@ -89,13 +87,8 @@ namespace Library_DataAccessLayer
 
         }
 
-
-
-
-
-        public static async Task<int> AddNewLoanes(int CopyID, int MemberID, int LoanByUserID, DateTime LoanDate,
-            DateTime DueDate, DateTime ReturnDate, int ReturnByUserID)
-
+        public static async Task<int> AddNewBorrowBook(int CopyID, int MemberID, int LoanByUserID,
+      DateTime DueDate, byte CopyStatus, byte ReservationStatus)
         {
             int InsertedID = -1;
 
@@ -104,44 +97,28 @@ namespace Library_DataAccessLayer
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
-                    string query = @"INSERT INTO Loanes(CopyID, MemberID, LoanByUserID, LoanDate, DueDate, ReturnDate, ReturnByUserID)
-                                   
-                                       VALUES (@CopyID, @MemberID, @LoanByUserID, @LoanDate, @DueDate, @ReturnDate, @ReturnByUserID) 
-                
-                                SELECT SCOPE_IDENTITY();";
-
-
-                    using (SqlCommand command = new SqlCommand(query, connection))
+                    using (SqlCommand command = new SqlCommand("SP_AddNewBorrowBook", connection))
                     {
+                        command.CommandType = CommandType.StoredProcedure;
+
                         command.Parameters.AddWithValue("@CopyID", CopyID);
                         command.Parameters.AddWithValue("@MemberID", MemberID);
                         command.Parameters.AddWithValue("@LoanByUserID", LoanByUserID);
-                        command.Parameters.AddWithValue("@LoanDate", LoanDate);
                         command.Parameters.AddWithValue("@DueDate", DueDate);
+                        command.Parameters.AddWithValue("@LoanDate", DateTime.Now);
+                        command.Parameters.AddWithValue("@CopyStatus", CopyStatus);
+                        command.Parameters.AddWithValue("@ReservationStatus", ReservationStatus);
 
-                        if (ReturnDate != DateTime.MinValue)
-                            command.Parameters.AddWithValue("@ReturnDate", ReturnDate);
-                        else
-                            command.Parameters.AddWithValue("@ReturnDate", System.DBNull.Value);
-
-                        if (ReturnByUserID == -1)
-
-                            command.Parameters.AddWithValue("@ReturnByUserID", DBNull.Value);
-                        else
-                            command.Parameters.AddWithValue("@ReturnByUserID", ReturnByUserID);
-
-
-                        object Result = command.ExecuteScalar();
-
-                        int ID = 0;
-
-                        if (Result != null && int.TryParse(Result.ToString(), out ID))
+                        SqlParameter outputIdParam = new SqlParameter("@NewLoanID", SqlDbType.Int)
                         {
-                            InsertedID = ID;
+                            Direction = ParameterDirection.Output
+                        };
 
-                        }
+                        command.Parameters.Add(outputIdParam);
+                        await command.ExecuteNonQueryAsync();
+                        InsertedID = (int)command.Parameters["@NewLoanID"].Value;
 
                     }
                 }
@@ -154,6 +131,7 @@ namespace Library_DataAccessLayer
             return InsertedID;
 
         }
+
         public static async Task<bool> UpdateLoanes(int LoanID, int CopyID, int MemberID, int LoanByUserID,
         DateTime LoanDate, DateTime DueDate, DateTime ReturnDate, int ReturnByUserID)
         {
@@ -164,7 +142,7 @@ namespace Library_DataAccessLayer
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                  await connection.OpenAsync();
 
                     string query = @"Update Loanes SET CopyID = @CopyID,MemberID = @MemberID,LoanByUserID = @LoanByUserID
               ,LoanDate = @LoanDate,DueDate = @DueDate,ReturnDate = @ReturnDate,ReturnByUserID = @ReturnByUserID
@@ -196,7 +174,7 @@ namespace Library_DataAccessLayer
                             command.Parameters.AddWithValue("@ReturnByUserID", ReturnByUserID);
 
 
-                        RowsAffected = command.ExecuteNonQuery();
+                        RowsAffected =await  command.ExecuteNonQueryAsync();
 
 
 
@@ -211,6 +189,60 @@ namespace Library_DataAccessLayer
             return (RowsAffected != -1);
 
         }
+
+        public static async Task<int> ReturnBook(int LoanID,
+            int ReturnByUserID,byte CopyStatus,int PaymentTypeID,byte PaymentStatus)
+        {
+            int InsertedID = -1;
+            try
+            {
+
+                using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
+                {
+                    await connection.OpenAsync();
+                    using (SqlCommand command = new SqlCommand("SP_ReturnBook", connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+                        command.Parameters.AddWithValue("@LoanID", LoanID);
+
+                        command.Parameters.AddWithValue("@ReturnByUserID", ReturnByUserID);
+                        command.Parameters.AddWithValue("@CopyStatus", CopyStatus);
+                        if(PaymentTypeID == -1)
+                            command.Parameters.AddWithValue("@PaymentTypeID", DBNull.Value);
+                        else
+                        command.Parameters.AddWithValue("@PaymentTypeID", PaymentTypeID);
+
+                        if(PaymentStatus==0)
+                        command.Parameters.AddWithValue("@PaymentStatus", DBNull.Value);
+                        else
+                        command.Parameters.AddWithValue("@PaymentStatus", PaymentStatus);
+
+
+                        SqlParameter outputIdParam = new SqlParameter("@PaymentDetailsID", SqlDbType.Int)
+                        {
+                            Direction = ParameterDirection.Output
+                        };
+
+                        command.Parameters.Add(outputIdParam);
+                        await command.ExecuteNonQueryAsync();
+                        InsertedID = (int)command.Parameters["@PaymentDetailsID"].Value;
+
+
+
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                clsErrorEventLog.LogError(ex.Message);
+            }
+
+            return InsertedID;
+
+        }
+
+
+
         public static async Task<DataTable> GetListLoanes()
         {
             DataTable dtList = new DataTable();
@@ -220,25 +252,12 @@ namespace Library_DataAccessLayer
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
-                    string query = @"
-
-
-			 			 SELECT LoanBooks_View_1.LoanID, LoanBooks_View_1.CopyID, LoanBooks_View_1.BookID, LoanBooks_View_1.Title,
-			 LoanBooks_View_1.ISBN, LoanBooks_View_1.UserName as LoanByUser, LoanBooks_View_1.IsMemberActive, 
-             LoanBooks_View_1.LibraryCardNumber, LoanBooks_View_1.FullName, Users.UserName AS ReturnByUser, LoanBooks_View_1.LoanDate,
-			 LoanBooks_View_1.DueDate, LoanBooks_View_1.ReturnDate,
-			  CASE WHEN   LoanBooks_View_1.ReturnDate is Null THEN 'NO' 
-	 ELSE 'Yes' END AS IsReturn
-FROM   LoanBooks_View_1 LEFT OUTER JOIN
-             Users ON Users.UserID = LoanBooks_View_1.ReturnByUserID";
-
-
-                    using (SqlCommand command = new SqlCommand(query, connection))
+                    using (SqlCommand command = new SqlCommand("SP_GetListLoanes", connection))
                     {
-
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        command.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader reader =await command.ExecuteReaderAsync())
                         {
 
                             if (reader.HasRows)
@@ -262,6 +281,7 @@ FROM   LoanBooks_View_1 LEFT OUTER JOIN
             return dtList;
 
         }
+   
         public static async Task<bool> DeleteLoanes(int LoanID)
         {
             int RowsAffected = -1;
@@ -271,7 +291,8 @@ FROM   LoanBooks_View_1 LEFT OUTER JOIN
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
+
 
                     string query = @" Delete From Loanes Where LoanID = @LoanID";
 
@@ -281,7 +302,7 @@ FROM   LoanBooks_View_1 LEFT OUTER JOIN
                         command.Parameters.AddWithValue("@LoanID", LoanID);
 
 
-                        RowsAffected = command.ExecuteNonQuery();
+                        RowsAffected =await command.ExecuteNonQueryAsync();
 
 
 
@@ -296,6 +317,7 @@ FROM   LoanBooks_View_1 LEFT OUTER JOIN
             return (RowsAffected != -1);
 
         }
+    
         public static async Task<bool> IsLoanesExisteByID(int LoanID)
         {
             bool IsFound = false;
@@ -305,7 +327,8 @@ FROM   LoanBooks_View_1 LEFT OUTER JOIN
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
+
 
                     string query = @" Select Found = 1 From Loanes Where LoanID = @LoanID";
 
@@ -315,7 +338,7 @@ FROM   LoanBooks_View_1 LEFT OUTER JOIN
                         command.Parameters.AddWithValue("@LoanID", LoanID);
 
 
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader =await command.ExecuteReaderAsync())
                         {
 
                             if (reader.Read())
@@ -352,7 +375,7 @@ FROM   LoanBooks_View_1 LEFT OUTER JOIN
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
                     string query = @"
 
@@ -368,7 +391,7 @@ FROM   Loanes INNER JOIN
                         command.Parameters.AddWithValue("@LoanID", LoanID);
 
 
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader =await command.ExecuteReaderAsync())
                         {
 
                             if (reader.Read())

@@ -51,7 +51,7 @@ namespace Library_Manegment_System
             _Mode = enMode.Update;
         }
 
-        private async void _FillPaymentTypeInComoboBox()
+        private async Task  _FillPaymentTypeInComoboBox()
         {
             DataTable DTPaymentType = await  clsPaymentTypes.GetListPaymentTypes();
 
@@ -64,9 +64,9 @@ namespace Library_Manegment_System
 
 
 
-        private void _ResetDefualtValues()
+        private async void _ResetDefualtValues()
         {
-            _FillPaymentTypeInComoboBox();
+           await  _FillPaymentTypeInComoboBox();
             if (_Mode == enMode.AddNew)
             {
                 lblTitel.Text = "Add New Payments";
@@ -232,7 +232,7 @@ namespace Library_Manegment_System
                 lblPaymentID.Text = _paymentDetails.PaymentID.ToString();
                 lblPaymentDetailsID.Text = _paymentDetails.PaymentDetailID.ToString();
                 lblPaymentStatus.Text = "Paid";
-                clsMemberSubscriptions.ChangeMemberSubscriptionActiv(_paymentDetails.EntityID,true);
+               await  clsMemberSubscriptions.ChangeMemberSubscriptionActiv(_paymentDetails.EntityID,true);
                 _Mode = enMode.Update;
                 lblTitel.Text = "Update Payments";
                 this.Text = "Update Payments";

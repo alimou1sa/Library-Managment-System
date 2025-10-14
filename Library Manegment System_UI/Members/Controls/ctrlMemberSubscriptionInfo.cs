@@ -52,7 +52,7 @@ namespace Library_Manegment_System
         private void _FillMemberSubscriptionInfo()
         {
             ctrlMemberCard1.LoadMemberInfo(_Member.MemberID);
-            ctrlSubscriptiomInfo1.LoadMemberSubscriptionsInfo(_Member.LasrSubscriptionID);
+            ctrlSubscriptiomInfo1.LoadMemberSubscriptionsInfo(_Member.LastSubscriptionID);
         }
 
 

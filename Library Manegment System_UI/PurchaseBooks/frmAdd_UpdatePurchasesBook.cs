@@ -1,31 +1,26 @@
 ﻿using Library;
 using Library_Business;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Library_Manegment_System
 {
-    public partial class frmPurchasesBook : Form
+    public partial class frmAdd_UpdatePurchasesBook : Form
     {
-        public frmPurchasesBook(int PurchasesBookID)
+        public frmAdd_UpdatePurchasesBook(int PurchasesBookID)
         {
             InitializeComponent();
             _PurchasesBookID = PurchasesBookID;
-            _Mode=enMode.Update;
+            _Mode = enMode.Update;
         }
 
 
-        public frmPurchasesBook()
+        public frmAdd_UpdatePurchasesBook()
         {
             InitializeComponent();
-            _Mode=enMode.AddNew;
+            _Mode = enMode.AddNew;
         }
 
         public enum enMode { AddNew = 0, Update = 1 };
@@ -40,18 +35,18 @@ namespace Library_Manegment_System
 
 
 
-        private async void _FillPaymentTypeInComoboBox()
+        private async Task _FillPaymentTypeInComoboBox()
         {
-            DataTable dtPayment = await  clsPaymentTypes.GetListPaymentTypes();
+            DataTable dtPayment = await clsPaymentTypes.GetListPaymentTypes();
             foreach (DataRow row in dtPayment.Rows)
             {
                 cbPaymentType.Items.Add(row["TypeName"]);
             }
         }
 
-        private void _ResetDefualtValues()
+        private async Task _ResetDefualtValues()
         {
-            _ResetPaymentValues();
+            await _ResetPaymentValues();
             cbPaymentType.SelectedIndex = 0;
             if (_Mode == enMode.AddNew)
             {
@@ -61,12 +56,12 @@ namespace Library_Manegment_System
                 _PaymentDetails = new clsPaymentDetails();
 
                 tpMemberInfo.Enabled = false;
-                dtpPurchaseDate.Enabled = true ;
+                dtpPurchaseDate.Enabled = true;
                 lblCreateByUser.Enabled = false;
                 dtpPurchaseDate.Value = DateTime.Now;
                 ctrlBookCardWithFilter1.FilterFocus();
                 ctrlMemberCardWhithFilter1.FilterFocus();
-                lblCreateByUser.Text=clsGlobal.CurrentUser.UserName;
+                lblCreateByUser.Text = clsGlobal.CurrentUser.UserName;
 
             }
             else
@@ -74,7 +69,7 @@ namespace Library_Manegment_System
                 lblTitel.Text = "Update Purchases Book";
                 this.Text = "Update Purchases Book";
 
-       
+
                 tpMemberInfo.Enabled = false;
                 tpBookInfo.Enabled = false;
                 tpPurchasesBookInfo.Enabled = true;
@@ -87,11 +82,11 @@ namespace Library_Manegment_System
 
         }
 
-        private void _ResetPaymentValues()
+        private async Task _ResetPaymentValues()
         {
-            _FillPaymentTypeInComoboBox();
+            await _FillPaymentTypeInComoboBox();
 
-            cbPaymentType.SelectedIndex =0;
+            cbPaymentType.SelectedIndex = 0;
             lblPaymentDate.Text = DateTime.Now.ToString("yyyy|MM|dd");
             lblTotalPrice.Text = 0.ToString();
             lblPaymentStatus.Text = clsPaymentDetails.GetPaymentStatusText(clsPaymentDetails.enPaymentStatus.Pending);
@@ -110,7 +105,7 @@ namespace Library_Manegment_System
             _PaymentDetails.EntityTypeID = clsPaymentEntities.FindByID(EntityTypeID).EntityTypeID;
             _PaymentDetails.EntityID = _PurchasesBook.PurchaseID;
 
-            if (await  _PaymentDetails.Save())
+            if (await _PaymentDetails.Save())
             {
                 lblPaymentID.Text = _PaymentDetails.PaymentID.ToString();
                 lblPaymentStatus.Text = Convert.ToString(clsPayments.enPaymentStatus.Paid);
@@ -125,7 +120,7 @@ namespace Library_Manegment_System
         {
 
             _PurchasesBook = clsPurchasesBooks.FindByID(_PurchasesBookID);
-            NupdCopiesPurchased.Enabled=false;
+            NupdCopiesPurchased.Enabled = false;
             ctrlMemberCardWhithFilter1.FilterEnabled = false;
             ctrlBookCardWithFilter1.FilterEnabled = false;
 
@@ -148,7 +143,7 @@ namespace Library_Manegment_System
             }
 
             lblPaymentID.Text = _PaymentDetails.PaymentID.ToString();
-            cbPaymentType.SelectedIndex = _PaymentDetails.PaymentTypeID-1;
+            cbPaymentType.SelectedIndex = _PaymentDetails.PaymentTypeID - 1;
             ctrlMemberCardWhithFilter1.LoadMemberInfo(_PurchasesBook.MemberID);
             ctrlBookCardWithFilter1.LoadBookInfo(_PurchasesBook.BookID);
             tabControl1.SelectedTab = tabControl1.TabPages["tpPurchasesBookInfo"];
@@ -157,7 +152,7 @@ namespace Library_Manegment_System
             dtpPurchaseDate.Value = _PurchasesBook.PurchaseDate;
             NupdCopiesPurchased.Value = _PurchasesBook.CopiesPurchased;
 
-            lblTotalPrice .Text =_PaymentDetails.Amount.ToString();
+            lblTotalPrice.Text = _PaymentDetails.Amount.ToString();
             lblPaymentStatus.Text = clsPaymentDetails.GetPaymentStatusText((clsPayments.enPaymentStatus)_PaymentDetails.PaymentStatus);
 
 
@@ -187,48 +182,48 @@ namespace Library_Manegment_System
                 for (int i = 0; i < _PurchasesBook.CopiesPurchased; i++)
                 {
 
-                    clsBookCopies.ChangeCopyStatus(_CopyID, clsBookCopies.enStatusCopy.Sold);
-                    _GetCopyID();
+                    await clsBookCopies.ChangeCopyStatus(_CopyID, clsBookCopies.enStatusCopy.Sold);
+                    await _GetCopyID();
                 }
             }
             else if (_Mode == enMode.Update)
                 _PurchasesBook.PurchaseDate = dtpPurchaseDate.Value;
 
-            
-
-            if (  _PurchasesBook.Save() && await  _SavePayment())
-            {
-
-                lblPurchaseID.Text = _PurchasesBook.PurchaseID.ToString();
-                lblPaymentID.Text = _PaymentDetails.PaymentID.ToString();
-             
-                    _Mode = enMode.Update;
-                    lblTitel.Text = "Update Purchases Book";
-                    this.Text = "Update Purchases Book";
-
-                    MessageBox.Show("Data Saved Successfully.", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
-      
 
 
-            }
-            else
-                MessageBox.Show("Error: Data Is not Saved Successfully.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            if (await _PurchasesBook.Save())
+            { 
+                if (await _SavePayment())
+                {
+
+                        lblPurchaseID.Text = _PurchasesBook.PurchaseID.ToString();
+                        lblPaymentID.Text = _PaymentDetails.PaymentID.ToString();
+
+                        _Mode = enMode.Update;
+                        lblTitel.Text = "Update Purchases Book";
+                        this.Text = "Update Purchases Book";
+
+                        MessageBox.Show("Data Saved Successfully.", "Saved", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+             }
+                else
+                    MessageBox.Show("Error: Data Is not Saved Successfully.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
 
 
         }
 
-        private async void _GetCopyID()
+        private async Task _GetCopyID()
         {
-                _CopyID = await   clsBookCopies.GetCopyIDAvailabl(ctrlBookCardWithFilter1.BookID);
-                if (_CopyID == -1)
+            _CopyID = await clsBookCopies.GetCopyIDAvailabl(ctrlBookCardWithFilter1.BookID);
+            if (_CopyID == -1)
+            {
+                if (MessageBox.Show("This Book Is Not Available Now ", "XXX", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    if (MessageBox.Show("This Book Is Not Available Now ", "XXX", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                    {
-                        ctrlBookCardWithFilter1.FilterFocus();
-                        return;
-                    }
+                    ctrlBookCardWithFilter1.FilterFocus();
+                    return;
                 }
+            }
 
         }
 
@@ -237,7 +232,7 @@ namespace Library_Manegment_System
             _Save();
         }
 
-        private void guna2Button2_Click(object sender, EventArgs e)
+        private async void guna2Button2_Click(object sender, EventArgs e)
         {
             if (_Mode == enMode.Update)
             {
@@ -251,7 +246,7 @@ namespace Library_Manegment_System
             if (ctrlBookCardWithFilter1.BookID != -1)
             {
 
-                _GetCopyID();
+                await _GetCopyID();
 
                 btnSave.Enabled = true;
                 tpMemberInfo.Enabled = true;
@@ -303,10 +298,10 @@ namespace Library_Manegment_System
             }
         }
 
-        private void frmPurchasesBook_Load(object sender, EventArgs e)
+        private async void frmPurchasesBook_Load(object sender, EventArgs e)
         {
-            _ResetDefualtValues();
-            if(_Mode == enMode.Update) 
+            await _ResetDefualtValues();
+            if (_Mode == enMode.Update)
                 _LoadData();
 
         }
@@ -316,7 +311,7 @@ namespace Library_Manegment_System
             if (_Mode != enMode.Update)
             {
                 int NumberOfAvailableCopies =
-                  await   clsBookCopies.GetNumberOfAvailableBookCopies(ctrlBookCardWithFilter1.BookID, (byte)clsBookCopies.enStatusCopy.Available);
+                  await clsBookCopies.GetNumberOfAvailableBookCopies(ctrlBookCardWithFilter1.BookID, (byte)clsBookCopies.enStatusCopy.Available);
                 if (NupdCopiesPurchased.Value > NumberOfAvailableCopies)
                 {
                     MessageBox.Show("Ther Are Only " + NumberOfAvailableCopies + " Available Book Copies", "XXX", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1, MessageBoxOptions.RightAlign);

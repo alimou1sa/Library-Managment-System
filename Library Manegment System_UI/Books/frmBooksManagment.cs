@@ -21,12 +21,17 @@ namespace Library_Manegment_System
         {
             InitializeComponent();
         }
-        private async void _RefreshBooksList()
+
+        private  async Task _RefreshBooksList()
         {
             _dtBooks = await  clsBooks.GetListBooks();
-            dgvShowBooks.DataSource = _dtBooks;
-            lblRecordsCount.Text = dgvShowBooks.Rows.Count.ToString();
+            if (_dtBooks != null)
+            {
+                dgvShowBooks.DataSource = _dtBooks;
+                lblRecordsCount.Text = dgvShowBooks.Rows.Count.ToString();
+            }
         }
+
         private void label1_Click(object sender, EventArgs e)
         {
 
@@ -37,17 +42,17 @@ namespace Library_Manegment_System
 
         }
 
-        private void guna2Button1_Click(object sender, EventArgs e)
+        private async void guna2Button1_Click(object sender, EventArgs e)
         {
             frmAddUpdateBooks addUpdateBooks = new frmAddUpdateBooks();
             addUpdateBooks.ShowDialog();
-            _RefreshBooksList();
+           await  _RefreshBooksList();
         }
 
-        private void frmListBooks_Load(object sender, EventArgs e)
+        private   async void frmListBooks_Load(object sender, EventArgs e)
         {
-            _RefreshBooksList();
-            dgvShowBooks.DataSource = _dtBooks;
+             await _RefreshBooksList();
+           
             cbFiterBy.SelectedIndex = 0;
             lblRecordsCount.Text = dgvShowBooks.Rows.Count.ToString();
             dgvShowBooks.ColumnHeadersHeight = 70;
@@ -80,7 +85,7 @@ namespace Library_Manegment_System
         }
 
 
-        private async void _FillGenreInComoboBox()
+        private async Task  _FillGenreInComoboBox()
         {
             DataTable dtGenre = new DataTable();
             dtGenre.Rows.Clear();
@@ -99,7 +104,7 @@ namespace Library_Manegment_System
 
         }
     
-        private async void _FillAutherInComoboBox()
+        private async Task _FillAutherInComoboBox()
         {
             DataTable dtAuther = await  clsAuthors.GetListAuthors();
             cbForAll.Items.Clear();
@@ -110,7 +115,7 @@ namespace Library_Manegment_System
             }
         }
     
-        private async void _FillCategoryNameInComoboBox()
+        private async Task _FillCategoryNameInComoboBox()
         {
             DataTable dtCategory = await clsCategories.GetListCategories();
             cbForAll.Items.Clear();
@@ -121,7 +126,7 @@ namespace Library_Manegment_System
             }
         }
    
-        private async void _FillPublishersInComoboBox()
+        private async Task _FillPublishersInComoboBox()
         {
             DataTable dtPublisher =await  clsPublishers.GetListPublishers();
             cbForAll.Items.Clear();
@@ -132,7 +137,7 @@ namespace Library_Manegment_System
             }
         }
 
-        private void cbFiterBy_SelectedIndexChanged(object sender, EventArgs e)
+        private async void cbFiterBy_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cbFiterBy.Text == "Genre")
             {
@@ -140,7 +145,7 @@ namespace Library_Manegment_System
                 cbForAll.Visible = true;
                 cbForAll.Focus();
 
-                _FillGenreInComoboBox();
+               await  _FillGenreInComoboBox();
                 return;
             }
             if (cbFiterBy.Text == "Publisher Name")
@@ -148,7 +153,7 @@ namespace Library_Manegment_System
                 txtFiter.Visible = false;
                 cbForAll.Visible = true;
                 cbForAll.Focus();
-                _FillPublishersInComoboBox();
+               await  _FillPublishersInComoboBox();
                 return;
             }
             if (cbFiterBy.Text == "Category Name")
@@ -156,7 +161,7 @@ namespace Library_Manegment_System
                 txtFiter.Visible = false;
                 cbForAll.Visible = true;
                 cbForAll.Focus();
-                _FillCategoryNameInComoboBox();
+              await   _FillCategoryNameInComoboBox();
                 return;
             }
             if (cbFiterBy.Text == "Auther Name")
@@ -164,7 +169,7 @@ namespace Library_Manegment_System
                 txtFiter.Visible = false;
                 cbForAll.Visible = true;
                 cbForAll.Focus();
-                _FillAutherInComoboBox();
+                await   _FillAutherInComoboBox();
                 return;
             }
 
@@ -279,20 +284,18 @@ namespace Library_Manegment_System
 
         }
 
-        private void editToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmAddUpdateBooks addUpdateBooks = new frmAddUpdateBooks((int)dgvShowBooks.CurrentRow.Cells[0].Value);
             addUpdateBooks.ShowDialog();
-            _RefreshBooksList();
-
-
+            await   _RefreshBooksList();
         }
 
-        private void showToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void showToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmBookDetails frmBook = new frmBookDetails((int)dgvShowBooks.CurrentRow.Cells[0].Value);
             frmBook.ShowDialog();
-            _RefreshBooksList();
+           await  _RefreshBooksList();
         }
 
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
@@ -301,7 +304,7 @@ namespace Library_Manegment_System
         }
 
 
-        private async void deleteBookToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void   deleteBookToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int BookID = (int)dgvShowBooks.CurrentRow.Cells[0].Value;
 
@@ -314,9 +317,6 @@ namespace Library_Manegment_System
 
                 if ( await clsBookCopies.DeleteBookCopiesByBookID(BookID))
                 {
-
-
-
                     if (await clsBooks.DeleteBooks(BookID))
                     {
                         MessageBox.Show("Book Deleted Successfully.", "Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -336,25 +336,25 @@ namespace Library_Manegment_System
                 e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
 
-        private void addBookToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void addBookToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmAddUpdateBooks addUpdateBooks = new frmAddUpdateBooks();
             addUpdateBooks.ShowDialog();
-            _RefreshBooksList();
+           await  _RefreshBooksList();
         }
 
-        private void statusCopiesBookToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void statusCopiesBookToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmBookCopiesManagment frmBookCopiesManagment = new frmBookCopiesManagment((int)dgvShowBooks.CurrentRow.Cells[0].Value);
             frmBookCopiesManagment.ShowDialog();
-            _RefreshBooksList();
+          await   _RefreshBooksList();
         }
 
-        private void loanBookToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void loanBookToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmLoanBook frmBorrow=new frmLoanBook((int)dgvShowBooks.CurrentRow.Cells[0].Value);
            frmBorrow.ShowDialog();
-            _RefreshBooksList();
+          await   _RefreshBooksList();
         }
     }
 

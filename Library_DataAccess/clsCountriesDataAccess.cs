@@ -15,9 +15,9 @@ namespace Library_DataAccessLayer
     public class clsCountriesDataAccess
     {
 
-public static bool GetCountriesInfoByID(int CountryID,ref string CountryName)
-    {
-        bool IsFound  = false;
+        public static bool GetCountriesInfoByID(int CountryID, ref string CountryName)
+        {
+            bool IsFound = false;
 
             try
             {
@@ -59,19 +59,20 @@ public static bool GetCountriesInfoByID(int CountryID,ref string CountryName)
 
             }
 
-        return IsFound ;
-          
-    }
+            return IsFound;
+
+        }
         public static async Task<int> AddNewCountries(string CountryName)
-    {
-        int InsertedID  = -1;
+        {
+            int InsertedID = -1;
 
             try
             {
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
+
 
                     string query = @"INSERT INTO Countries(CountryName)
                                    
@@ -103,19 +104,20 @@ public static bool GetCountriesInfoByID(int CountryID,ref string CountryName)
                 clsErrorEventLog.LogError(ex.Message);
             }
 
-            return InsertedID ;
-          
-    }
-        public static async Task<bool> UpdateCountries(int CountryID,string CountryName)
-    {
-        int RowsAffected  = -1;
+            return InsertedID;
+
+        }
+        public static async Task<bool> UpdateCountries(int CountryID, string CountryName)
+        {
+            int RowsAffected = -1;
 
             try
             {
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
+
 
                     string query = @"Update Countries SET CountryName = @CountryName
 
@@ -129,7 +131,7 @@ public static bool GetCountriesInfoByID(int CountryID,ref string CountryName)
                         command.Parameters.AddWithValue("@CountryName", CountryName);
 
 
-                        RowsAffected = command.ExecuteNonQuery();
+                        RowsAffected = await command.ExecuteNonQueryAsync();
 
 
 
@@ -141,38 +143,34 @@ public static bool GetCountriesInfoByID(int CountryID,ref string CountryName)
                 clsErrorEventLog.LogError(ex.Message);
             }
 
-            return (RowsAffected != -1 ) ;
-          
-    }
+            return (RowsAffected != -1);
+
+        }
         public static async Task<DataTable> GetListCountries()
-    {
-        DataTable dtList = new DataTable();
+        {
+            DataTable dtList = new DataTable();
 
             try
             {
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
                     string query = @" Select * From Countries";
 
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
-
-                        using (SqlDataReader reader = command.ExecuteReader())
+      
+                        using (SqlDataReader reader = await command.ExecuteReaderAsync())
                         {
 
                             if (reader.HasRows)
                             {
-
                                 dtList.Load(reader);
-
                             }
                         }
-
-
 
                     }
                 }
@@ -181,19 +179,20 @@ public static bool GetCountriesInfoByID(int CountryID,ref string CountryName)
             {
                 clsErrorEventLog.LogError(ex.Message);
             }
-            return dtList ;
-          
-    }
+            return dtList;
+
+        }
         public static async Task<bool> DeleteCountries(int CountryID)
-    {
-        int RowsAffected  = -1;
+        {
+            int RowsAffected = -1;
 
             try
             {
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
+
 
                     string query = @" Delete From Countries Where CountryID = @CountryID";
 
@@ -203,7 +202,7 @@ public static bool GetCountriesInfoByID(int CountryID,ref string CountryName)
                         command.Parameters.AddWithValue("@CountryID", CountryID);
 
 
-                        RowsAffected = command.ExecuteNonQuery();
+                        RowsAffected = await command.ExecuteNonQueryAsync();
 
 
 
@@ -215,19 +214,20 @@ public static bool GetCountriesInfoByID(int CountryID,ref string CountryName)
                 clsErrorEventLog.LogError(ex.Message);
             }
 
-            return (RowsAffected != -1 ) ;
-          
-    }
+            return (RowsAffected != -1);
+
+        }
         public static async Task<bool> IsCountriesExisteByID(int CountryID)
-    {
-        bool IsFound  = false;
+        {
+            bool IsFound = false;
 
             try
             {
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
+
 
                     string query = @" Select Found = 1 From Countries Where CountryID = @CountryID";
 
@@ -237,7 +237,7 @@ public static bool GetCountriesInfoByID(int CountryID,ref string CountryName)
                         command.Parameters.AddWithValue("@CountryID", CountryID);
 
 
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader = await command.ExecuteReaderAsync())
                         {
 
                             if (reader.Read())
@@ -261,9 +261,9 @@ public static bool GetCountriesInfoByID(int CountryID,ref string CountryName)
 
             }
 
-        return IsFound ;
-          
-    }
+            return IsFound;
+
+        }
 
 
         public static bool GetCountryInfoByName(string CountryName, ref int ID)
@@ -305,8 +305,8 @@ public static bool GetCountriesInfoByID(int CountryID,ref string CountryName)
             catch (SqlException ex)
             {
                 clsErrorEventLog.LogError(ex.Message);
-            
-            isFound = false;
+
+                isFound = false;
             }
             finally
             {

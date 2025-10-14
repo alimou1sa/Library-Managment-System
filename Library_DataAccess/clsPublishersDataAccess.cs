@@ -15,9 +15,9 @@ namespace Library_DataAccessLayer
     public class clsPublishersDataAccess
     {
 
-public static bool GetPublishersInfoByID(int PublisherID,ref string Name,ref string Address,ref string Phone)
-    {
-        bool IsFound  = false;
+        public static bool GetPublishersInfoByID(int PublisherID, ref string Name, ref string Address, ref string Phone)
+        {
+            bool IsFound = false;
 
             try
             {
@@ -61,19 +61,20 @@ public static bool GetPublishersInfoByID(int PublisherID,ref string Name,ref str
 
             }
 
-        return IsFound ;
-          
-    }
-        public static async Task<int> AddNewPublishers(string Name,string Address,string Phone)
-    {
-        int InsertedID  = -1;
+            return IsFound;
+
+        }
+        public static async Task<int> AddNewPublishers(string Name, string Address, string Phone)
+        {
+            int InsertedID = -1;
 
             try
             {
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
+
 
                     string query = @"INSERT INTO Publishers(Name, Address, Phone)
                                    
@@ -105,7 +106,7 @@ public static bool GetPublishersInfoByID(int PublisherID,ref string Name,ref str
 
                         }
 
-                        object Result = command.ExecuteScalar();
+                        object Result =await command.ExecuteScalarAsync();
 
                         int ID = 0;
 
@@ -123,19 +124,19 @@ public static bool GetPublishersInfoByID(int PublisherID,ref string Name,ref str
                 clsErrorEventLog.LogError(ex.Message);
             }
 
-            return InsertedID ;
-          
-    }
-        public static async Task<bool> UpdatePublishers(int PublisherID,string Name, string Address, string Phone)
-    {
-        int RowsAffected  = -1;
+            return InsertedID;
+
+        }
+        public static async Task<bool> UpdatePublishers(int PublisherID, string Name, string Address, string Phone)
+        {
+            int RowsAffected = -1;
 
             try
             {
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
                     string query = @"Update Publishers SET Name = @Name,Address = @Address,Phone = @Phone
 
@@ -167,7 +168,7 @@ public static bool GetPublishersInfoByID(int PublisherID,ref string Name,ref str
 
                         }
 
-                        RowsAffected = command.ExecuteNonQuery();
+                        RowsAffected =await command.ExecuteNonQueryAsync();
 
 
 
@@ -179,19 +180,20 @@ public static bool GetPublishersInfoByID(int PublisherID,ref string Name,ref str
                 clsErrorEventLog.LogError(ex.Message);
             }
 
-            return (RowsAffected != -1 ) ;
-          
-    }
+            return (RowsAffected != -1);
+
+        }
         public static async Task<DataTable> GetListPublishers()
-    {
-        DataTable dtList = new DataTable();
+        {
+            DataTable dtList = new DataTable();
 
             try
             {
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
+
 
                     string query = @" Select * From Publishers";
 
@@ -199,7 +201,7 @@ public static bool GetPublishersInfoByID(int PublisherID,ref string Name,ref str
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
 
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader =await command.ExecuteReaderAsync())
                         {
 
                             if (reader.HasRows)
@@ -220,31 +222,25 @@ public static bool GetPublishersInfoByID(int PublisherID,ref string Name,ref str
                 clsErrorEventLog.LogError(ex.Message);
             }
 
-            return dtList ;
-          
-    }
-        public static async Task<bool> DeletePublishers(int PublisherID)
-    {
-        int RowsAffected  = -1;
+            return dtList;
+
+        }
+        public static async Task<bool> DeletePublishers(string  Name)
+        {
+            int RowsAffected = -1;
 
             try
             {
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
-
-                    string query = @" Delete From Publishers Where PublisherID = @PublisherID";
-
+                    await connection.OpenAsync();
+                    string query = @" Delete From Publishers Where Name = @Name";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@PublisherID", PublisherID);
-
-
-                        RowsAffected = command.ExecuteNonQuery();
-
-
+                        command.Parameters.AddWithValue("@Name", Name);
+                        RowsAffected =await command.ExecuteNonQueryAsync();
 
                     }
                 }
@@ -254,19 +250,19 @@ public static bool GetPublishersInfoByID(int PublisherID,ref string Name,ref str
                 clsErrorEventLog.LogError(ex.Message);
             }
 
-            return (RowsAffected != -1 ) ;
-          
-    }
+            return (RowsAffected != -1);
+
+        }
         public static async Task<bool> IsPublishersExisteByID(int PublisherID)
-    {
-        bool IsFound  = false;
+        {
+            bool IsFound = false;
 
             try
             {
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                   await connection.OpenAsync();
 
                     string query = @" Select Found = 1 From Publishers Where PublisherID = @PublisherID";
 
@@ -276,7 +272,7 @@ public static bool GetPublishersInfoByID(int PublisherID,ref string Name,ref str
                         command.Parameters.AddWithValue("@PublisherID", PublisherID);
 
 
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader =await command.ExecuteReaderAsync())
                         {
 
                             if (reader.Read())
@@ -300,9 +296,9 @@ public static bool GetPublishersInfoByID(int PublisherID,ref string Name,ref str
 
             }
 
-        return IsFound ;
-          
-    }
+            return IsFound;
+
+        }
 
         public static bool GetPublisherInfoByName(string Name, ref int PublisherID, ref string Address, ref string Phone)
         {
@@ -355,14 +351,6 @@ public static bool GetPublishersInfoByID(int PublisherID,ref string Name,ref str
 
             return isFound;
         }
-
-
-
-
-
-
-
-
 
 
     }

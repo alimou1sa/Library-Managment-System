@@ -21,10 +21,8 @@ namespace Library_Manegment_System
                _BookID = BookID;
         }
 
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-
-        }
+        private void btnClose_Click(object sender, EventArgs e)=>this .Close();
+        
 
         private void frmBookDetails_Load(object sender, EventArgs e)
         {

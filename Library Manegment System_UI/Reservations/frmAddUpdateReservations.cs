@@ -40,7 +40,7 @@ namespace Library_Manegment_System
 
         clsReservations _Reservations;
 
-        private void _ResetDefualtValues()
+        private void   _ResetDefualtValues()
         {
 
 
@@ -155,7 +155,7 @@ namespace Library_Manegment_System
             this.Close();
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private async void btnSave_Click(object sender, EventArgs e)
         {
             if (!this.ValidateChildren())
             {
@@ -181,7 +181,7 @@ namespace Library_Manegment_System
 
             }
 
-            if (_Reservations.Save())
+            if (await  _Reservations.Save())
             {
                 lblReservationID.Text = _Reservations.ReservationID.ToString();
 

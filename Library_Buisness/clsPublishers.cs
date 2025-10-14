@@ -108,9 +108,9 @@ string Phone = " ";
 
     }
 
-} public static async Task<bool> DeletePublishers( int PublisherID )
+} public static async Task<bool> DeletePublishers( string Name)
 {
-    return await  clsPublishersDataAccess.DeletePublishers(PublisherID);
+    return await  clsPublishersDataAccess.DeletePublishers(Name);
 
 }
 public static async Task<DataTable> GetListPublishers()

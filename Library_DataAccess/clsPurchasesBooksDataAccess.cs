@@ -15,10 +15,10 @@ namespace Library_DataAccessLayer
     public class clsPurchasesBooksDataAccess
     {
 
-public static bool GetPurchasesBooksInfoByID(int PurchaseID,ref int BookID,ref int MemberID,ref int CopiesPurchased,
-    ref double TotalPrice,ref DateTime PurchaseDate,ref int CreateByUserID)
-    {
-        bool IsFound  = false;
+        public static bool GetPurchasesBooksInfoByID(int? PurchaseID, ref int BookID, ref int MemberID, ref int CopiesPurchased,
+            ref double TotalPrice, ref DateTime PurchaseDate, ref int CreateByUserID)
+        {
+            bool IsFound = false;
 
             try
             {
@@ -65,19 +65,19 @@ public static bool GetPurchasesBooksInfoByID(int PurchaseID,ref int BookID,ref i
 
             }
 
-        return IsFound ;
-          
-    }
-        public static int AddNewPurchasesBooks(int BookID,int MemberID,int CopiesPurchased, double TotalPrice,DateTime PurchaseDate,int CreateByUserID)
-    {
-        int InsertedID  = -1;
+            return IsFound;
+
+        }
+        public static async Task<int> AddNewPurchasesBooks(int BookID, int MemberID, int CopiesPurchased, double TotalPrice, DateTime PurchaseDate, int CreateByUserID)
+        {
+            int InsertedID = -1;
 
             try
             {
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
                     string query = @"INSERT INTO PurchasesBooks(BookID, MemberID, CopiesPurchased, TotalPrice, PurchaseDate, CreateByUserID)
                                    
@@ -96,7 +96,7 @@ public static bool GetPurchasesBooksInfoByID(int PurchaseID,ref int BookID,ref i
                         command.Parameters.AddWithValue("@CreateByUserID", CreateByUserID);
 
 
-                        object Result = command.ExecuteScalar();
+                        object Result =await command.ExecuteScalarAsync();
 
                         int ID = 0;
 
@@ -114,28 +114,30 @@ public static bool GetPurchasesBooksInfoByID(int PurchaseID,ref int BookID,ref i
                 clsErrorEventLog.LogError(ex.Message);
             }
 
-            return InsertedID ;
-          
-    }
-        public static bool UpdatePurchasesBooks(int PurchaseID,int BookID, int MemberID, int CopiesPurchased, double TotalPrice, DateTime PurchaseDate, int CreateByUserID)
-    {
-        int RowsAffected  = -1;
+            return InsertedID;
+
+        }
+        public static async Task<bool> UpdatePurchasesBooks(int PurchaseID, int BookID, int MemberID, int CopiesPurchased, double TotalPrice, DateTime PurchaseDate, int CreateByUserID)
+        {
+            int RowsAffected = -1;
 
             try
             {
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
-                    string query = @"Update PurchasesBooks SET BookID = @BookID,MemberID = @MemberID,CopiesPurchased = @CopiesPurchased,TotalPrice = @TotalPrice,PurchaseDate = @PurchaseDate,CreateByUserID = @CreateByUserID
 
-                                    WHERE PurchaseID= @PurchaseID";
+                    string query = @"Update PurchasesBooks SET BookID = @BookID,MemberID =@MemberID,
+CopiesPurchased = @CopiesPurchased,TotalPrice = @TotalPrice,PurchaseDate = @PurchaseDate,
+CreateByUserID = @CreateByUserID
+WHERE PurchaseID= @PurchaseID";
 
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
-
+                      
                         command.Parameters.AddWithValue("@PurchaseID", PurchaseID);
                         command.Parameters.AddWithValue("@BookID", BookID);
                         command.Parameters.AddWithValue("@MemberID", MemberID);
@@ -145,7 +147,7 @@ public static bool GetPurchasesBooksInfoByID(int PurchaseID,ref int BookID,ref i
                         command.Parameters.AddWithValue("@CreateByUserID", CreateByUserID);
 
 
-                        RowsAffected = command.ExecuteNonQuery();
+                        RowsAffected =await command.ExecuteNonQueryAsync();
 
 
 
@@ -157,37 +159,26 @@ public static bool GetPurchasesBooksInfoByID(int PurchaseID,ref int BookID,ref i
                 clsErrorEventLog.LogError(ex.Message);
             }
 
-            return (RowsAffected != -1 ) ;
-          
-    }
-        public static DataTable GetListPurchasesBooks()
-    {
-        DataTable dtList = new DataTable();
+            return (RowsAffected != -1);
+
+        }
+        public static async Task<DataTable> GetListPurchasesBooks()
+        {
+            DataTable dtList = new DataTable();
 
             try
             {
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
-                    string query = @"
-
-SELECT PurchasesBooks.PurchaseID, PurchasesBooks.BookID, Books.Title, Books.ISBN, Categories.CategoryName, PurchasesBooks.MemberID, People.FirstName + ' ' + People.SecondName + ' ' + ISNULL(People.ThirdName, '') + ' ' + People.LastName AS FullName, 
-             Members.LibraryCardNumber, PurchasesBooks.CopiesPurchased, PurchasesBooks.TotalPrice, PurchasesBooks.PurchaseDate, PurchasesBooks.CreateByUserID
-FROM   PurchasesBooks INNER JOIN
-             Books ON PurchasesBooks.BookID = Books.BookID INNER JOIN
-             Members ON PurchasesBooks.MemberID = Members.MemberID INNER JOIN
-             People ON Members.PersonID = People.PersonID INNER JOIN
-             Categories ON Books.CategoryID = Categories.CategoryID";
-
-
-                    using (SqlCommand command = new SqlCommand(query, connection))
+                    using (SqlCommand command = new SqlCommand("GetListPurchasesBooks", connection))
                     {
+                        command.CommandType = CommandType.StoredProcedure;
 
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader =await command.ExecuteReaderAsync())
                         {
-
                             if (reader.HasRows)
                             {
 
@@ -206,19 +197,20 @@ FROM   PurchasesBooks INNER JOIN
                 clsErrorEventLog.LogError(ex.Message);
             }
 
-            return dtList ;
-          
-    }
-        public static bool DeletePurchasesBooks(int PurchaseID)
-    {
-        int RowsAffected  = -1;
+            return dtList;
+
+        }
+        public static async Task<bool> DeletePurchasesBooks(int PurchaseID)
+        {
+            int RowsAffected = -1;
 
             try
             {
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
+
 
                     string query = @" Delete From PurchasesBooks Where PurchaseID = @PurchaseID";
 
@@ -228,7 +220,7 @@ FROM   PurchasesBooks INNER JOIN
                         command.Parameters.AddWithValue("@PurchaseID", PurchaseID);
 
 
-                        RowsAffected = command.ExecuteNonQuery();
+                        RowsAffected =await command.ExecuteNonQueryAsync();
 
 
 
@@ -240,19 +232,19 @@ FROM   PurchasesBooks INNER JOIN
                 clsErrorEventLog.LogError(ex.Message);
             }
 
-            return (RowsAffected != -1 ) ;
-          
-    }
-        public static bool IsPurchasesBooksExisteByID(int PurchaseID)
-    {
-        bool IsFound  = false;
+            return (RowsAffected != -1);
+
+        }
+        public static async Task<bool> IsPurchasesBooksExisteByID(int PurchaseID)
+        {
+            bool IsFound = false;
 
             try
             {
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
                     string query = @" Select Found = 1 From PurchasesBooks Where PurchaseID = @PurchaseID";
 
@@ -262,7 +254,7 @@ FROM   PurchasesBooks INNER JOIN
                         command.Parameters.AddWithValue("@PurchaseID", PurchaseID);
 
 
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader =await command.ExecuteReaderAsync())
                         {
 
                             if (reader.Read())
@@ -286,8 +278,8 @@ FROM   PurchasesBooks INNER JOIN
 
             }
 
-        return IsFound ;
-          
+            return IsFound;
+
+        }
     }
-   }
 }

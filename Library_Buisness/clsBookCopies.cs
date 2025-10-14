@@ -143,7 +143,7 @@ namespace Library_Business
 
         public static async Task<bool> DeleteBookCopiesByBookID(int BookID)
         {
-            return await  clsBookCopiesDataAccess.DeleteBookCopiesByBooID(BookID);
+            return await  clsBookCopiesDataAccess.DeleteBookCopiesByBooKID(BookID);
         }
 
 

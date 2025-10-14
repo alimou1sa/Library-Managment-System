@@ -100,9 +100,9 @@ public static clsCategories FindByID(int CategoryID )
 
     }
 
-} public static async Task<bool> DeleteCategories( int CategoryID )
+} public static async Task<bool> DeleteCategories( string CategoryName)
 {
-    return await  clsCategoriesDataAccess.DeleteCategories(CategoryID);
+    return await  clsCategoriesDataAccess.DeleteCategories(CategoryName);
 
 }
 public static async Task<DataTable> GetListCategories()

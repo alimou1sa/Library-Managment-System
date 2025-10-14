@@ -15,7 +15,7 @@ namespace Library_DataAccessLayer
     public class clsCategoriesDataAccess
     {
 
-public static bool GetCategoriesInfoByID(int CategoryID,ref string CategoryName)
+public static  bool GetCategoriesInfoByID(int CategoryID,ref string CategoryName)
     {
         bool IsFound  = false;
 
@@ -23,9 +23,8 @@ public static bool GetCategoriesInfoByID(int CategoryID,ref string CategoryName)
             {
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
-                {
-                    connection.Open();
-
+                { 
+                   connection.Open();
                     string query = @" Select * From Categories Where CategoryID = @CategoryID";
 
 
@@ -71,7 +70,8 @@ public static bool GetCategoriesInfoByID(int CategoryID,ref string CategoryName)
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
+
 
                     string query = @"INSERT INTO Categories(CategoryName)
                                    
@@ -85,7 +85,7 @@ public static bool GetCategoriesInfoByID(int CategoryID,ref string CategoryName)
                         command.Parameters.AddWithValue("@CategoryName", CategoryName);
 
 
-                        object Result = command.ExecuteScalar();
+                        object Result =await command.ExecuteScalarAsync();
 
                         int ID = 0;
 
@@ -115,7 +115,7 @@ public static bool GetCategoriesInfoByID(int CategoryID,ref string CategoryName)
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
                     string query = @"Update Categories SET CategoryName = @CategoryName
 
@@ -129,7 +129,7 @@ public static bool GetCategoriesInfoByID(int CategoryID,ref string CategoryName)
                         command.Parameters.AddWithValue("@CategoryName", CategoryName);
 
 
-                        RowsAffected = command.ExecuteNonQuery();
+                        RowsAffected =await command.ExecuteNonQueryAsync();
 
 
 
@@ -153,7 +153,7 @@ public static bool GetCategoriesInfoByID(int CategoryID,ref string CategoryName)
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
                     string query = @" Select * From Categories";
 
@@ -161,7 +161,7 @@ public static bool GetCategoriesInfoByID(int CategoryID,ref string CategoryName)
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
 
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader =await  command.ExecuteReaderAsync())
                         {
 
                             if (reader.HasRows)
@@ -185,7 +185,7 @@ public static bool GetCategoriesInfoByID(int CategoryID,ref string CategoryName)
             return dtList ;
           
     }
-        public static async Task<bool> DeleteCategories(int CategoryID)
+        public static async Task<bool> DeleteCategories(string CategoryName)
     {
         int RowsAffected  = -1;
 
@@ -194,19 +194,15 @@ public static bool GetCategoriesInfoByID(int CategoryID,ref string CategoryName)
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
-                    string query = @" Delete From Categories Where CategoryID = @CategoryID";
+                    string query = @" Delete From Categories Where CategoryName = @CategoryName";
 
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@CategoryID", CategoryID);
-
-
-                        RowsAffected = command.ExecuteNonQuery();
-
-
+                        command.Parameters.AddWithValue("@CategoryName", CategoryName);
+                        RowsAffected =await command.ExecuteNonQueryAsync();
 
                     }
                 }
@@ -228,7 +224,7 @@ public static bool GetCategoriesInfoByID(int CategoryID,ref string CategoryName)
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
                     string query = @" Select Found = 1 From Categories Where CategoryID = @CategoryID";
 
@@ -238,7 +234,7 @@ public static bool GetCategoriesInfoByID(int CategoryID,ref string CategoryName)
                         command.Parameters.AddWithValue("@CategoryID", CategoryID);
 
 
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader =await command.ExecuteReaderAsync())
                         {
 
                             if (reader.Read())

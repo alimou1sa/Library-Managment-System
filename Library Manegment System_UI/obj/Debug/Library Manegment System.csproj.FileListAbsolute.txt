@@ -133,7 +133,6 @@ C:\Users\TOPTECH\source\C#\Library Managment System\Library Manegment System_UI\
 C:\Users\TOPTECH\source\C#\Library Managment System\Library Manegment System_UI\obj\Debug\Library_Manegment_System.frmAddUpdatePayments.resources
 C:\Users\TOPTECH\source\C#\Library Managment System\Library Manegment System_UI\obj\Debug\Library_Manegment_System.frmAdd_UpdateGenresAndCategories.resources
 C:\Users\TOPTECH\source\C#\Library Managment System\Library Manegment System_UI\obj\Debug\Library_Manegment_System.frmManageSubscriptionForthisMember.resources
-C:\Users\TOPTECH\source\C#\Library Managment System\Library Manegment System_UI\obj\Debug\Library_Manegment_System.frmMemberSubscribtionManagment.resources
 C:\Users\TOPTECH\source\C#\Library Managment System\Library Manegment System_UI\obj\Debug\Library_Manegment_System.frmPurchasesBookDetails.resources
 C:\Users\TOPTECH\source\C#\Library Managment System\Library Manegment System_UI\obj\Debug\Library_Manegment_System.frmReservationsDetails.resources
 C:\Users\TOPTECH\source\C#\Library Managment System\Library Manegment System_UI\obj\Debug\Library_Manegment_System.frmSetting.resources
@@ -144,7 +143,6 @@ C:\Users\TOPTECH\source\C#\Library Managment System\Library Manegment System_UI\
 C:\Users\TOPTECH\source\C#\Library Managment System\Library Manegment System_UI\obj\Debug\Library_Manegment_System.frmChangePassowrd.resources
 C:\Users\TOPTECH\source\C#\Library Managment System\Library Manegment System_UI\obj\Debug\Library_Manegment_System.frmLoanDetails.resources
 C:\Users\TOPTECH\source\C#\Library Managment System\Library Manegment System_UI\obj\Debug\Library_Manegment_System.frmPaymentManagments.resources
-C:\Users\TOPTECH\source\C#\Library Managment System\Library Manegment System_UI\obj\Debug\Library_Manegment_System.frmPurchasesBook.resources
 C:\Users\TOPTECH\source\C#\Library Managment System\Library Manegment System_UI\obj\Debug\Library_Manegment_System.frmAddUpdateAuther_Publisher.resources
 C:\Users\TOPTECH\source\C#\Library Managment System\Library Manegment System_UI\obj\Debug\Library_Manegment_System.frmAddUpdateReservations.resources
 C:\Users\TOPTECH\source\C#\Library Managment System\Library Manegment System_UI\obj\Debug\Library_Manegment_System.frmAddUpdatebookCopies.resources
@@ -174,3 +172,4 @@ C:\Users\TOPTECH\source\C#\Library Managment System\Library Manegment System_UI\
 C:\Users\TOPTECH\source\C#\Library Managment System\Library Manegment System_UI\obj\Debug\Library Manegment System.exe
 C:\Users\TOPTECH\source\C#\Library Managment System\Library Manegment System_UI\obj\Debug\Library Manegment System.pdb
 C:\Users\TOPTECH\source\C#\Library Managment System\Library Manegment System_UI\obj\Debug\Library_Manegment_System.frmFindBook.resources
+C:\Users\TOPTECH\source\C#\Library Managment System\Library Manegment System_UI\obj\Debug\Library_Manegment_System.frmAdd_UpdatePurchasesBook.resources

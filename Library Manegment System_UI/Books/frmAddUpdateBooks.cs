@@ -1,10 +1,12 @@
 ﻿using Library_Business;
+using Microsoft.VisualBasic.ApplicationServices;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -35,7 +37,7 @@ namespace Library_Manegment_System
             _BookID = BookID;
         }
 
-        private async void _FillCategoriesInComoboBox()
+        private async Task  _FillCategoriesInComoboBox()
         {
             DataTable dtCatecories = await  clsCategories.GetListCategories();
 
@@ -44,7 +46,8 @@ namespace Library_Manegment_System
                 cbCategory.Items.Add(row["CategoryName"]);
             }
         }
-        private async void _FillGenreInComoboBox()
+    
+        private async Task  _FillGenreInComoboBox()
         {
             DataTable dtGenre = new DataTable();
   
@@ -55,7 +58,8 @@ namespace Library_Manegment_System
                 cbGenre.Items.Add(row["GenreName"]);
             }
         }
-        private async void _FillAutherInComoboBox()
+      
+        private async Task  _FillAutherInComoboBox()
         {
             DataTable dtAuther = await  clsAuthors.GetListAuthors();
  
@@ -64,7 +68,8 @@ namespace Library_Manegment_System
                 cbAutherName.Items.Add(row["Name"]);
             }
         }
-        private async void _FillPublishersInComoboBox()
+    
+        private async Task  _FillPublishersInComoboBox()
         {
             DataTable dtPublisher =await  clsPublishers.GetListPublishers();
             foreach (DataRow row in dtPublisher.Rows)
@@ -73,13 +78,14 @@ namespace Library_Manegment_System
             }
         }
 
-        private void _ResetDefualtValues()
+        private async Task _ResetDefualtValues()
         {
-            _FillCategoriesInComoboBox();
-            _FillGenreInComoboBox();
-            _FillAutherInComoboBox();
-            _FillPublishersInComoboBox();
+           Task task1= _FillCategoriesInComoboBox();
+           Task task2=_FillGenreInComoboBox();
+           Task task3=  _FillAutherInComoboBox();
+           Task task4=  _FillPublishersInComoboBox();
 
+           await  Task.WhenAll(task1,task2,task3,task4);
             if (_Mode == enMode.AddNew)
             {
                 lblTitel.Text = "Add New Book";
@@ -93,10 +99,10 @@ namespace Library_Manegment_System
             }
 
             txtAdditionalDetails.Text = "";
-            cbGenre.SelectedIndex = 0;
-            cbCategory.SelectedIndex = 0;
-            cbAutherName.SelectedIndex = 0;
-            cbPublisherName.SelectedIndex = 0;
+          cbGenre.SelectedIndex = 0;
+          cbCategory.SelectedIndex = 0;
+           cbAutherName.SelectedIndex = 0;
+           cbPublisherName.SelectedIndex = 0;
             txtISBN.Text = "";
             txtTitle.Text = "";
             lblBookID.Text = "???";
@@ -105,7 +111,7 @@ namespace Library_Manegment_System
 
         }
 
-        private async void _LoadData()
+        private async Task _LoadData()
         {
 
             _Book = clsBooks.FindByID(_BookID);
@@ -131,33 +137,36 @@ namespace Library_Manegment_System
             NupDNumofCopies.Value = await  clsBookCopies.GetNumberOfAllBookCopies(_Book.BookID);
 
         }
+        
         private void groupBox1_Enter(object sender, EventArgs e)
         {
 
         }
 
-        private void frmAddUpdateBooks_Load(object sender, EventArgs e)
+        private async void frmAddUpdateBooks_Load(object sender, EventArgs e)
         {
-            _ResetDefualtValues();
+           await  _ResetDefualtValues();
 
             if (_Mode == enMode.Update)
-                _LoadData();
+               await  _LoadData();
         }
 
-        private void Author_DataBack(object sender,string Name)
+        private async void Author_DataBack(object sender,string Name)
         {
             cbAutherName.Items.Clear();
-            _FillAutherInComoboBox();
+           await  _FillAutherInComoboBox();
             cbAutherName.SelectedIndex = cbAutherName.FindString(Name);
             return;
         }
-        private void Pulisher_DataBack(object sender, string Name)
+    
+        private async void Pulisher_DataBack(object sender, string Name)
         {
             cbPublisherName.Items.Clear();
-            _FillPublishersInComoboBox();
+           await  _FillPublishersInComoboBox();
             cbPublisherName.SelectedIndex = cbPublisherName.FindString(Name);
             return;
         }
+     
         private void guna2Button1_Click(object sender, EventArgs e)
         {
             frmAddUpdateAuther_Publisher frmAddAuther_Publisher = new frmAddUpdateAuther_Publisher(true);
@@ -173,28 +182,6 @@ namespace Library_Manegment_System
             frmAddAuther_Publisher.ShowDialog();
         }
 
-
-
-        private async void _AddCobyBooks(short NumberOFCoby)
-        {
-            for (short i = 0; i < NumberOFCoby; i++)
-            {
-                clsBookCopies bookCopies = new clsBookCopies();
-
-                bookCopies.BookID = _Book.BookID;
-                bookCopies.Status = (byte)clsBookCopies.enStatusCopy.Available;
-
-                if ( ! await bookCopies.Save())
-                {
-                    MessageBox.Show("Canot Saved Cobies Succesfuly");
-                    return;
-                }
-            }
-        }
-
-
-
-
         private async void btnSave_Click(object sender, EventArgs e)
         {
             if (!this.ValidateChildren())
@@ -205,50 +192,20 @@ namespace Library_Manegment_System
                 return;
             }
 
-
+            _Book.GenreID=clsGenres.FindByGenreNAme(cbGenre.Text).GenreID;
+            _Book.CategoryID=clsCategories.Find(cbCategory.Text).CategoryID;
             _Book.AdditionalDetails = txtAdditionalDetails.Text.ToString();
             _Book.AuthorID = clsAuthors.Find(cbAutherName.Text).AutherID;
             _Book.ISBN = txtISBN.Text.ToString();
             _Book.Title = txtTitle.Text.ToString();
             _Book.PublisherID=clsPublishers.FindByPublisgerName(cbPublisherName.Text).PublisherID;
             _Book.BookPrice =Convert.ToDouble(txtBookPrice.Text);
-
-            clsCategories category = clsCategories.Find(cbCategory.Text);
-
-            if (category != null)
-                _Book.CategoryID = category.CategoryID;
-            else
-            {
-                category = new clsCategories();
-                category.CategoryName = cbCategory.Text;
-                if (await category.Save())
-                    _Book.CategoryID = category.CategoryID;
-            }
-
-
-            clsGenres Genre = clsGenres.FindByGenreNAme(cbGenre.Text);
-            if (Genre != null)
-                _Book.GenreID = Genre.GenreID;
-            else
-            {
-                Genre = new clsGenres();
-                Genre.GenreName = cbGenre.Text;
-                if ( await Genre.Save())
-                    _Book.GenreID = Genre.GenreID;
-            }
-
-
-
-
-
             _Book.YearPublished = dtpPublicationDate.Value.Date;
+            _Book.NumberOfCopies = Convert.ToInt16(NupDNumofCopies.Value);
 
             if (await _Book.Save())
             {
-                if(_Mode==enMode.AddNew)
-                    _AddCobyBooks(Convert.ToInt16(NupDNumofCopies.Value));
-
-
+                
                 lblBookID.Text = _Book.BookID.ToString();
                 _Mode = enMode.Update;
                 lblTitel.Text = "Update Book";
@@ -268,20 +225,20 @@ namespace Library_Manegment_System
             e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
 
-        private void Genre_DataBack(object sender, string Name)
+        private async void Genre_DataBack(object sender, string Name)
         {
            
                 cbGenre.Items.Clear();
-                _FillGenreInComoboBox();
+               await  _FillGenreInComoboBox();
                 cbGenre.SelectedIndex = cbGenre.FindString(Name);
                 return;
         }
 
-        private void Category_DataBack(object sender, string Name)
+        private async void Category_DataBack(object sender, string Name)
         {
 
             cbCategory.Items.Clear();
-            _FillCategoriesInComoboBox();
+           await  _FillCategoriesInComoboBox();
             cbCategory.SelectedIndex = cbCategory.FindString(Name);
             return;
         }
@@ -337,7 +294,144 @@ namespace Library_Manegment_System
 
         private void guna2Button1_Click_1(object sender, EventArgs e)
         {
+            this .Close();
+        }
 
+        private void txtTitle_Validating(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtTitle.Text.Trim()))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtTitle, "Title cannot be blank");
+                return;
+            }
+            else
+            {
+                errorProvider1.SetError(txtTitle, null);
+            };
+
+
+        }
+
+        private void txtISBN_Validating(object sender, CancelEventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtISBN.Text.Trim()))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtISBN, "ISBN cannot be blank");
+                return;
+            }
+            else
+            {
+                errorProvider1.SetError(txtISBN, null);
+            };
+
+
+            if (_Mode == enMode.AddNew)
+            {
+
+                if ( clsBooks.IsBooksExisteByISBN(txtISBN.Text.Trim()))
+                {
+                    e.Cancel = true;
+                    errorProvider1.SetError(txtISBN, "ISBN is used by another Book");
+                }
+                else
+                {
+                    errorProvider1.SetError(txtISBN, null);
+                };
+            }
+            else
+            {
+                if (_Book.ISBN != txtISBN.Text.Trim())
+                {
+                    if ( clsBooks.IsBooksExisteByISBN(txtISBN.Text.Trim()))
+                    {
+                        e.Cancel = true;
+                        errorProvider1.SetError(txtISBN, "ISBN is used by another Book");
+                        return;
+                    }
+                    else
+                    {
+                        errorProvider1.SetError(txtISBN, null);
+                    };
+                }
+            }
+        }
+
+        private void txtBookPrice_Validating(object sender, CancelEventArgs e)
+        {
+
+            if (string.IsNullOrEmpty(txtBookPrice.Text.Trim()))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(txtBookPrice, "Book Price cannot be blank");
+                return;
+            }
+            else
+            {
+                errorProvider1.SetError(txtBookPrice, null);
+            };
+        }
+
+        private async void deleteToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (await clsGenres.DeleteGenres(cbGenre.Text.Trim()))
+            {
+                MessageBox.Show("Genre Deleted Successfully.", "Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                cbGenre.Items.Clear();
+                await  _FillGenreInComoboBox();
+               cbGenre.SelectedIndex = 0;
+
+            }
+            else
+            {
+                MessageBox.Show("Could not delete Genre , other data depends on it.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private async void deleteToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (await  clsCategories.DeleteCategories(cbCategory.Text .Trim()))
+            {
+                MessageBox.Show("Category Deleted Successfully.", "Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                cbCategory.Items.Clear();
+                await _FillCategoriesInComoboBox();
+                cbCategory.SelectedIndex = 0;
+            }
+            else
+            {
+                MessageBox.Show("Could not delete Category , other data depends on it.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private async void deleteToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            if (await  clsAuthors.DeleteAuthors (cbAutherName.Text.Trim()))
+            {
+                MessageBox.Show("Auther Deleted Successfully.", "Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                cbAutherName.Items.Clear();
+                await _FillAutherInComoboBox();
+                cbAutherName.SelectedIndex = 0;
+            }
+            else
+            {
+                MessageBox.Show("Could not delete Auther , other data depends on it.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private async void deleteToolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            if (await  clsPublishers.DeletePublishers(cbPublisherName.Text.Trim()))
+            {
+                MessageBox.Show("Publisher Deleted Successfully.", "Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                cbPublisherName.Items.Clear();
+                await _FillPublishersInComoboBox();
+                cbPublisherName.SelectedIndex = 0;
+            }
+            else
+            {
+                MessageBox.Show("Could not delete Publisher , other data depends on it.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

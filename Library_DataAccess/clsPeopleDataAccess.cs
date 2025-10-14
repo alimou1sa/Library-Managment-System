@@ -15,11 +15,11 @@ namespace Library_DataAccessLayer
     public class clsPeopleDataAccess
     {
 
-public static bool GetPeopleInfoByID(int PersonID,ref string NationalNo,ref string FirstName,ref string SecondName,ref string ThirdName,ref string LastName,ref DateTime DateOfBirth,ref byte Gendor,ref string Address,ref string Phone,ref string Email,ref int NationalityCountryID,ref string ImagePath)
+        public static bool GetPeopleInfoByID(int PersonID, ref string NationalNo, ref string FirstName, ref string SecondName, ref string ThirdName, ref string LastName, ref DateTime DateOfBirth, ref byte Gendor, ref string Address, ref string Phone, ref string Email, ref int NationalityCountryID, ref string ImagePath)
 
 
-    {
-        bool IsFound  = false;
+        {
+            bool IsFound = false;
 
             try
             {
@@ -72,30 +72,24 @@ public static bool GetPeopleInfoByID(int PersonID,ref string NationalNo,ref stri
 
             }
 
-        return IsFound ;
-          
-    }
-        
-        public static async Task<int> AddNewPeople(string NationalNo,string FirstName,string SecondName,string ThirdName,string LastName,DateTime DateOfBirth,byte Gendor,string Address,string Phone,string Email,int NationalityCountryID,string ImagePath)
-    {
-        int InsertedID  = -1;
+            return IsFound;
+
+        }
+
+        public static async Task<int> AddNewPeople(string NationalNo, string FirstName, string SecondName, string ThirdName, string LastName, DateTime DateOfBirth, byte Gendor, string Address, string Phone, string Email, int NationalityCountryID, string ImagePath)
+        {
+            int InsertedID = -1;
 
             try
             {
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
-                    string query = @"INSERT INTO People(NationalNo, FirstName, SecondName, ThirdName, LastName, DateOfBirth, Gendor, Address, Phone, Email, NationalityCountryID, ImagePath)
-                                   
-                                       VALUES (@NationalNo, @FirstName, @SecondName, @ThirdName, @LastName, @DateOfBirth, @Gendor, @Address, @Phone, @Email, @NationalityCountryID, @ImagePath) 
-                
-                                SELECT SCOPE_IDENTITY();";
-
-
-                    using (SqlCommand command = new SqlCommand(query, connection))
+                    using (SqlCommand command = new SqlCommand("SP_AddNewPerson", connection))
                     {
+                        command.CommandType = CommandType.StoredProcedure;
                         command.Parameters.AddWithValue("@NationalNo", NationalNo);
                         command.Parameters.AddWithValue("@FirstName", FirstName);
                         command.Parameters.AddWithValue("@SecondName", SecondName);
@@ -136,15 +130,15 @@ public static bool GetPeopleInfoByID(int PersonID,ref string NationalNo,ref stri
 
                         }
 
-                        object Result = command.ExecuteScalar();
 
-                        int ID = 0;
-
-                        if (Result != null && int.TryParse(Result.ToString(), out ID))
+                        SqlParameter outputIdParam = new SqlParameter("@NewPersonID", SqlDbType.Int)
                         {
-                            InsertedID = ID;
+                            Direction = ParameterDirection.Output
+                        };
 
-                        }
+                        command.Parameters.Add(outputIdParam);
+                        await command.ExecuteNonQueryAsync();
+                        InsertedID = (int)command.Parameters["@NewPersonID"].Value;
 
                     }
                 }
@@ -154,19 +148,20 @@ public static bool GetPeopleInfoByID(int PersonID,ref string NationalNo,ref stri
                 clsErrorEventLog.LogError(ex.Message);
             }
 
-            return InsertedID ;
-          
-    }
-        public static async Task<bool> UpdatePeople(int PersonID,string NationalNo, string FirstName, string SecondName, string ThirdName, string LastName, DateTime DateOfBirth, byte Gendor, string Address, string Phone, string Email, int NationalityCountryID, string ImagePath)
-    {
-        int RowsAffected  = -1;
+            return InsertedID;
+
+        }
+        public static async Task<bool> UpdatePeople(int PersonID, string NationalNo, string FirstName, string SecondName, string ThirdName, string LastName, DateTime DateOfBirth, byte Gendor, string Address, string Phone, string Email, int NationalityCountryID, string ImagePath)
+        {
+            int RowsAffected = -1;
 
             try
             {
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
+
 
                     string query = @"Update People SET NationalNo = @NationalNo,FirstName = @FirstName,SecondName = @SecondName,ThirdName = @ThirdName,LastName = @LastName,DateOfBirth = @DateOfBirth,Gendor = @Gendor,Address = @Address,Phone = @Phone,Email = @Email,NationalityCountryID = @NationalityCountryID,ImagePath = @ImagePath
 
@@ -229,34 +224,24 @@ public static bool GetPeopleInfoByID(int PersonID,ref string NationalNo,ref stri
                 clsErrorEventLog.LogError(ex.Message);
             }
 
-            return (RowsAffected != -1 ) ;
-          
-    }
+            return (RowsAffected != -1);
+
+        }
         public static async Task<DataTable> GetListPeople()
-    {
-        DataTable dtList = new DataTable();
+        {
+            DataTable dtList = new DataTable();
 
             try
             {
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
-
-                    string query = @"
-SELECT People.PersonID, People.NationalNo, People.FirstName, People.SecondName, People.LastName, People.DateOfBirth,
-  CASE
-      WHEN People.Gendor = 0 THEN 'Male'
-
-      ELSE 'Female'
-
-      END as GendorCaption , People.Address, People.Phone, People.Email, People.ImagePath, Countries.CountryName
-FROM   People INNER JOIN
-             Countries ON People.NationalityCountryID = Countries.CountryID";
+                    await connection.OpenAsync();
 
 
-                    using (SqlCommand command = new SqlCommand(query, connection))
+                    using (SqlCommand command = new SqlCommand("SP_GetListPeople", connection))
                     {
+                        command.CommandType = CommandType.StoredProcedure;
 
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
@@ -279,19 +264,20 @@ FROM   People INNER JOIN
                 clsErrorEventLog.LogError(ex.Message);
             }
 
-            return dtList ;
-          
-    }
+            return dtList;
+
+        }
         public static async Task<bool> DeletePeople(int PersonID)
-    {
-        int RowsAffected  = -1;
+        {
+            int RowsAffected = -1;
 
             try
             {
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
+
 
                     string query = @" Delete From People Where PersonID = @PersonID";
 
@@ -299,12 +285,7 @@ FROM   People INNER JOIN
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@PersonID", PersonID);
-
-
-                        RowsAffected = command.ExecuteNonQuery();
-
-
-
+                        RowsAffected =await command.ExecuteNonQueryAsync();
                     }
                 }
             }
@@ -313,19 +294,22 @@ FROM   People INNER JOIN
                 clsErrorEventLog.LogError(ex.Message);
             }
 
-            return (RowsAffected != -1 ) ;
-          
-    }
+            return (RowsAffected != -1);
+
+        }
+      
+        
         public static async Task<bool> IsPeopleExisteByID(int PersonID)
-    {
-        bool IsFound  = false;
+        {
+            bool IsFound = false;
 
             try
             {
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
+
 
                     string query = @" Select Found = 1 From People Where PersonID = @PersonID";
 
@@ -359,12 +343,12 @@ FROM   People INNER JOIN
 
             }
 
-        return IsFound ;
-          
-    }
+            return IsFound;
+
+        }
 
 
-        public static async Task<bool>IsPeopleExisteByNationalNo(string  NationalNo)
+        public static async Task<bool> IsPeopleExisteByNationalNo(string NationalNo)
         {
             bool IsFound = false;
 
@@ -373,7 +357,8 @@ FROM   People INNER JOIN
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
+
 
                     string query = @" Select Found = 1 From People Where NationalNo = @NationalNo";
 
@@ -412,7 +397,12 @@ FROM   People INNER JOIN
         }
 
 
-        public static bool GetPeopleInfoByNationalNo(string NationalNo,ref int PersonID, ref   string FirstName, ref string SecondName, ref string ThirdName, ref string LastName, ref DateTime DateOfBirth, ref byte Gendor, ref string Address, ref string Phone, ref string Email, ref int NationalityCountryID, ref string ImagePath)
+
+       
+        
+        
+        
+        public static bool GetPeopleInfoByNationalNo(string NationalNo, ref int PersonID, ref string FirstName, ref string SecondName, ref string ThirdName, ref string LastName, ref DateTime DateOfBirth, ref byte Gendor, ref string Address, ref string Phone, ref string Email, ref int NationalityCountryID, ref string ImagePath)
 
 
         {
@@ -464,8 +454,8 @@ FROM   People INNER JOIN
             catch (SqlException ex)
             {
                 clsErrorEventLog.LogError(ex.Message);
-            
-            IsFound = false;
+
+                IsFound = false;
 
             }
 

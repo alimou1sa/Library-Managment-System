@@ -355,6 +355,7 @@
             // 
             this.chbIsSubscribtionActive.AutoSize = true;
             this.chbIsSubscribtionActive.BackColor = System.Drawing.Color.Transparent;
+            this.chbIsSubscribtionActive.Enabled = false;
             this.chbIsSubscribtionActive.Font = new System.Drawing.Font("Tahoma", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chbIsSubscribtionActive.Location = new System.Drawing.Point(17, 194);
             this.chbIsSubscribtionActive.Name = "chbIsSubscribtionActive";
@@ -505,6 +506,7 @@
             this.btnClose.Size = new System.Drawing.Size(161, 45);
             this.btnClose.TabIndex = 9;
             this.btnClose.Text = "Close";
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
             // btnSave
             // 

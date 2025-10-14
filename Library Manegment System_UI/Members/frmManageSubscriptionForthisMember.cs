@@ -20,19 +20,19 @@ namespace Library_Manegment_System
             _MemberID = MemberID;
         }
 
-        DataTable _DTSubscriptions;//=await  clsMemberSubscriptions.GetListMemberSubscriptionsByMemberID(_MemberID);
+        DataTable _DTSubscriptions=null;//=await  clsMemberSubscriptions.GetListMemberSubscriptionsByMemberID(_MemberID);
 
-        private async void _RefreshSubscriptionsList()
+        private async Task  _RefreshSubscriptionsList()
         {
             _DTSubscriptions =await  clsMemberSubscriptions.GetListMemberSubscriptionsByMemberID(_MemberID);
             dgvListSubscriptions.DataSource = _DTSubscriptions;
             lblRecordsCount.Text = dgvListSubscriptions.Rows.Count.ToString();
         }
 
-        private void frmManageSubscriptionForthisMember_Load(object sender, EventArgs e)
+        private async void frmManageSubscriptionForthisMember_Load(object sender, EventArgs e)
         {
 
-            _RefreshSubscriptionsList();
+           await  _RefreshSubscriptionsList();
             dgvListSubscriptions.DataSource = _DTSubscriptions;
             cbFiterBy.SelectedIndex = 0;
             lblRecordsCount.Text = dgvListSubscriptions.Rows.Count.ToString();
@@ -192,20 +192,20 @@ namespace Library_Manegment_System
             lblRecordsCount.Text = _DTSubscriptions.Rows.Count.ToString();
         }
 
-        private void btnPeopleManagment_Click(object sender, EventArgs e)
+        private async void btnPeopleManagment_Click(object sender, EventArgs e)
         {
             frmAdd_UpdateSubscriptions frmAdd_UpdateSubscriptions = new frmAdd_UpdateSubscriptions(_MemberID);
             frmAdd_UpdateSubscriptions.ShowDialog();
 
-            _RefreshSubscriptionsList();
+           await  _RefreshSubscriptionsList();
         }
 
-        private void editToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
             frmAdd_UpdateSubscriptions frmAdd_UpdateSubscriptions = new frmAdd_UpdateSubscriptions(null,(int)dgvListSubscriptions.CurrentRow.Cells[0].Value);
             frmAdd_UpdateSubscriptions.ShowDialog();
 
-            _RefreshSubscriptionsList();
+           await  _RefreshSubscriptionsList();
         }
     }
 }

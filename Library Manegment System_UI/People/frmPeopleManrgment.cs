@@ -21,7 +21,7 @@ namespace Library_Manegment_System
 
         DataTable _dtPeople=null ;
 
-        private async void _RefreshPeoplsList()
+        private async Task  _RefreshPeoplsList()
         {
             _dtPeople =await  clsPeople.GetListPeople();
             dgvListPeople.DataSource = _dtPeople;
@@ -76,9 +76,9 @@ namespace Library_Manegment_System
             lblRecordsCount.Text = dgvListPeople.Rows.Count.ToString();
         }
 
-        private void frmPeopleManrgment_Load(object sender, EventArgs e)
+        private async void frmPeopleManrgment_Load(object sender, EventArgs e)
         {
-            _RefreshPeoplsList();
+           await  _RefreshPeoplsList();
             dgvListPeople.DataSource = _dtPeople;
             cbFiterBy.SelectedIndex = 0;
             lblRecordsCount.Text = dgvListPeople.Rows.Count.ToString();
@@ -168,11 +168,6 @@ namespace Library_Manegment_System
                 e.Handled = !char.IsDigit(e.KeyChar) && !char.IsControl(e.KeyChar);
         }
 
-        private void btnAddPerson_Click(object sender, EventArgs e)
-        {
-            frmAddUpdatePersons frmAddUpdatePersons = new frmAddUpdatePersons();
-                frmAddUpdatePersons.ShowDialog();
-        }
 
         private void editToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -197,7 +192,7 @@ namespace Library_Manegment_System
                 if (await  clsPeople.DeletePeople((int)dgvListPeople.CurrentRow.Cells[0].Value))
                 {
                     MessageBox.Show("Person Deleted Successfully.", "Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    _RefreshPeoplsList();
+                   await  _RefreshPeoplsList();
                 }
 
                 else

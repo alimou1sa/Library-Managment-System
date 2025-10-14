@@ -47,8 +47,9 @@
     <Compile Include="clsBooksDataAccess.cs" />
     <Compile Include="clsCategoriesDataAccess.cs" />
     <Compile Include="clsCountriesDataAccess.cs" />
-    <Compile Include="clsDataAccessSettings.cs" />
-    <Compile Include="clsErrorEventLog.cs" />
+    <Compile Include="Global classes\clsDataAccessHelper.cs" />
+    <Compile Include="Global classes\clsDataAccessSettings.cs" />
+    <Compile Include="Global classes\clsErrorEventLog.cs" />
     <Compile Include="clsGenresDataAccess.cs" />
     <Compile Include="clsLoanesDataAccess.cs" />
     <Compile Include="clsMembersDataAccess.cs" />

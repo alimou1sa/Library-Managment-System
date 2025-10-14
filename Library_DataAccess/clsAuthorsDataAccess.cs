@@ -74,7 +74,7 @@ public static bool GetAuthorsInfoByID(int AutherID,ref string Name,ref string BI
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                   await connection.OpenAsync();
 
                     string query = @"INSERT INTO Authors(Name, BIi)
                                    
@@ -118,7 +118,7 @@ public static bool GetAuthorsInfoByID(int AutherID,ref string Name,ref string BI
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
                     string query = @"Update Authors SET Name = @Name,BIi = @BIi
 
@@ -133,7 +133,7 @@ public static bool GetAuthorsInfoByID(int AutherID,ref string Name,ref string BI
                         command.Parameters.AddWithValue("@BIi", BIi);
 
 
-                        RowsAffected = command.ExecuteNonQuery();
+                        RowsAffected =await command.ExecuteNonQueryAsync();
 
 
 
@@ -157,7 +157,7 @@ public static bool GetAuthorsInfoByID(int AutherID,ref string Name,ref string BI
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
+                    await connection.OpenAsync();
 
                     string query = @" Select * From Authors";
 
@@ -165,7 +165,7 @@ public static bool GetAuthorsInfoByID(int AutherID,ref string Name,ref string BI
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
 
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader =await command.ExecuteReaderAsync())
                         {
 
                             if (reader.HasRows)
@@ -189,29 +189,21 @@ public static bool GetAuthorsInfoByID(int AutherID,ref string Name,ref string BI
             return dtList ;
           
     }
-        public static async Task<bool> DeleteAuthors(int AutherID)
-    {
-        int RowsAffected  = -1;
+        public static async Task<bool> DeleteAuthors(string Name)
+        {
+            int RowsAffected = -1;
 
             try
             {
-
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
-
-                    string query = @" Delete From Authors Where AutherID = @AutherID";
-
+                    await connection.OpenAsync();
+                    string query = @" Delete From Authors Where Name = @Name";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@AutherID", AutherID);
-
-
-                        RowsAffected = command.ExecuteNonQuery();
-
-
-
+                        command.Parameters.AddWithValue("@Name", Name);
+                        RowsAffected = await command.ExecuteNonQueryAsync();
                     }
                 }
             }
@@ -220,9 +212,9 @@ public static bool GetAuthorsInfoByID(int AutherID,ref string Name,ref string BI
                 clsErrorEventLog.LogError(ex.Message);
             }
 
-            return (RowsAffected != -1 ) ;
-          
-    }
+            return (RowsAffected != -1);
+        }
+
         public static async Task<bool> IsAuthorsExisteByID(int AutherID)
     {
         bool IsFound  = false;
@@ -232,29 +224,21 @@ public static bool GetAuthorsInfoByID(int AutherID,ref string Name,ref string BI
 
                 using (SqlConnection connection = new SqlConnection(clsDataAccessSettings.connectionString))
                 {
-                    connection.Open();
-
+                    await connection.OpenAsync();
                     string query = @" Select Found = 1 From Authors Where AutherID = @AutherID";
-
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@AutherID", AutherID);
 
-
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        using (SqlDataReader reader =await command.ExecuteReaderAsync())
                         {
 
                             if (reader.Read())
                             {
                                 IsFound = true;
-
-
                             }
                         }
-
-
-
                     }
                 }
             }
@@ -306,7 +290,6 @@ public static bool GetAuthorsInfoByID(int AutherID,ref string Name,ref string BI
                                 // The record was not found
                                 isFound = false;
                             }
-
 
                         }
 
