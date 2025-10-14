@@ -3,7 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{0089513D-95FD-4E28-ABFF-2ED651A1FFCB}|Library Manegment System.csproj|C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\loans\\frmloanbook.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{1B2EC07E-AC46-40EA-97FE-CAB1F56D81D9}|..\\Library_DataAccess\\Library_DataAccess.csproj|c:\\users\\toptech\\source\\c#\\library managment system\\library_dataaccess\\clspaymentdetailsdataaccess.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1B2EC07E-AC46-40EA-97FE-CAB1F56D81D9}|..\\Library_DataAccess\\Library_DataAccess.csproj|c:\\users\\toptech\\source\\c#\\library managment system\\library_dataaccess\\clspeopledataaccess.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1B2EC07E-AC46-40EA-97FE-CAB1F56D81D9}|..\\Library_DataAccess\\Library_DataAccess.csproj|c:\\users\\toptech\\source\\c#\\library managment system\\library_dataaccess\\clsmembersdataaccess.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0089513D-95FD-4E28-ABFF-2ED651A1FFCB}|Library Manegment System.csproj|c:\\users\\toptech\\source\\c#\\library managment system\\library manegment system_ui\\supscribtions\\frmadd\u0026updatesubscriptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0089513D-95FD-4E28-ABFF-2ED651A1FFCB}|Library Manegment System.csproj|solutionrelative:supscribtions\\frmadd\u0026updatesubscriptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0089513D-95FD-4E28-ABFF-2ED651A1FFCB}|Library Manegment System.csproj|c:\\users\\toptech\\source\\c#\\library managment system\\library manegment system_ui\\supscribtions\\frmadd\u0026updatesubscriptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{0089513D-95FD-4E28-ABFF-2ED651A1FFCB}|Library Manegment System.csproj|solutionrelative:supscribtions\\frmadd\u0026updatesubscriptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0089513D-95FD-4E28-ABFF-2ED651A1FFCB}|Library Manegment System.csproj|c:\\users\\toptech\\source\\c#\\library managment system\\library manegment system_ui\\loans\\frmloanbook.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0089513D-95FD-4E28-ABFF-2ED651A1FFCB}|Library Manegment System.csproj|solutionrelative:loans\\frmloanbook.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -155,10 +172,6 @@
       "RelativeMoniker": "D:0:0:{0089513D-95FD-4E28-ABFF-2ED651A1FFCB}|Library Manegment System.csproj|solutionrelative:members\\frmmanagesubscriptionforthismember.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0089513D-95FD-4E28-ABFF-2ED651A1FFCB}|Library Manegment System.csproj|C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\supscribtions\\frmmembersubscribtionmanagment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{0089513D-95FD-4E28-ABFF-2ED651A1FFCB}|Library Manegment System.csproj|solutionrelative:supscribtions\\frmmembersubscribtionmanagment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{0089513D-95FD-4E28-ABFF-2ED651A1FFCB}|Library Manegment System.csproj|C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\users\\frmaddupdateuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0089513D-95FD-4E28-ABFF-2ED651A1FFCB}|Library Manegment System.csproj|solutionrelative:users\\frmaddupdateuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -176,14 +189,7 @@
       "AbsoluteMoniker": "D:0:0:{1B2EC07E-AC46-40EA-97FE-CAB1F56D81D9}|..\\Library_DataAccess\\Library_DataAccess.csproj|c:\\users\\toptech\\source\\c#\\library managment system\\library_dataaccess\\clspaymenttypesdataaccess.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{1B2EC07E-AC46-40EA-97FE-CAB1F56D81D9}|..\\Library_DataAccess\\Library_DataAccess.csproj|c:\\users\\toptech\\source\\c#\\library managment system\\library_dataaccess\\clspeopledataaccess.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{1B2EC07E-AC46-40EA-97FE-CAB1F56D81D9}|..\\Library_DataAccess\\Library_DataAccess.csproj|c:\\users\\toptech\\source\\c#\\library managment system\\library_dataaccess\\clspublishersdataaccess.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0089513D-95FD-4E28-ABFF-2ED651A1FFCB}|Library Manegment System.csproj|C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\purchasebooks\\frmpurchasesbook.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0089513D-95FD-4E28-ABFF-2ED651A1FFCB}|Library Manegment System.csproj|solutionrelative:purchasebooks\\frmpurchasesbook.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0089513D-95FD-4E28-ABFF-2ED651A1FFCB}|Library Manegment System.csproj|C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\purchasebooks\\frmpurchasesbooksmanagment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -214,9 +220,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{0089513D-95FD-4E28-ABFF-2ED651A1FFCB}|Library Manegment System.csproj|C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\global classes\\clsvalidation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0089513D-95FD-4E28-ABFF-2ED651A1FFCB}|Library Manegment System.csproj|solutionrelative:global classes\\clsvalidation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{1B2EC07E-AC46-40EA-97FE-CAB1F56D81D9}|..\\Library_DataAccess\\Library_DataAccess.csproj|c:\\users\\toptech\\source\\c#\\library managment system\\library_dataaccess\\clsmembersdataaccess.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0089513D-95FD-4E28-ABFF-2ED651A1FFCB}|Library Manegment System.csproj|C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\users\\frmuserdetails.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
@@ -336,10 +339,6 @@
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\TOPTECH\\AppData\\Local\\Temp\\.vsdbgsrc\\65bd1bd31fd9f24f68c71095e72124e363104503b5c83e9599252f471973f92e\\NameNode.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0089513D-95FD-4E28-ABFF-2ED651A1FFCB}|Library Manegment System.csproj|C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\supscribtions\\frmmembersubscribtionmanagment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0089513D-95FD-4E28-ABFF-2ED651A1FFCB}|Library Manegment System.csproj|solutionrelative:supscribtions\\frmmembersubscribtionmanagment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0089513D-95FD-4E28-ABFF-2ED651A1FFCB}|Library Manegment System.csproj|C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\loans\\frmloandetails.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -833,6 +832,18 @@
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\clsSaveLoginInRegjistry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:clsSaveLoginInRegjistry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\supscribtions\\frmmembersubscribtionmanagment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:supscribtions\\frmmembersubscribtionmanagment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\PurchaseBooks\\frmPurchasesBook.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:PurchaseBooks\\frmPurchasesBook.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Supscribtions\\frmMemberSubscribtionManagment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Supscribtions\\frmMemberSubscribtionManagment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -842,7 +853,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 8,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -862,19 +873,82 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "frmBookCopiesManagment.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\BookCopies\\frmBookCopiesManagment.cs",
-              "RelativeDocumentMoniker": "BookCopies\\frmBookCopiesManagment.cs",
-              "ToolTip": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\BookCopies\\frmBookCopiesManagment.cs [Design]",
-              "RelativeToolTip": "BookCopies\\frmBookCopiesManagment.cs [Design]",
+              "DocumentIndex": 0,
+              "Title": "clsPaymentDetailsDataAccess.cs",
+              "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library_DataAccess\\clsPaymentDetailsDataAccess.cs",
+              "RelativeDocumentMoniker": "..\\Library_DataAccess\\clsPaymentDetailsDataAccess.cs",
+              "ToolTip": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library_DataAccess\\clsPaymentDetailsDataAccess.cs*",
+              "RelativeToolTip": "..\\Library_DataAccess\\clsPaymentDetailsDataAccess.cs*",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-19T09:27:11.945Z",
+              "WhenOpened": "2025-10-14T08:34:15.157Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "frmAdd\u0026UpdateSubscriptions.cs",
+              "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Supscribtions\\frmAdd\u0026UpdateSubscriptions.cs",
+              "RelativeDocumentMoniker": "Supscribtions\\frmAdd\u0026UpdateSubscriptions.cs",
+              "ToolTip": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Supscribtions\\frmAdd\u0026UpdateSubscriptions.cs",
+              "RelativeToolTip": "Supscribtions\\frmAdd\u0026UpdateSubscriptions.cs",
+              "ViewState": "AQIAAAwBAAAAAAAAAAAUwAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-14T08:33:48.14Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "frmAdd\u0026UpdateSubscriptions.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Supscribtions\\frmAdd\u0026UpdateSubscriptions.cs",
+              "RelativeDocumentMoniker": "Supscribtions\\frmAdd\u0026UpdateSubscriptions.cs",
+              "ToolTip": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Supscribtions\\frmAdd\u0026UpdateSubscriptions.cs [Design]",
+              "RelativeToolTip": "Supscribtions\\frmAdd\u0026UpdateSubscriptions.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-14T08:33:45.962Z",
               "EditorCaption": " [Design]"
             },
             {
               "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "frmAddUpdateAuther_Publisher.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Books\\Publisher\u0026Author\\frmAddUpdateAuther_Publisher.cs",
+              "RelativeDocumentMoniker": "Books\\Publisher\u0026Author\\frmAddUpdateAuther_Publisher.cs",
+              "ToolTip": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Books\\Publisher\u0026Author\\frmAddUpdateAuther_Publisher.cs [Design]",
+              "RelativeToolTip": "Books\\Publisher\u0026Author\\frmAddUpdateAuther_Publisher.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-27T15:16:47.818Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "clsMembersDataAccess.cs",
+              "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library_DataAccess\\clsMembersDataAccess.cs",
+              "RelativeDocumentMoniker": "..\\Library_DataAccess\\clsMembersDataAccess.cs",
+              "ToolTip": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library_DataAccess\\clsMembersDataAccess.cs",
+              "RelativeToolTip": "..\\Library_DataAccess\\clsMembersDataAccess.cs",
+              "ViewState": "AQIAAH8AAAAAAAAAAAAgwAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-09T09:25:46.916Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "clsPeopleDataAccess.cs",
+              "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library_DataAccess\\clsPeopleDataAccess.cs",
+              "RelativeDocumentMoniker": "..\\Library_DataAccess\\clsPeopleDataAccess.cs",
+              "ToolTip": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library_DataAccess\\clsPeopleDataAccess.cs",
+              "RelativeToolTip": "..\\Library_DataAccess\\clsPeopleDataAccess.cs",
+              "ViewState": "AQIAAA8AAAAAAAAAAAAmwE4AAAAIAQAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-09T11:40:22.957Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "frmBookCopiesManagment.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\BookCopies\\frmBookCopiesManagment.cs",
               "RelativeDocumentMoniker": "BookCopies\\frmBookCopiesManagment.cs",
@@ -882,24 +956,22 @@
               "RelativeToolTip": "BookCopies\\frmBookCopiesManagment.cs",
               "ViewState": "AQIAAH0AAAAAAAAAAAASwK4AAAARAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-27T15:24:05.858Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-27T15:24:05.858Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "frmBookCopiesManagment.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\BookCopies\\frmBookCopiesManagment.cs",
+              "RelativeDocumentMoniker": "BookCopies\\frmBookCopiesManagment.cs",
+              "ToolTip": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\BookCopies\\frmBookCopiesManagment.cs [Design]",
+              "RelativeToolTip": "BookCopies\\frmBookCopiesManagment.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-19T09:27:11.945Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "frmAddUpdateAuther_Publisher.cs [Design]",
-              "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Books\\Publisher\u0026Author\\frmAddUpdateAuther_Publisher.cs",
-              "RelativeDocumentMoniker": "Books\\Publisher\u0026Author\\frmAddUpdateAuther_Publisher.cs",
-              "ToolTip": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Books\\Publisher\u0026Author\\frmAddUpdateAuther_Publisher.cs [Design]",
-              "RelativeToolTip": "Books\\Publisher\u0026Author\\frmAddUpdateAuther_Publisher.cs [Design]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-27T15:16:47.818Z",
-              "EditorCaption": " [Design]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
               "Title": "frmLoanBook.cs [Design]",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Loans\\frmLoanBook.cs",
               "RelativeDocumentMoniker": "Loans\\frmLoanBook.cs",
@@ -911,20 +983,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 5,
               "Title": "frmLoanBook.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Loans\\frmLoanBook.cs",
               "RelativeDocumentMoniker": "Loans\\frmLoanBook.cs",
               "ToolTip": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Loans\\frmLoanBook.cs",
               "RelativeToolTip": "Loans\\frmLoanBook.cs",
-              "ViewState": "AQIAALIAAAAAAAAAAAAuwF0BAAAAAAAA",
+              "ViewState": "AQIAAEoAAAAAAAAAAAAgwE8BAABEAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-09-05T12:02:00.571Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 9,
               "Title": "frmAddUpdatebookCopies.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\BookCopies\\frmAddUpdatebookCopies.cs",
               "RelativeDocumentMoniker": "BookCopies\\frmAddUpdatebookCopies.cs",
@@ -932,24 +1004,22 @@
               "RelativeToolTip": "BookCopies\\frmAddUpdatebookCopies.cs",
               "ViewState": "AQIAACIAAAAAAAAAAAAgwIoAAAApAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-19T12:37:06.454Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-19T12:37:06.454Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 10,
               "Title": "frmAddUpdatebookCopies.cs [Design]",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\BookCopies\\frmAddUpdatebookCopies.cs",
               "RelativeDocumentMoniker": "BookCopies\\frmAddUpdatebookCopies.cs",
               "ToolTip": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\BookCopies\\frmAddUpdatebookCopies.cs [Design]",
               "RelativeToolTip": "BookCopies\\frmAddUpdatebookCopies.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-19T12:37:05.225Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2025-09-19T12:37:05.225Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 15,
               "Title": "clsAuthorsDataAccess.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library_DataAccess\\clsAuthorsDataAccess.cs",
               "RelativeDocumentMoniker": "..\\Library_DataAccess\\clsAuthorsDataAccess.cs",
@@ -957,12 +1027,11 @@
               "RelativeToolTip": "..\\Library_DataAccess\\clsAuthorsDataAccess.cs",
               "ViewState": "AQIAANIAAAAAAAAAAAAYwOYAAAAxAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-12T14:31:30.775Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-12T14:31:30.775Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 12,
               "Title": "frmAddUpdateBooks.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Books\\frmAddUpdateBooks.cs",
               "RelativeDocumentMoniker": "Books\\frmAddUpdateBooks.cs",
@@ -970,24 +1039,22 @@
               "RelativeToolTip": "Books\\frmAddUpdateBooks.cs",
               "ViewState": "AQIAADcAAAAAAAAAAAAUwEYAAAAbAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-17T11:40:58.189Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-17T11:40:58.189Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 13,
               "Title": "frmAddUpdateBooks.cs [Design]",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Books\\frmAddUpdateBooks.cs",
               "RelativeDocumentMoniker": "Books\\frmAddUpdateBooks.cs",
               "ToolTip": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Books\\frmAddUpdateBooks.cs [Design]",
               "RelativeToolTip": "Books\\frmAddUpdateBooks.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-17T10:46:35.828Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2025-09-17T10:46:35.828Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 14,
               "Title": "frmAddUpdateAuther_Publisher.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Books\\Publisher\u0026Author\\frmAddUpdateAuther_Publisher.cs",
               "RelativeDocumentMoniker": "Books\\Publisher\u0026Author\\frmAddUpdateAuther_Publisher.cs",
@@ -995,12 +1062,11 @@
               "RelativeToolTip": "Books\\Publisher\u0026Author\\frmAddUpdateAuther_Publisher.cs",
               "ViewState": "AQIAAHEAAAAAAAAAAAAAAMUAAAA0AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-27T15:16:49.067Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-27T15:16:49.067Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 19,
               "Title": "clsLoanesDataAccess.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library_DataAccess\\clsLoanesDataAccess.cs",
               "RelativeDocumentMoniker": "..\\Library_DataAccess\\clsLoanesDataAccess.cs",
@@ -1012,7 +1078,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 17,
               "Title": "clsLoanes.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library_Buisness\\clsLoanes.cs",
               "RelativeDocumentMoniker": "..\\Library_Buisness\\clsLoanes.cs",
@@ -1024,7 +1090,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 18,
               "Title": "clsGenres.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library_Buisness\\clsGenres.cs",
               "RelativeDocumentMoniker": "..\\Library_Buisness\\clsGenres.cs",
@@ -1036,7 +1102,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 20,
               "Title": "clsGenresDataAccess.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library_DataAccess\\clsGenresDataAccess.cs",
               "RelativeDocumentMoniker": "..\\Library_DataAccess\\clsGenresDataAccess.cs",
@@ -1048,7 +1114,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 16,
               "Title": "clsAuthors.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library_Buisness\\clsAuthors.cs",
               "RelativeDocumentMoniker": "..\\Library_Buisness\\clsAuthors.cs",
@@ -1056,12 +1122,11 @@
               "RelativeToolTip": "..\\Library_Buisness\\clsAuthors.cs",
               "ViewState": "AQIAADoAAAAAAAAAAAAuwFIAAAAYAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-27T15:14:35.218Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-27T15:14:35.218Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 21,
               "Title": "clsPaymentsDataAccess.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library_DataAccess\\clsPaymentsDataAccess.cs",
               "RelativeDocumentMoniker": "..\\Library_DataAccess\\clsPaymentsDataAccess.cs",
@@ -1073,7 +1138,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 22,
               "Title": "frmLoanDetails.cs [Design]",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Loans\\frmLoanDetails.cs",
               "RelativeDocumentMoniker": "Loans\\frmLoanDetails.cs",
@@ -1084,7 +1149,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 23,
               "Title": "clsReservationsDataAccess.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library_DataAccess\\clsReservationsDataAccess.cs",
               "RelativeDocumentMoniker": "..\\Library_DataAccess\\clsReservationsDataAccess.cs",
@@ -1096,7 +1161,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 24,
               "Title": "clsReservations.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library_Buisness\\clsReservations.cs",
               "RelativeDocumentMoniker": "..\\Library_Buisness\\clsReservations.cs",
@@ -1108,7 +1173,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 25,
               "Title": "clsBookCopiesDataAccess.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library_DataAccess\\clsBookCopiesDataAccess.cs",
               "RelativeDocumentMoniker": "..\\Library_DataAccess\\clsBookCopiesDataAccess.cs",
@@ -1120,7 +1185,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 26,
               "Title": "clsBookCopies.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library_Buisness\\clsBookCopies.cs",
               "RelativeDocumentMoniker": "..\\Library_Buisness\\clsBookCopies.cs",
@@ -1132,7 +1197,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 27,
               "Title": "frmBooksManagment.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Books\\frmBooksManagment.cs",
               "RelativeDocumentMoniker": "Books\\frmBooksManagment.cs",
@@ -1140,24 +1205,22 @@
               "RelativeToolTip": "Books\\frmBooksManagment.cs",
               "ViewState": "AQIAACwBAAAAAAAAAAAiwD0BAAAsAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-12T07:42:49.216Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-12T07:42:49.216Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 28,
               "Title": "frmBooksManagment.cs [Design]",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Books\\frmBooksManagment.cs",
               "RelativeDocumentMoniker": "Books\\frmBooksManagment.cs",
               "ToolTip": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Books\\frmBooksManagment.cs [Design]",
               "RelativeToolTip": "Books\\frmBooksManagment.cs [Design]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-12T07:42:47.863Z",
-              "EditorCaption": " [Design]"
+              "WhenOpened": "2025-09-12T07:42:47.863Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 29,
               "Title": "clsSettingsDataAccess.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library_DataAccess\\clsSettingsDataAccess.cs",
               "RelativeDocumentMoniker": "..\\Library_DataAccess\\clsSettingsDataAccess.cs",
@@ -1169,7 +1232,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 30,
               "Title": "frmBookDetails.cs [Design]",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Books\\frmBookDetails.cs",
               "RelativeDocumentMoniker": "Books\\frmBookDetails.cs",
@@ -1180,7 +1243,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 31,
               "Title": "frmAddUpdateMembers.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Members\\frmAddUpdateMembers.cs",
               "RelativeDocumentMoniker": "Members\\frmAddUpdateMembers.cs",
@@ -1192,7 +1255,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 32,
               "Title": "frmAddUpdateMembers.cs [Design]",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Members\\frmAddUpdateMembers.cs",
               "RelativeDocumentMoniker": "Members\\frmAddUpdateMembers.cs",
@@ -1203,7 +1266,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 33,
               "Title": "frmLoanManagment.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Loans\\frmLoanManagment.cs",
               "RelativeDocumentMoniker": "Loans\\frmLoanManagment.cs",
@@ -1215,7 +1278,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 34,
               "Title": "frmLoanManagment.cs [Design]",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Loans\\frmLoanManagment.cs",
               "RelativeDocumentMoniker": "Loans\\frmLoanManagment.cs",
@@ -1226,7 +1289,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 35,
               "Title": "clsCountriesDataAccess.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library_DataAccess\\clsCountriesDataAccess.cs",
               "RelativeDocumentMoniker": "..\\Library_DataAccess\\clsCountriesDataAccess.cs",
@@ -1238,7 +1301,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 36,
               "Title": "clsCategoriesDataAccess.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library_DataAccess\\clsCategoriesDataAccess.cs",
               "RelativeDocumentMoniker": "..\\Library_DataAccess\\clsCategoriesDataAccess.cs",
@@ -1250,7 +1313,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 37,
               "Title": "clsCategories.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library_Buisness\\clsCategories.cs",
               "RelativeDocumentMoniker": "..\\Library_Buisness\\clsCategories.cs",
@@ -1262,7 +1325,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 38,
               "Title": "clsCountries.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library_Buisness\\clsCountries.cs",
               "RelativeDocumentMoniker": "..\\Library_Buisness\\clsCountries.cs",
@@ -1274,7 +1337,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 40,
               "Title": "clsBooks.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library_Buisness\\clsBooks.cs",
               "RelativeDocumentMoniker": "..\\Library_Buisness\\clsBooks.cs",
@@ -1286,7 +1349,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 39,
               "Title": "clsBooksDataAccess.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library_DataAccess\\clsBooksDataAccess.cs",
               "RelativeDocumentMoniker": "..\\Library_DataAccess\\clsBooksDataAccess.cs",
@@ -1298,7 +1361,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 41,
               "Title": "frmBookDetails.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Books\\frmBookDetails.cs",
               "RelativeDocumentMoniker": "Books\\frmBookDetails.cs",
@@ -1310,7 +1373,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 42,
               "Title": "clsUsersDataAccess.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library_DataAccess\\clsUsersDataAccess.cs",
               "RelativeDocumentMoniker": "..\\Library_DataAccess\\clsUsersDataAccess.cs",
@@ -1322,7 +1385,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 43,
               "Title": "frmAdd_UpdateGenresAndCategoriew.cs [Design]",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Books\\Categories\u0026Genres\\frmAdd_UpdateGenresAndCategoriew.cs",
               "RelativeDocumentMoniker": "Books\\Categories\u0026Genres\\frmAdd_UpdateGenresAndCategoriew.cs",
@@ -1333,7 +1396,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 44,
               "Title": "ctrBookInfo.cs [Design]",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Books\\Controls\\ctrBookInfo.cs",
               "RelativeDocumentMoniker": "Books\\Controls\\ctrBookInfo.cs",
@@ -1344,7 +1407,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 45,
               "Title": "clsMemberSubscriptionsDataAccess.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library_DataAccess\\clsMemberSubscriptionsDataAccess.cs",
               "RelativeDocumentMoniker": "..\\Library_DataAccess\\clsMemberSubscriptionsDataAccess.cs",
@@ -1356,7 +1419,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 46,
               "Title": "frmManageSubscriptionForthisMember.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Members\\frmManageSubscriptionForthisMember.cs",
               "RelativeDocumentMoniker": "Members\\frmManageSubscriptionForthisMember.cs",
@@ -1368,7 +1431,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 47,
               "Title": "frmManageSubscriptionForthisMember.cs [Design]",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Members\\frmManageSubscriptionForthisMember.cs",
               "RelativeDocumentMoniker": "Members\\frmManageSubscriptionForthisMember.cs",
@@ -1379,7 +1442,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 251,
               "Title": "frmMemberSubscribtionManagment.cs [Design]",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Supscribtions\\frmMemberSubscribtionManagment.cs",
               "RelativeDocumentMoniker": "Supscribtions\\frmMemberSubscribtionManagment.cs",
@@ -1390,7 +1453,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 48,
               "Title": "frmAddUpdateUser.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Users\\frmAddUpdateUser.cs",
               "RelativeDocumentMoniker": "Users\\frmAddUpdateUser.cs",
@@ -1402,7 +1465,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
+              "DocumentIndex": 49,
               "Title": "frmAddUpdateUser.cs [Design]",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Users\\frmAddUpdateUser.cs",
               "RelativeDocumentMoniker": "Users\\frmAddUpdateUser.cs",
@@ -1413,7 +1476,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 50,
               "Title": "clsPurchasesBooksDataAccess.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library_DataAccess\\clsPurchasesBooksDataAccess.cs",
               "RelativeDocumentMoniker": "..\\Library_DataAccess\\clsPurchasesBooksDataAccess.cs",
@@ -1425,7 +1488,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
+              "DocumentIndex": 51,
               "Title": "clsDataAccessHelper.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library_DataAccess\\Global classes\\clsDataAccessHelper.cs",
               "RelativeDocumentMoniker": "..\\Library_DataAccess\\Global classes\\clsDataAccessHelper.cs",
@@ -1437,7 +1500,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 48,
+              "DocumentIndex": 52,
               "Title": "clsPaymentTypesDataAccess.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library_DataAccess\\clsPaymentTypesDataAccess.cs",
               "RelativeDocumentMoniker": "..\\Library_DataAccess\\clsPaymentTypesDataAccess.cs",
@@ -1449,7 +1512,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 51,
+              "DocumentIndex": 252,
               "Title": "frmPurchasesBook.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\PurchaseBooks\\frmPurchasesBook.cs",
               "RelativeDocumentMoniker": "PurchaseBooks\\frmPurchasesBook.cs",
@@ -1461,19 +1524,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 49,
-              "Title": "clsPeopleDataAccess.cs",
-              "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library_DataAccess\\clsPeopleDataAccess.cs",
-              "RelativeDocumentMoniker": "..\\Library_DataAccess\\clsPeopleDataAccess.cs",
-              "ToolTip": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library_DataAccess\\clsPeopleDataAccess.cs",
-              "RelativeToolTip": "..\\Library_DataAccess\\clsPeopleDataAccess.cs",
-              "ViewState": "AQIAAKAAAAAAAAAAAAAYwPsAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-09T11:40:22.957Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 54,
+              "DocumentIndex": 56,
               "Title": "frmReservationsManagments.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Reservations\\frmReservationsManagments.cs",
               "RelativeDocumentMoniker": "Reservations\\frmReservationsManagments.cs",
@@ -1485,7 +1536,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 50,
+              "DocumentIndex": 53,
               "Title": "clsPublishersDataAccess.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library_DataAccess\\clsPublishersDataAccess.cs",
               "RelativeDocumentMoniker": "..\\Library_DataAccess\\clsPublishersDataAccess.cs",
@@ -1497,7 +1548,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 53,
+              "DocumentIndex": 55,
               "Title": "clsPurchasesBooks.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library_Buisness\\clsPurchasesBooks.cs",
               "RelativeDocumentMoniker": "..\\Library_Buisness\\clsPurchasesBooks.cs",
@@ -1509,7 +1560,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 52,
+              "DocumentIndex": 54,
               "Title": "frmPurchasesBooksManagment.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\PurchaseBooks\\frmPurchasesBooksManagment.cs",
               "RelativeDocumentMoniker": "PurchaseBooks\\frmPurchasesBooksManagment.cs",
@@ -1521,7 +1572,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 55,
+              "DocumentIndex": 57,
               "Title": "frmAddUpdateReservations.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Reservations\\frmAddUpdateReservations.cs",
               "RelativeDocumentMoniker": "Reservations\\frmAddUpdateReservations.cs",
@@ -1533,7 +1584,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 56,
+              "DocumentIndex": 58,
               "Title": "clsUsers.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library_Buisness\\clsUsers.cs",
               "RelativeDocumentMoniker": "..\\Library_Buisness\\clsUsers.cs",
@@ -1545,7 +1596,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 57,
+              "DocumentIndex": 59,
               "Title": "frmUsersManagments.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Users\\frmUsersManagments.cs",
               "RelativeDocumentMoniker": "Users\\frmUsersManagments.cs",
@@ -1557,7 +1608,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 58,
+              "DocumentIndex": 60,
               "Title": "util.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Global Classes\\util.cs",
               "RelativeDocumentMoniker": "Global Classes\\util.cs",
@@ -1569,7 +1620,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 59,
+              "DocumentIndex": 61,
               "Title": "clsValidation.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Global Classes\\clsValidation.cs",
               "RelativeDocumentMoniker": "Global Classes\\clsValidation.cs",
@@ -1581,19 +1632,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 60,
-              "Title": "clsMembersDataAccess.cs",
-              "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library_DataAccess\\clsMembersDataAccess.cs",
-              "RelativeDocumentMoniker": "..\\Library_DataAccess\\clsMembersDataAccess.cs",
-              "ToolTip": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library_DataAccess\\clsMembersDataAccess.cs",
-              "RelativeToolTip": "..\\Library_DataAccess\\clsMembersDataAccess.cs",
-              "ViewState": "AQIAAPgAAAAAAAAAAAAcwAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-09T09:25:46.916Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 62,
+              "DocumentIndex": 63,
               "Title": "ctrlSubscriptiomInfo.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Supscribtions\\Controls\\ctrlSubscriptiomInfo.cs",
               "RelativeDocumentMoniker": "Supscribtions\\Controls\\ctrlSubscriptiomInfo.cs",
@@ -1605,7 +1644,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 63,
+              "DocumentIndex": 64,
               "Title": "ctrlSubscriptiomInfo.cs [Design]",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Supscribtions\\Controls\\ctrlSubscriptiomInfo.cs",
               "RelativeDocumentMoniker": "Supscribtions\\Controls\\ctrlSubscriptiomInfo.cs",
@@ -1616,7 +1655,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 64,
+              "DocumentIndex": 65,
               "Title": "ctrlMemberCardWhithFilter.cs [Design]",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Members\\Controls\\ctrlMemberCardWhithFilter.cs",
               "RelativeDocumentMoniker": "Members\\Controls\\ctrlMemberCardWhithFilter.cs",
@@ -1627,7 +1666,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 61,
+              "DocumentIndex": 62,
               "Title": "frmUserDetails.cs [Design]",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Users\\frmUserDetails.cs",
               "RelativeDocumentMoniker": "Users\\frmUserDetails.cs",
@@ -1638,7 +1677,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 65,
+              "DocumentIndex": 66,
               "Title": "ctrlMemberSubscriptionInfo.cs [Design]",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Members\\Controls\\ctrlMemberSubscriptionInfo.cs",
               "RelativeDocumentMoniker": "Members\\Controls\\ctrlMemberSubscriptionInfo.cs",
@@ -1649,7 +1688,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 67,
+              "DocumentIndex": 68,
               "Title": "ctrlBookCardWithFilter.cs [Design]",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Books\\Controls\\ctrlBookCardWithFilter.cs",
               "RelativeDocumentMoniker": "Books\\Controls\\ctrlBookCardWithFilter.cs",
@@ -1660,7 +1699,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 66,
+              "DocumentIndex": 67,
               "Title": "ctrBookInfo.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Books\\Controls\\ctrBookInfo.cs",
               "RelativeDocumentMoniker": "Books\\Controls\\ctrBookInfo.cs",
@@ -1672,7 +1711,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 68,
+              "DocumentIndex": 69,
               "Title": "frmFindBook.cs [Design]",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Books\\frmFindBook.cs",
               "RelativeDocumentMoniker": "Books\\frmFindBook.cs",
@@ -1683,7 +1722,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 69,
+              "DocumentIndex": 70,
               "Title": "frmMain.cs [Design]",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\frmMain.cs",
               "RelativeDocumentMoniker": "frmMain.cs",
@@ -1694,7 +1733,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 70,
+              "DocumentIndex": 71,
               "Title": "frmMain.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\frmMain.cs",
               "RelativeDocumentMoniker": "frmMain.cs",
@@ -1706,7 +1745,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 73,
+              "DocumentIndex": 74,
               "Title": "Login.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Login\u0026Setting\\Login.cs",
               "RelativeDocumentMoniker": "Login\u0026Setting\\Login.cs",
@@ -1718,7 +1757,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 71,
+              "DocumentIndex": 72,
               "Title": "frmFindBook.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Books\\frmFindBook.cs",
               "RelativeDocumentMoniker": "Books\\frmFindBook.cs",
@@ -1730,7 +1769,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 72,
+              "DocumentIndex": 73,
               "Title": "Login.cs [Design]",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Login\u0026Setting\\Login.cs",
               "RelativeDocumentMoniker": "Login\u0026Setting\\Login.cs",
@@ -1741,7 +1780,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 74,
+              "DocumentIndex": 75,
               "Title": "frmSetting.cs [Design]",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Login\u0026Setting\\frmSetting.cs",
               "RelativeDocumentMoniker": "Login\u0026Setting\\frmSetting.cs",
@@ -1752,7 +1791,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 75,
+              "DocumentIndex": 76,
               "Title": "frmUsersManagments.cs [Design]",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Users\\frmUsersManagments.cs",
               "RelativeDocumentMoniker": "Users\\frmUsersManagments.cs",
@@ -1763,7 +1802,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 76,
+              "DocumentIndex": 77,
               "Title": "frmChangePassowrd.cs [Design]",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Login\u0026Setting\\frmChangePassowrd.cs",
               "RelativeDocumentMoniker": "Login\u0026Setting\\frmChangePassowrd.cs",
@@ -1786,7 +1825,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 77,
+              "DocumentIndex": 78,
               "Title": "frmChangePassowrd.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Login\u0026Setting\\frmChangePassowrd.cs",
               "RelativeDocumentMoniker": "Login\u0026Setting\\frmChangePassowrd.cs",
@@ -1798,7 +1837,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 78,
+              "DocumentIndex": 79,
               "Title": "frmAddUpdatePersons.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\People\\frmAddUpdatePersons.cs",
               "RelativeDocumentMoniker": "People\\frmAddUpdatePersons.cs",
@@ -1810,7 +1849,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 79,
+              "DocumentIndex": 80,
               "Title": "frmAdd_UpdateGenresAndCategoriew.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Books\\Categories\u0026Genres\\frmAdd_UpdateGenresAndCategoriew.cs",
               "RelativeDocumentMoniker": "Books\\Categories\u0026Genres\\frmAdd_UpdateGenresAndCategoriew.cs",
@@ -1822,7 +1861,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 81,
+              "DocumentIndex": 82,
               "Title": "ctrlUserCard.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Users\\Controls\\ctrlUserCard.cs",
               "RelativeDocumentMoniker": "Users\\Controls\\ctrlUserCard.cs",
@@ -1834,7 +1873,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 82,
+              "DocumentIndex": 83,
               "Title": "ctrlUserCard.cs [Design]",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Users\\Controls\\ctrlUserCard.cs",
               "RelativeDocumentMoniker": "Users\\Controls\\ctrlUserCard.cs",
@@ -1857,7 +1896,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 80,
+              "DocumentIndex": 81,
               "Title": "frmChangePassowrd.Designer.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Login\u0026Setting\\frmChangePassowrd.Designer.cs",
               "RelativeDocumentMoniker": "Login\u0026Setting\\frmChangePassowrd.Designer.cs",
@@ -1905,7 +1944,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 83,
+              "DocumentIndex": 84,
               "Title": "frmSubscriptionInfo.cs [Design]",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Supscribtions\\frmSubscriptionInfo.cs",
               "RelativeDocumentMoniker": "Supscribtions\\frmSubscriptionInfo.cs",
@@ -1916,7 +1955,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 84,
+              "DocumentIndex": 85,
               "Title": "ctrlLoanInfo.cs [Design]",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Loans\\Controls\\ctrlLoanInfo.cs",
               "RelativeDocumentMoniker": "Loans\\Controls\\ctrlLoanInfo.cs",
@@ -1927,7 +1966,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 85,
+              "DocumentIndex": 86,
               "Title": "ctrlReservatiomsInfo.cs [Design]",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Reservations\\Controls\\ctrlReservatiomsInfo.cs",
               "RelativeDocumentMoniker": "Reservations\\Controls\\ctrlReservatiomsInfo.cs",
@@ -2079,7 +2118,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 88,
+              "DocumentIndex": 89,
               "Title": "ctrlPersonCardWithFilter.cs [Design]",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\People\\Controls\\ctrlPersonCardWithFilter.cs",
               "RelativeDocumentMoniker": "People\\Controls\\ctrlPersonCardWithFilter.cs",
@@ -2102,7 +2141,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 87,
+              "DocumentIndex": 88,
               "Title": "ctrlBookCardWithFilter.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Books\\Controls\\ctrlBookCardWithFilter.cs",
               "RelativeDocumentMoniker": "Books\\Controls\\ctrlBookCardWithFilter.cs",
@@ -2114,7 +2153,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 86,
+              "DocumentIndex": 87,
               "Title": "frmLoanBook.Designer.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Loans\\frmLoanBook.Designer.cs",
               "RelativeDocumentMoniker": "Loans\\frmLoanBook.Designer.cs",
@@ -2122,8 +2161,7 @@
               "RelativeToolTip": "Loans\\frmLoanBook.Designer.cs",
               "ViewState": "AQIAAJYAAAAAAAAAAAAQwKcAAAALAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-09-20T09:16:38.839Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-20T09:16:38.839Z"
             },
             {
               "$type": "Document",
@@ -2151,7 +2189,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 89,
+              "DocumentIndex": 90,
               "Title": "ctrlPersonCardWithFilter.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\People\\Controls\\ctrlPersonCardWithFilter.cs",
               "RelativeDocumentMoniker": "People\\Controls\\ctrlPersonCardWithFilter.cs",
@@ -2624,7 +2662,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 90,
+              "DocumentIndex": 91,
               "Title": "NameNode.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\AppData\\Local\\Temp\\.vsdbgsrc\\65bd1bd31fd9f24f68c71095e72124e363104503b5c83e9599252f471973f92e\\NameNode.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\AppData\\Local\\Temp\\.vsdbgsrc\\65bd1bd31fd9f24f68c71095e72124e363104503b5c83e9599252f471973f92e\\NameNode.cs",
@@ -2750,7 +2788,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 91,
+              "DocumentIndex": 253,
               "Title": "frmMemberSubscribtionManagment.cs",
               "DocumentMoniker": "C:\\Users\\TOPTECH\\source\\C#\\Library Managment System\\Library Manegment System_UI\\Supscribtions\\frmMemberSubscribtionManagment.cs",
               "RelativeDocumentMoniker": "Supscribtions\\frmMemberSubscribtionManagment.cs",
